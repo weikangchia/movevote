@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="assets/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>MoveVote - Movie recommendation</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span class="thin">Vote</span></a>
+            <a href="#" data-activates="mobile-navbar" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-navbar">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+        <div class="row">
+            <div class="col s12 l3 m3">
+                <div class="col s6 offset-s3 l12 m12">
+                    <img class="responsive-img circle center" src="assets/img/profile/wei_kang.jpg">
+                    <h5 class="bold red-text text-lighten-1 center">Wei Kang</h5>
+                    <ul>
+                        <li>Watchlist</li>
+                        <li>Recommendation</li>
+                        <li>Profile</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col s12 l9 m9">
+                <div class="row">
+                    <h5>Good Afternoon Wei Kang,</h5>
+                    <p></p>
+                </div>
+
+                <div class="spacer"></div>
+
+                <div class="row">
+                    <h5>Your Watchlist</h5>
+                </div>
+
+                <div class="row">
+                    <div class="col m6 l4">
+                        <div class="card medium">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="assets/img/sample/Captain_America_Civil_War_poster.jpg">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">Captain America Civil War</span>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">Captain America Civil War<i class="material-icons right">close</i></span>
+                                <p>Political interference in the Avengers' activities causes a rift between former allies Captain America and Iron Man.</p>
+                            </div>
+
+                            <div class="card-action">
+                                <a href="#">View</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col m6 l4">
+                        <div class="card medium">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="assets/img/sample/The%20Offering.jpg">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">The Offering</span>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">The Offering<i class="material-icons right">close</i></span>
+                                <p>When young and successful reporter Jamie finds out that her sister has died in mysterious circumstances, she travels to Singapore to uncover the truth. There, she discovers multiple deaths ...</p>
+                            </div>
+
+                            <div class="card-action">
+                                <a href="#">View</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col m6 l4">
+                        <div class="card medium">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="assets/img/sample/The_Jungle_Book_(2016).jpg">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">The Jungle Book (2016)</span>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">The Jungle Book (2016)<i class="material-icons right">close</i></span>
+                                <p>After a threat from the tiger, Sheer Khan, forces him to flee the jungle, a man-cub named, Mowgli, embarks on a journey of self discovery with the aid of the panther, Bagheera, and the free spirited bear, Baloo.</p>
+                            </div>
+
+                            <div class="card-action">
+                                <a href="#">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large red">
+                <i class="large material-icons">mode_edit</i>
+            </a>
+            <ul>
+                <li><a class="btn-floating red"><i class="material-icons">delete</i></a></li>
+                <li><a class="btn-floating green"><i class="material-icons">add</i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container white-text">
+                © 2016 Copyright Civil War
+                <span class="right">Made using Materialize</span>
+            </div>
+        </div>
+    </footer>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            vph = $(window).height() - 56;
+            $('#hero').css('height', vph);
+            $(".button-collapse").sideNav();
+
+            $('.fixed-action-btn').openFAB();
+            $('.fixed-action-btn').closeFAB();
+        });
+
+        $(window).resize(function () {
+            vpw = $(window).width();
+            vph = $(window).height() - 56;
+
+            $('#hero').css('height', vph);
+        });
+    </script>
+</body>
+
+</html>

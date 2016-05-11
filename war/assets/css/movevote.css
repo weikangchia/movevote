@@ -1,0 +1,29 @@
+#hero {
+    background-position: center center;
+    background-size: cover;
+    background-image: url("../img/banner1.jpg");
+}
+
+#hero-title {
+    margin-top: 10%;
+    line-height: 1.5em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.thin {
+    font-weight: 200;
+}
+
+.caption {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.spacer {
+    height: 2rem;
+    width: 100%;
+}
