@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!--Import Google Icon Font-->
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="assets/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="assets/css/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>MoveVote - Movie recommendation</title>
+</head>
+
+<body>
+	<nav>
+		<div class="nav-wrapper container">
+			<a href="#" class="brand-logo grey-text text-lighten-5"><span
+				class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
+				data-activates="mobile-navbar" class="button-collapse"><i
+				class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#features">Features</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a href="#features">Features</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="spacer"></div>
+		<div class="spacer"></div>
+		<div class="row">
+			<div class="col s12 l3 m3">
+				<div class="col s6 offset-s3 l12 m12">
+					<img class="responsive-img center"
+						src="assets/img/sample/Captain_America_Civil_War_poster.jpg">
+
+					<div class="hide-on-small-only pinned">
+						<ul class="section table-of-contents">
+							<li><a href="#summary">Summary</a></li>
+							<li><a href="#trailer">Trailer</a></li>
+							<li><a href="#recommendation">Recommendation</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12 l9 m9">
+				<div class="row">
+					<h3>Captain America: Civil War</h3>
+					<div class="chip">Action</div>
+					<div class="chip">Thriller</div>
+					<div class="chip">Science Fiction</div>
+				</div>
+
+				<div class="row">
+					<div class="col m8 s12">
+						<p>
+							PG-13 | 2h 27min | <i class="fa fa-star red-text"
+								aria-hidden="true"></i> 8.5/10
+						</p>
+					</div>
+					<div class="col m4 s12">
+						<a class="btn tooltipped right red lighten-1" data-position="top"
+							data-delay="50" data-tooltip="Add to watchlist"><i
+							class="fa fa-eye" aria-hidden="true"></i> Watchlist</a>
+					</div>
+				</div>
+
+				<div id="summary" class="section scrollspy">
+					<h5>Summary</h5>
+					<p>Following the events of Age of Ultron, the collective
+						governments of the world pass an act designed to regulate all
+						superhuman activity. This polarizes opinion amongst the Avengers,
+						causing two factions to side with Iron Man or Captain America,
+						which causes an epic battle between former allies.</p>
+				</div>
+
+				<div id="trailer" class="section scrollspy">
+					<h5>Trailer</h5>
+					<div class="spacer-small"></div>
+					<div class="row">
+						<div class="col s12 m6">
+							<div class="video-container">
+								<iframe width="853" height="480"
+									src="//www.youtube.com/embed/43NWzay3W4s?rel=0" frameborder="0"
+									allowfullscreen></iframe>
+							</div>
+						</div>
+
+						<div class="col s12 m6">
+							<div class="video-container">
+								<iframe width="853" height="480"
+									src="//www.youtube.com/embed/43NWzay3W4s?rel=0" frameborder="0"
+									allowfullscreen></iframe>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="recommendation" class="section scrollspy">
+					<h5>You might also like...</h5>
+					<div class="spacer-small"></div>
+					<div class="col s3">
+						<img class="responsive-img" src="assets/img/sample/deadpool.jpg">
+						<h6 class="center">Deadpool</h6>
+					</div>
+
+					<div class="col s3">
+						<img class="responsive-img" src="assets/img/sample/antman.jpg">
+						<h6 class="center">Ant-Man</h6>
+					</div>
+
+					<div class="col s3">
+						<img class="responsive-img" src="assets/img/sample/batman.jpg">
+						<h6 class="center">Batman v Superman: Dawn of Justice</h6>
+					</div>
+
+					<div class="col s12">
+						<button class="btn red lighten-1">View more</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="spacer"></div>
+	</div>
+
+	<footer class="page-footer">
+		<div class="footer-copyright">
+			<div class="container white-text">
+				© 2016 Copyright Civil War <span class="right">Made using
+					Materialize</span>
+			</div>
+		</div>
+	</footer>
+
+	<!--Import jQuery before materialize.js-->
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			vph = $(window).height() - 56;
+			$('#hero').css('height', vph);
+			$(".button-collapse").sideNav();
+
+			$(document).ready(function() {
+				$('.scrollspy').scrollSpy();
+			});
+		});
+
+		$(window).resize(function() {
+			vpw = $(window).width();
+			vph = $(window).height() - 56;
+
+			$('#hero').css('height', vph);
+		});
+	</script>
+</body>
+
+</html>
