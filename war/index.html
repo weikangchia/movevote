@@ -11,58 +11,34 @@
 <link type="text/css" rel="stylesheet"
 	href="assets/css/font-awesome.css" />
 <link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/owl.carousel.css" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/owl.theme.default.min.css" />
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<style>
-.owl-carousel .item {
-	height: 10rem;
-}
-
-@media only screen and (max-width: 600px) {
-	.item {
-		width: 150px;
-	}
-}
-
-@media only screen and (min-width: 601px) {
-	.item {
-		width: 220px;
-	}
-}
-</style>
 
 <title>MoveVote - Movie recommendation</title>
 </head>
 
 <body>
-	<div class="navbar-fixed">
-		<nav>
-			<div class="nav-wrapper container">
-				<a href="#" class="brand-logo grey-text text-lighten-5"><span
-					class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
-					data-activates="mobile-navbar" class="button-collapse"><i
-					class="material-icons">menu</i></a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a href="#showing">Now Showing</a></li>
-					<li><a href="#features">Features</a></li>
-					<li><a href="#team">Team</a></li>
-					<li><a href="#">Login</a></li>
-				</ul>
-				<ul class="side-nav" id="mobile-navbar">
-					<li><a href="#showing">Now Showing</a></li>
-					<li><a href="#features">Features</a></li>
-					<li><a href="#team">Team</a></li>
-					<li><a href="#">Login</a></li>
-				</ul>
-			</div>
-		</nav>
-	</div>
+	<nav>
+		<div class="nav-wrapper container">
+			<a href="#" class="brand-logo grey-text text-lighten-5"><span
+				class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
+				data-activates="mobile-navbar" class="button-collapse"><i
+				class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#showing">Now Showing</a></li>
+				<li><a href="#features">Features</a></li>
+				<li><a href="#team">Team</a></li>
+				<li><a href="#">Login</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a href="#showing">Now Showing</a></li>
+				<li><a href="#features">Features</a></li>
+				<li><a href="#team">Team</a></li>
+				<li><a href="#">Login</a></li>
+			</ul>
+		</div>
+	</nav>
 
 	<div id="hero">
 		<div class="container">
@@ -91,84 +67,118 @@
 		<div class="spacer"></div>
 		<div class="row center">
 			<h3 class="thin">Now Showing</h3>
-			<i class="fa fa-map-marker" aria-hidden="true"></i><span
-				class="medium"> Singapore</span>
+			<i class="material-icons">location_on</i><span class="medium">Singapore</span>
 		</div>
 		<div class="row">
-			<div class="owl-carousel">
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/antman.jpg" class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a href="" class="medium white-text">Ant-Man</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/deadpool.jpg" class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">Deadpool</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/The_Jungle_Book_(2016).jpg"
-								class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">The Jungle Book</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
+			<div class="col l4 m6 s8 offset-s2">
+				<div class="card-panel grey lighten-5 z-depth-1">
+					<div class="row valign-wrapper">
+						<div class="col s4">
 							<img src="assets/img/sample/Captain_America_Civil_War_poster.jpg"
-								class="responsive-img">
+								alt="" class="responsive-img">
 						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">Captain America Civil War</a>
-							<div class="spacer-small"></div>
+						<div class="col s8">
+							<span class="caption black-text"> Marvel's Captain America
+							</span>
 						</div>
 					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/The%20Offering.jpg"
-								class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">The Offering</a>
-							<div class="spacer-small"></div>
-						</div>
+					<div class="row" style="margin-bottom: 0px;">
+						<a class="right" href="#">Watch Now</a>
 					</div>
 				</div>
 			</div>
+
+			<div class="col l4 m6 s8 offset-s2">
+				<div class="card-panel grey lighten-5 z-depth-1">
+					<div class="row valign-wrapper">
+						<div class="col s4">
+							<img src="assets/img/sample/The_Jungle_Book_(2016).jpg" alt=""
+								class="responsive-img">
+						</div>
+						<div class="col s8">
+							<span class="caption black-text"> The Jungle Book </span>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 0px;">
+						<a class="right" href="#">Watch Now</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col l4 m6 s8 offset-s2">
+				<div class="card-panel grey lighten-5 z-depth-1">
+					<div class="row valign-wrapper">
+						<div class="col s4">
+							<img src="assets/img/sample/The_Jungle_Book_(2016).jpg" alt=""
+								class="responsive-img">
+						</div>
+						<div class="col s8">
+							<span class="caption black-text"> The Jungle Book </span>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 0px;">
+						<a class="right" href="#">Watch Now</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col l4 m6 s8 offset-s2">
+				<div class="card-panel grey lighten-5 z-depth-1">
+					<div class="row valign-wrapper">
+						<div class="col s4">
+							<img src="assets/img/sample/Captain_America_Civil_War_poster.jpg"
+								alt="" class="responsive-img">
+						</div>
+						<div class="col s8">
+							<span class="caption black-text"> Marvel's Captain America
+							</span>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 0px;">
+						<a class="right" href="#">Watch Now</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col l4 m6 s8 offset-s2">
+				<div class="card-panel grey lighten-5 z-depth-1">
+					<div class="row valign-wrapper">
+						<div class="col s4">
+							<img src="assets/img/sample/Captain_America_Civil_War_poster.jpg"
+								alt="" class="responsive-img">
+						</div>
+						<div class="col s8">
+							<span class="caption black-text"> Marvel's Captain America
+							</span>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 0px;">
+						<a class="right" href="#">Watch Now</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col l4 m6 s8 offset-s2">
+				<div class="card-panel grey lighten-5 z-depth-1">
+					<div class="row valign-wrapper">
+						<div class="col s4">
+							<img src="assets/img/sample/Captain_America_Civil_War_poster.jpg"
+								alt="" class="responsive-img">
+						</div>
+						<div class="col s8">
+							<span class="caption black-text"> Marvel's Captain America
+							</span>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 0px;">
+						<a class="right" href="#">Watch Now</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row center">
+			<button class="btn btn-large red lighten-1">View more</button>
 		</div>
 
 		<div class="spacer"></div>
@@ -233,6 +243,8 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="spacer"></div>
 		<div class="spacer"></div>
 	</div>
 
@@ -249,21 +261,11 @@
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
-	<script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			vph = $(window).height() - 56;
 			$('#hero').css('height', vph);
 			$(".button-collapse").sideNav();
-			$('.owl-carousel').owlCarousel({
-				margin : 30,
-				loop : true,
-				autoWidth : true,
-				items : 5,
-				lazyLoad : true,
-				nav : true,
-				dots : false,
-			})
 		});
 
 		$(window).resize(function() {
