@@ -38,7 +38,7 @@ We are a team of students from National University of Singapore.
 * [StackOverflow](http://stackoverflow.com/) - any questions
 
 ### Development
-* [Materialize](http://http://materializecss.com/) - a modern responsive CSS framework based on Material Design by Google
+* [Materialize](http://materializecss.com/) - a modern responsive CSS framework based on Material Design by Google
 * [The Movie Database (TMDb)](https://www.themoviedb.org/?language=en) - a popular, user editable database for movies and TV shows.
 
 
