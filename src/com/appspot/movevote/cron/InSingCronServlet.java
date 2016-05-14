@@ -33,6 +33,7 @@ public class InSingCronServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("retrieving movies...");
 		HashMap<String, InSingMovie> newMovieMap = new HashMap<String, InSingMovie>();
+
 		newMovieMap = InSingMovie.fetchFromInSing();
 
 		System.out.println("storing data");
@@ -42,5 +43,6 @@ public class InSingCronServlet extends HttpServlet {
 
 		response.setContentType("text/plain");
 		response.getWriter().println("finish");
+		response.getWriter().println(newMovieMap.size());
 	}
 }
