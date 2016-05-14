@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+	<cron>
+		<url>/cron/insing</url>
+		<description>Fetch InSing movies at every 3 hours
+		</description>
+		<schedule>every 3 hours</schedule>
+		<retry-parameters>
+			<min-backoff-seconds>120</min-backoff-seconds>
+			<max-doublings>5</max-doublings>
+		</retry-parameters>
+	</cron>
+</cronentries>
