@@ -10,4 +10,14 @@
     <servlet-name>InSingCronController</servlet-name>
     <url-pattern>/insing</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeServlet</display-name>
+    <servlet-name>HomeServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.HomeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeServlet</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
 </web-app>
