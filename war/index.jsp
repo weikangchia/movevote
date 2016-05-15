@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -18,24 +22,6 @@
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<style>
-.owl-carousel .item {
-	height: 10rem;
-}
-
-@media only screen and (max-width: 600px) {
-	.item {
-		width: 150px;
-	}
-}
-
-@media only screen and (min-width: 601px) {
-	.item {
-		width: 220px;
-	}
-}
-</style>
 
 <title>MoveVote - Movie recommendation</title>
 </head>
@@ -96,78 +82,24 @@
 		</div>
 		<div class="row">
 			<div class="owl-carousel">
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/antman.jpg" class="responsive-img">
-						</div>
+				<c:forEach items="${ movieList }" var="movie">
+					<div class="item">
+						<div class="card-panel teal row">
+							<div class="col s12">
+								<img src="<c:out
+									value="${movie.imageUrl}"></c:out>"
+									class="responsive-img">
+							</div>
 
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a href="" class="medium white-text">Ant-Man</a>
-							<div class="spacer-small"></div>
+							<div class="col s12">
+								<div class="spacer-small"></div>
+								<a href="" class="medium white-text"><c:out
+										value="${movie.title}"></c:out></a>
+								<div class="spacer-small"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/deadpool.jpg" class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">Deadpool</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/The_Jungle_Book_(2016).jpg"
-								class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">The Jungle Book</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/Captain_America_Civil_War_poster.jpg"
-								class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">Captain America Civil War</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="card-panel teal row">
-						<div class="col s12">
-							<img src="assets/img/sample/The%20Offering.jpg"
-								class="responsive-img">
-						</div>
-
-						<div class="col s12">
-							<div class="spacer-small"></div>
-							<a class="medium white-text center">The Offering</a>
-							<div class="spacer-small"></div>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 
@@ -259,7 +191,6 @@
 				margin : 30,
 				loop : true,
 				autoWidth : true,
-				items : 5,
 				lazyLoad : true,
 				nav : true,
 				dots : false,

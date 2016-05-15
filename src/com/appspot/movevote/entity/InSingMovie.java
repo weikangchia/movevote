@@ -110,12 +110,12 @@ public class InSingMovie extends Movie {
 		ArrayList<String> removeList = new ArrayList<String>();
 
 		// retrieve the current movie list stored in datastore
-		List<Entity> currList = retrieveMovieList();
+		List<Entity> currMovieEntityList = retrieveMovieListKeysOnly();
 
 		// compare the current movie list with the movie list fetched from
 		// InSing
 		// and add any difference into the removeList
-		for (Entity movieEntity : currList) {
+		for (Entity movieEntity : currMovieEntityList) {
 			String movieKey = movieEntity.getKey().getName();
 
 			if (!movieMap.containsKey(movieKey)) {
@@ -138,7 +138,7 @@ public class InSingMovie extends Movie {
 		}
 
 		// debug purpose
-		System.out.println("Curr size: " + currList.size());
+		System.out.println("Curr size: " + currMovieEntityList.size());
 		System.out.println("New size: " + movieMap.size());
 		System.out.println("Remove size: " + removeList.size());
 
@@ -146,19 +146,47 @@ public class InSingMovie extends Movie {
 	}
 
 	/**
-	 * Retrieve InSing movies from the datastore [InSing_Movie].
+	 * Retrieve InSing movies keys only from the datastore [InSing_Movie].
 	 * 
 	 * @param nothing
 	 * @return a list of Entity from the datastore [InSing_Movie]
 	 */
-	public static List<Entity> retrieveMovieList() {
+	public static List<Entity> retrieveMovieListKeysOnly() {
 		DatastoreService dataStore = DatastoreServiceFactory
 				.getDatastoreService();
 
 		Query q = new Query("InSing_Movie").setKeysOnly();
 		PreparedQuery pq = dataStore.prepare(q);
 
-		List<Entity> movieList = pq.asList(FetchOptions.Builder.withDefaults());
+		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder
+				.withDefaults());
+
+		return movieEntityList;
+	}
+
+	/**
+	 * Retrieve InSing movies from the datastore [InSing_Movie] with title
+	 * sorted in ascending order.
+	 * 
+	 * @param nothing
+	 * @return a arraylist of InSing movies from the datastore [InSing_Movie]
+	 */
+	public static ArrayList<InSingMovie> retrieveMovieList() {
+		DatastoreService dataStore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query q = new Query("InSing_Movie").addSort("title");
+		PreparedQuery pq = dataStore.prepare(q);
+
+		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder
+				.withDefaults());
+
+		ArrayList<InSingMovie> movieList = new ArrayList<InSingMovie>();
+		for (Entity movieEntity : movieEntityList) {
+			movieList.add(new InSingMovie(movieEntity.getKey().getName(),
+					movieEntity.getProperty("title").toString(), movieEntity
+							.getProperty("imageUrl").toString()));
+		}
 
 		return movieList;
 	}
