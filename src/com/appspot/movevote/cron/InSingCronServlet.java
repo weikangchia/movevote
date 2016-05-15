@@ -2,6 +2,7 @@ package com.appspot.movevote.cron;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,8 @@ import com.appspot.movevote.entity.InSingMovie;
  */
 public class InSingCronServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(InSingCronServlet.class
+			.getName());
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -31,18 +34,16 @@ public class InSingCronServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("retrieving movies...");
+		log.info("Starting InSing cron job...");
 		HashMap<String, InSingMovie> newMovieMap = new HashMap<String, InSingMovie>();
 
 		newMovieMap = InSingMovie.fetchFromInSing();
 
-		System.out.println("storing data");
 		InSingMovie.storeMovie(newMovieMap);
 
-		System.out.println("finish");
+		log.info("InSing cron job completed.");
 
 		response.setContentType("text/plain");
-		response.getWriter().println("finish");
-		response.getWriter().println(newMovieMap.size());
+		response.getWriter().println("Completed.");
 	}
 }

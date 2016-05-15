@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Response;
@@ -20,6 +21,9 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
 public class InSingMovie extends Movie {
+	private static final Logger log = Logger.getLogger(InSingMovie.class
+			.getName());
+
 	public InSingMovie(String id) {
 		super(id);
 	}
@@ -51,6 +55,9 @@ public class InSingMovie extends Movie {
 			Response mainResponse = Jsoup.connect(
 					Constant.INSING_HOSTNAME + "movies/").execute();
 			if (mainResponse.statusCode() == Internet.SUCCESS) {
+				log.info("Connected successfully to "
+						+ Constant.INSING_HOSTNAME + "movies/");
+
 				Document doc = mainResponse.parse();
 				Elements movieListElements = doc.select("ul[class^=movie-id]")
 						.select("li");
@@ -70,8 +77,6 @@ public class InSingMovie extends Movie {
 									.select("figure[class^=thumbnail")
 									.select("a").select("img").first();
 
-							System.out.println(movieImageElement.attr("src"));
-
 							movieMap.put(
 									movieElement.attr("data-value"),
 									new InSingMovie(movieElement
@@ -82,11 +87,12 @@ public class InSingMovie extends Movie {
 					}
 				}
 			} else {
-				System.out.println("unable to connect to "
-						+ Constant.INSING_HOSTNAME);
+				log.warning("Unable to connect to " + Constant.INSING_HOSTNAME
+						+ "movies/");
 			}
 		} catch (Exception ex) {
-			System.out.println("unable to parse data");
+			log.warning("Unable to parse data from " + Constant.INSING_HOSTNAME
+					+ "movies/");
 		}
 		return movieMap;
 	}
@@ -135,6 +141,8 @@ public class InSingMovie extends Movie {
 		System.out.println("Curr size: " + currList.size());
 		System.out.println("New size: " + movieMap.size());
 		System.out.println("Remove size: " + removeList.size());
+
+		log.info(movieMap.size() + " new movies are stored into the datastore.");
 	}
 
 	/**
