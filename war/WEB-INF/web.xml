@@ -9,10 +9,24 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 			<web-resource-name>cron</web-resource-name>
 			<url-pattern>/cron/*</url-pattern>
 		</web-resource-collection>
+		<web-resource-collection>
+			<web-resource-name>secret</web-resource-name>
+			<url-pattern>/assets/secret/*</url-pattern>
+		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>
 		</auth-constraint>
 	</security-constraint>
+	<servlet>
+		<description></description>
+		<display-name>GitKitWidgetServlet</display-name>
+		<servlet-name>GitKitWidgetServlet</servlet-name>
+		<servlet-class>com.appspot.movevote.controller.GitKitWidgetServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GitKitWidgetServlet</servlet-name>
+		<url-pattern>/gitkit</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<description></description>
 		<display-name>InSingCronServlet</display-name>

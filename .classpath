@@ -6,5 +6,12 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsoup-1.9.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gitkitclient-1.2.7.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/json-20160212.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jsontoken-1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.4.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

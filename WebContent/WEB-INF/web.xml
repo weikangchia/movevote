@@ -20,4 +20,14 @@
     <servlet-name>HomeServlet</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GitKitWidgetServlet</display-name>
+    <servlet-name>GitKitWidgetServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.GitKitWidgetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GitKitWidgetServlet</servlet-name>
+    <url-pattern>/gitkit</url-pattern>
+  </servlet-mapping>
 </web-app>
