@@ -1,7 +1,7 @@
 # MoveVote
 Orbital 2016
 
-MoveVote is a web app that can predict and recommend movies that you like. This is definitely very useful if you are planning to watch a movies with a group of friends or with your loved ones.
+MoveVote is a web app that can predict and recommend movies that you like. This is definitely very useful if you are planning to watch movies with a group of friends or with your loved ones.
 
 ## Team
 We are a team of students from National University of Singapore.
