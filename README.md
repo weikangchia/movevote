@@ -67,10 +67,12 @@ We are a team of students from National University of Singapore.
 * [Materialize](http://materializecss.com/) - a modern responsive CSS framework based on Material Design by Google
 * [The Movie Database (TMDb)](https://www.themoviedb.org/?language=en) - a popular, user editable database for movies and TV shows.
 * [Google App Engine](https://appengine.google.com/) - a platform for building scalable web applications and mobile backends.
+* [jQuery](https://jquery.com/) - A write less, do more, JavaScript library.
+* [Google Identity Toolkit](https://developers.google.com/identity/toolkit/) - a robust, more secure authentication system that helps you do sign-in the right way, and can grow with your app.
 
 ## Website
 Link: [https://movevote.appspot.com](https://movevote.appspot.com)
 
 ## Video
-Ignition @Hanger: [YouTube Link](https://youtu.be/hK8Z0QLRlbU?t=30m45s)
-Intro Video: [YouTube Link](https://www.youtube.com/watch?v=HZTFhQe64RE)
+* Ignition @Hanger: [YouTube Link](https://youtu.be/hK8Z0QLRlbU?t=30m45s)
+* Intro Video: [YouTube Link](https://www.youtube.com/watch?v=HZTFhQe64RE)
