@@ -69,6 +69,7 @@ We are a team of students from National University of Singapore.
 * [Google App Engine](https://appengine.google.com/) - a platform for building scalable web applications and mobile backends.
 * [jQuery](https://jquery.com/) - A write less, do more, JavaScript library.
 * [Google Identity Toolkit](https://developers.google.com/identity/toolkit/) - a robust, more secure authentication system that helps you do sign-in the right way, and can grow with your app.
+* [Google cron.xml Reference](https://cloud.google.com/appengine/docs/java/config/cronref) - provides details on the options for cron job in Google App Engine
 
 ## Website
 Link: [https://movevote.appspot.com](https://movevote.appspot.com)
