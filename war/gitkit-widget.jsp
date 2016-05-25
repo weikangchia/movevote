@@ -23,7 +23,7 @@
 <script type="text/javascript">
 	function load() {
 		var config = {
-			widgetUrl : 'http://localhost:8888/gitkit',
+			widgetUrl : '/gitkit',
 			apiKey : 'AIzaSyDtqW6zARF6LhKFHci_mST7x5yCNgfqRSQ',
 			signInSuccessUrl : '/',
 			idps : [ "password", "google", "facebook" ],
