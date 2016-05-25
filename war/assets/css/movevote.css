@@ -19,6 +19,10 @@ main {
 	line-height: 1.5em;
 }
 
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
 .bold {
 	font-weight: bold;
 }
@@ -64,6 +68,14 @@ main {
 .collapsible-body {
 	margin: 0;
 	padding: 1rem;
+}
+
+.morecontent span {
+	display: none;
+}
+
+.morelink {
+	display: block;
 }
 
 @media only screen and (max-width: 600px) {
