@@ -16,34 +16,29 @@
 <link type="text/css" rel="stylesheet"
 	href="assets/css/font-awesome.css" />
 <link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
-<link type="text/css" rel="stylesheet" href="assets/css/bars-movie.css" />
-
-<style>
-.morecontent span {
-	display: none;
-}
-
-.morelink {
-	display: block;
-}
-</style>
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-8">
 
 <title>MoveVote - Movie recommendation</title>
 </head>
 
 <body>
-	<ul id="dropdown1" class="dropdown-content">
-		<li><a href="#!">Profile</a></li>
-		<li><a href="#!">Logout</a></li>
-	</ul>
-	<ul id="dropdown2" class="dropdown-content">
-		<li><a href="#!">Profile</a></li>
-		<li><a href="#!">Logout</a></li>
-	</ul>
+	<c:if test="${isLoggedIn}">
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a
+				href="${pageContext.request.contextPath}/user-profile.html">Profile</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+		<ul id="dropdown2" class="dropdown-content">
+			<li><a
+				href="${pageContext.request.contextPath}/user-profile.html">Profile</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+	</c:if>
+
 	<nav>
 		<div class="nav-wrapper container">
 			<a href="${pageContext.request.contextPath}/home"
@@ -58,19 +53,41 @@
 						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<li><a href="#"><i class="material-icons tooltipped"
 						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
-				<li><a class="dropdown-button" href="#!"
-					data-activates="dropdown1"><img class="circle profile_logo"
-						align="middle" src="assets/img/profile/wei_kang.jpg"> Wei
-						Kang<i class="material-icons right">arrow_drop_down</i></a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown1"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
 				<li><a id="toggle-search" href="#">Search</a></li>
 				<li><a href="#">Discover</a></li>
 				<li><a href="#">Group</a></li>
-				<li><a class="dropdown-button" href="#!"
-					data-activates="dropdown2"><img class="circle profile_logo"
-						align="middle" src="assets/img/profile/wei_kang.jpg"> Wei
-						Kang<i class="material-icons right">arrow_drop_down</i></a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown2"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</nav>
@@ -310,9 +327,7 @@
 		src="assets/js/jquery.star.rating.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$(".button-collapse").sideNav({
-				closeOnClick : true
-			});
+			$(".button-collapse").sideNav({});
 
 			$('ul.tabs').tabs();
 

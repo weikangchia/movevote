@@ -1,6 +1,7 @@
 package com.appspot.movevote.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.TMDBMovie;
+import com.appspot.movevote.entity.User;
+import com.appspot.movevote.helper.GitkitHelper;
+import com.google.identitytoolkit.GitkitClient;
+import com.google.identitytoolkit.GitkitClientException;
+import com.google.identitytoolkit.GitkitServerException;
+import com.google.identitytoolkit.GitkitUser;
 
 /**
  * Servlet implementation class MovieServlet
@@ -51,6 +58,23 @@ public class MovieServlet extends HttpServlet {
 			// not one of the provider
 			response.sendRedirect("/home");
 		}
+
+		// check if user is login
+		boolean isLoggedIn = false;
+		GitkitHelper gitkitHelper = new GitkitHelper(this);
+		GitkitUser gitkitUser = gitkitHelper.validateLogin((HttpServletRequest) request);
+
+		if (gitkitUser == null) {
+			response.sendRedirect(request.getContextPath() + Constant.LOGIN_PATH);
+		} else {
+			isLoggedIn = true;
+			User userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
+					gitkitUser.getPhotoUrl(), gitkitUser.getEmail());
+
+			request.setAttribute("userInfo", userInfo);
+		}
+
+		request.setAttribute("isLoggedIn", isLoggedIn);
 
 		getServletContext().getRequestDispatcher("/movie.jsp").forward(request, response);
 	}

@@ -23,40 +23,77 @@
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-.icon-block .material-icons {
-	font-size: inherit;
-}
-</style>
-
 <title>MoveVote - Movie recommendation</title>
 </head>
 
 <body>
-	<div class="navbar-fixed">
-		<nav>
-			<div class="nav-wrapper container">
-				<a href="#" class="brand-logo grey-text text-lighten-5"><span
-					class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
-					data-activates="mobile-navbar" class="button-collapse"><i
-					class="material-icons">menu</i></a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a href="#showing">Now Showing</a></li>
-					<li><a href="#features">Features</a></li>
-					<li><a href="#team">Team</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/gitkit?mode=select">Login</a></li>
-				</ul>
-				<ul class="side-nav" id="mobile-navbar">
-					<li><a href="#showing">Now Showing</a></li>
-					<li><a href="#features">Features</a></li>
-					<li><a href="#team">Team</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/gitkit?mode=select">Login</a></li>
-				</ul>
-			</div>
-		</nav>
-	</div>
+	<c:if test="${isLoggedIn}">
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a
+				href="${pageContext.request.contextPath}/user-profile.html">Profile</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+		<ul id="dropdown2" class="dropdown-content">
+			<li><a
+				href="${pageContext.request.contextPath}/user-profile.html">Profile</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+	</c:if>
+
+	<nav>
+		<div class="nav-wrapper container">
+			<a href="${pageContext.request.contextPath}/home"
+				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+				class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a id="toggle-search" href="#"><i
+						class="material-icons tooltipped" data-position="bottom"
+						data-delay="50" data-tooltip="search">search</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown1"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a id="toggle-search" href="#">Search</a></li>
+				<li><a href="#">Discover</a></li>
+				<li><a href="#">Group</a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown2"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</nav>
 
 	<div id="hero">
 		<div class="container">
@@ -83,7 +120,6 @@
 	<div class="divider"></div>
 
 	<div class="container">
-		<span id="showing" class="scrollspy"></span>
 		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Now Showing</h3>
@@ -120,7 +156,6 @@
 		<div class="spacer-thick"></div>
 		<div class="divider"></div>
 
-		<span id="features" class="scrollspy"></span>
 		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Features</h3>
@@ -166,12 +201,11 @@
 		<div class="spacer-thick"></div>
 		<div class="divider"></div>
 
-		<span id="team" class="scrollspy"></span>
 		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Meet the Team</h3>
-			<p class="caption-normal thin">We are a team of students from National
-				University of Singapore.</p>
+			<p class="caption-normal thin">We are a team of students from
+				National University of Singapore.</p>
 		</div>
 		<div class="row">
 			<div class="col s12 m6 center">
@@ -222,7 +256,12 @@
 	<script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$(".button-collapse").sideNav();
+			$(".button-collapse").sideNav({});
+			$(".dropdown-button").dropdown({
+				constrain_width : false,
+				alignment : 'right',
+				belowOrigin : true,
+			});
 			$('.owl-carousel').owlCarousel({
 				margin : 30,
 				loop : true,
