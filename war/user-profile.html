@@ -27,38 +27,36 @@
 		<li><a href="#!">Profile</a></li>
 		<li><a href="#!">Logout</a></li>
 	</ul>
-	<div class="navbar-fixed">
-		<nav>
-			<div class="nav-wrapper container">
-				<a href="${pageContext.request.contextPath}/home"
-					class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-					class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-					class="button-collapse"><i class="material-icons">menu</i></a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a id="toggle-search" href="#"><i
-							class="material-icons tooltipped" data-position="bottom"
-							data-delay="50" data-tooltip="search">search</i></a></li>
-					<li><a href="#"><i class="material-icons tooltipped"
-							data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-					<li><a href="#"><i class="material-icons tooltipped"
-							data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
-					<li><a class="dropdown-button" href="#!"
-						data-activates="dropdown1"><img class="circle profile_logo"
-							align="middle" src="assets/img/profile/wei_kang.jpg"> Wei
-							Kang<i class="material-icons right">arrow_drop_down</i></a></li>
-				</ul>
-				<ul class="side-nav" id="mobile-navbar">
-					<li><a id="toggle-search" href="#">Search</a></li>
-					<li><a href="#">Discover</a></li>
-					<li><a href="#">Group</a></li>
-					<li><a class="dropdown-button" href="#!"
-						data-activates="dropdown2"><img class="circle profile_logo"
-							align="middle" src="assets/img/profile/wei_kang.jpg"> Wei
-							Kang<i class="material-icons right">arrow_drop_down</i></a></li>
-				</ul>
-			</div>
-		</nav>
-	</div>
+	<nav>
+		<div class="nav-wrapper container">
+			<a href="${pageContext.request.contextPath}/home"
+				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+				class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a id="toggle-search" href="#"><i
+						class="material-icons tooltipped" data-position="bottom"
+						data-delay="50" data-tooltip="search">search</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+				<li><a class="dropdown-button" href="#!"
+					data-activates="dropdown1"><img class="circle profile_logo"
+						align="middle" src="assets/img/profile/wei_kang.jpg"> Wei
+						Kang<i class="material-icons right">arrow_drop_down</i></a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a id="toggle-search" href="#">Search</a></li>
+				<li><a href="#">Discover</a></li>
+				<li><a href="#">Group</a></li>
+				<li><a class="dropdown-button" href="#!"
+					data-activates="dropdown2"><img class="circle profile_logo"
+						align="middle" src="assets/img/profile/wei_kang.jpg"> Wei
+						Kang<i class="material-icons right">arrow_drop_down</i></a></li>
+			</ul>
+		</div>
+	</nav>
 
 	<div class="red lighten-2">
 		<div class="container">
@@ -139,7 +137,12 @@
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$(".button-collapse").sideNav();
+			$(".button-collapse").sideNav({});
+			$(".dropdown-button").dropdown({
+				constrain_width : false,
+				alignment : 'right',
+				belowOrigin : true,
+			});
 		});
 	</script>
 </body>
