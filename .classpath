@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (1)"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
@@ -13,5 +13,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-19.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-2.6.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-annotations-2.7.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-core-2.7.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-databind-2.7.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang3-3.4.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
