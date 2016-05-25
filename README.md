@@ -15,20 +15,23 @@ MoveVote will be built and hosted on Google App Engine, a platform for building 
 * Personalized Movie Recommendation - Sign up for MoveVote and by rating some movies, we can help you get more movies that you and/or your group of friends will like.
 * Latest Movie Showing Time - Not sure when and where your latest movie will be showing today and tomorrow? MoveVote can help you get all these information for you.
 * Modern Responsive Design - To provide our users an optimal viewing and interaction experience, we have adopted a modern responsive framework based on Material Design by Google.
-* Support multiple login options - Email, Google and Facebook
+* Support multiple login options - Email, Google and Facebook (will implement more if time permits)
 
 ## Timesheet
-| Name | Description | Hours |
-| --- | --- | --- |
-| Team | Ignition Day 1 | 2 hours |
-| Team | Project planning and research | 5 hours |
-| Team | - Create accounts<br>- Install IDE and tools on our workstations | 3 hours |
-| Wei Kang | Design prototype | 8 hours |
-| Wei Kang | Explore Google Identity Toolkit | 3 hours |
-| Wei Kang | Explore TMDB api | 2 hours |
+| Wei Kang | David | Description |
+| :---: | :---: | --- |
+| 2 | 2 | Ignition Day 1 |
+| 8 | 8 | Project brainstorm and planning |
+| 3 | 3 | - Create accounts<br>- Install IDE and tools on our workstations |
+| 23 | - | Design prototype |
+| 3 | - | Explore Single Sign-On (SSO) platform |
+| 24 | - | Implement Google Identity Toolkit |
+| 2 | - | Explore movies database |
+| 2 | - | Explore TMDB movie database |
+| 2 | - | Prepare introduction video to include in milestone 1 |
 
-David: 10 hours spent so far<br>
-Wei Kang: 23 hours spent so far
+David: 13 hours spent so far<br>
+Wei Kang: 69 hours spent so far
 
 ## Team
 We are a team of students from National University of Singapore.
@@ -47,10 +50,11 @@ We are a team of students from National University of Singapore.
 ## Milestones
 ### Milestone 1
 - [X] Create accounts and install IDE and tools
-- [X] Design prototype
+- [X] Design prototype (complete most of the prototype)
+- [X] Implement Google Identity Toolkit (able to login and register)
 
 ### Milestone 2
-- [ ] Implement Google Identity Toolkit
+- [ ] Implement Google Identity Toolkit (send email for verification and change password)
 - [ ] Design recommendation engine
 - [ ] Implement recommendation engine
 
@@ -67,9 +71,17 @@ We are a team of students from National University of Singapore.
 * [Materialize](http://materializecss.com/) - a modern responsive CSS framework based on Material Design by Google
 * [The Movie Database (TMDb)](https://www.themoviedb.org/?language=en) - a popular, user editable database for movies and TV shows.
 * [Google App Engine](https://appengine.google.com/) - a platform for building scalable web applications and mobile backends.
-* [jQuery](https://jquery.com/) - A write less, do more, JavaScript library.
+* [jQuery](https://jquery.com/) - a write less, do more, JavaScript library.
 * [Google Identity Toolkit](https://developers.google.com/identity/toolkit/) - a robust, more secure authentication system that helps you do sign-in the right way, and can grow with your app.
+* [Google Identity Toolkit Java Client](https://github.com/google/identity-toolkit-java-client) - a very good Java library for google Idenity Toolkit services.
 * [Google cron.xml Reference](https://cloud.google.com/appengine/docs/java/config/cronref) - provides details on the options for cron job in Google App Engine
+* [Material Palette](http://www.materialpalette.com/) - to get some reference to generate some colors
+
+### Software used
+* PowerPoint - to prepare slides
+* Adobe After Effects CS5 - to render videos
+* Adobe Photoshop CS5 - to create some wonderful images
+* Eclipse - IDE
 
 ## Website
 Link: [https://movevote.appspot.com](https://movevote.appspot.com)
