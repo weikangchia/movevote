@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,8 +22,10 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
 public class InSingMovie extends Movie {
-	private static final Logger log = Logger.getLogger(InSingMovie.class
-			.getName());
+	private static final Logger log = Logger
+			.getLogger(InSingMovie.class.getName());
+
+	private String tmdbId;
 
 	public InSingMovie(String id) {
 		super(id);
@@ -30,6 +33,21 @@ public class InSingMovie extends Movie {
 
 	public InSingMovie(String id, String title, String imageUrl) {
 		super(id, title, imageUrl);
+		this.setTmdbId("");
+	}
+
+	public InSingMovie(String id, String title, String imageUrl,
+			String tmdbID) {
+		super(id, title, imageUrl);
+		this.setTmdbId(tmdbID);
+	}
+
+	public String getTmdbId() {
+		return tmdbId;
+	}
+
+	public void setTmdbId(String tmdbId) {
+		this.tmdbId = tmdbId;
 	}
 
 	public boolean equals(Object obj) {
@@ -52,37 +70,49 @@ public class InSingMovie extends Movie {
 		HashMap<String, InSingMovie> movieMap = new HashMap<String, InSingMovie>();
 
 		try {
-			Response mainResponse = Jsoup.connect(
-					Constant.INSING_HOSTNAME + "movies/").execute();
+			Response mainResponse = Jsoup
+					.connect(Constant.INSING_HOSTNAME + "movies/").execute();
 			if (mainResponse.statusCode() == Internet.SUCCESS) {
-				log.info("Connected successfully to "
-						+ Constant.INSING_HOSTNAME + "movies/");
+				log.info("Connected successfully to " + Constant.INSING_HOSTNAME
+						+ "movies/");
 
 				Document doc = mainResponse.parse();
 				Elements movieListElements = doc.select("ul[class^=movie-id]")
 						.select("li");
 
 				for (Element movieElement : movieListElements) {
+					String inSingId = movieElement.attr("data-value");
 					if (!movieElement.html().equals("Search for a movie")) {
-						Response detailResponse = Jsoup.connect(
-								Constant.INSING_HOSTNAME + "movies/"
-										+ movieElement.attr("data-slug")
-										+ "/id-"
-										+ movieElement.attr("data-value")
-										+ "/showtimes").execute();
+						try {
+							Response detailResponse = Jsoup.connect(
+									Constant.INSING_HOSTNAME + "movies/"
+											+ movieElement.attr("data-slug")
+											+ "/id-" + inSingId + "/showtimes")
+									.execute();
 
-						if (detailResponse.statusCode() == Internet.SUCCESS) {
-							Document doc2 = detailResponse.parse();
-							Element movieImageElement = doc2
-									.select("figure[class^=thumbnail")
-									.select("a").select("img").first();
+							if (detailResponse
+									.statusCode() == Internet.SUCCESS) {
+								Document doc2 = detailResponse.parse();
+								Element movieImageElement = doc2
+										.select("figure[class^=thumbnail")
+										.select("a").select("img").first();
 
-							movieMap.put(
-									movieElement.attr("data-value"),
-									new InSingMovie(movieElement
-											.attr("data-value"), movieElement
-											.html(), movieImageElement
-											.attr("src")));
+								String tmdbId = TMDBMovie.retrieveTMDBIdByQuery(
+										movieElement.html());
+								String title = movieElement.html();
+								String imageUrl = movieImageElement.attr("src");
+
+								if (tmdbId != null) {
+									movieMap.put(inSingId, new InSingMovie(
+											inSingId, title, imageUrl, tmdbId));
+								} else {
+									movieMap.put(inSingId, new InSingMovie(
+											inSingId, title, imageUrl));
+								}
+							}
+						} catch (Exception ex2) {
+							log.warning("Unable to retrieve inSing movie id: "
+									+ inSingId);
 						}
 					}
 				}
@@ -113,8 +143,7 @@ public class InSingMovie extends Movie {
 		List<Entity> currMovieEntityList = retrieveMovieListKeysOnly();
 
 		// compare the current movie list with the movie list fetched from
-		// InSing
-		// and add any difference into the removeList
+		// InSing and add any difference into the removeList
 		for (Entity movieEntity : currMovieEntityList) {
 			String movieKey = movieEntity.getKey().getName();
 
@@ -132,8 +161,10 @@ public class InSingMovie extends Movie {
 		for (Map.Entry<String, InSingMovie> entry : movieMap.entrySet()) {
 			InSingMovie newMovie = entry.getValue();
 			Entity movieEntity = new Entity("InSing_Movie", newMovie.getId());
-			movieEntity.setProperty("title", newMovie.getTitle());
+			movieEntity.setProperty("title",
+					StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
 			movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
+			movieEntity.setProperty("tmdbId", newMovie.getTmdbId());
 			dataStore.put(movieEntity);
 		}
 
@@ -142,7 +173,8 @@ public class InSingMovie extends Movie {
 		System.out.println("New size: " + movieMap.size());
 		System.out.println("Remove size: " + removeList.size());
 
-		log.info(movieMap.size() + " new movies are stored into the datastore.");
+		log.info(
+				movieMap.size() + " new movies are stored into the datastore.");
 	}
 
 	/**
@@ -158,8 +190,8 @@ public class InSingMovie extends Movie {
 		Query q = new Query("InSing_Movie").setKeysOnly();
 		PreparedQuery pq = dataStore.prepare(q);
 
-		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder
-				.withDefaults());
+		List<Entity> movieEntityList = pq
+				.asList(FetchOptions.Builder.withDefaults());
 
 		return movieEntityList;
 	}
@@ -178,14 +210,15 @@ public class InSingMovie extends Movie {
 		Query q = new Query("InSing_Movie").addSort("title");
 		PreparedQuery pq = dataStore.prepare(q);
 
-		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder
-				.withDefaults());
+		List<Entity> movieEntityList = pq
+				.asList(FetchOptions.Builder.withDefaults());
 
 		ArrayList<InSingMovie> movieList = new ArrayList<InSingMovie>();
 		for (Entity movieEntity : movieEntityList) {
 			movieList.add(new InSingMovie(movieEntity.getKey().getName(),
-					movieEntity.getProperty("title").toString(), movieEntity
-							.getProperty("imageUrl").toString()));
+					movieEntity.getProperty("title").toString(),
+					movieEntity.getProperty("imageUrl").toString(),
+					movieEntity.getProperty("tmdbId").toString()));
 		}
 
 		return movieList;

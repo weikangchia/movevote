@@ -10,9 +10,9 @@ public class Movie {
 	}
 
 	public Movie(String id, String title, String imageUrl) {
-		this.title = title;
-		this.id = id;
-		this.imageUrl = imageUrl;
+		setTitle(title);
+		setId(id);
+		setImageUrl(imageUrl);
 	}
 
 	public String getImageUrl() {
