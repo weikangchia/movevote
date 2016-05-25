@@ -23,6 +23,12 @@
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<style>
+.icon-block .material-icons {
+	font-size: inherit;
+}
+</style>
+
 <title>MoveVote - Movie recommendation</title>
 </head>
 
@@ -38,13 +44,15 @@
 					<li><a href="#showing">Now Showing</a></li>
 					<li><a href="#features">Features</a></li>
 					<li><a href="#team">Team</a></li>
-					<li><a href="#">Login</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/gitkit?mode=select">Login</a></li>
 				</ul>
 				<ul class="side-nav" id="mobile-navbar">
 					<li><a href="#showing">Now Showing</a></li>
 					<li><a href="#features">Features</a></li>
 					<li><a href="#team">Team</a></li>
-					<li><a href="#">Login</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/gitkit?mode=select">Login</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -52,6 +60,7 @@
 
 	<div id="hero">
 		<div class="container">
+			<div class="spacer-thick"></div>
 			<div class="row">
 				<div class="col s12 center">
 					<h1 id="hero-title" class="grey-text text-darken-5">
@@ -60,12 +69,14 @@
 					<h3 class="thin">Recommend movie to you and your friends</h3>
 				</div>
 			</div>
-			<div class="spacer"></div>
+			<div class="spacer-normal"></div>
 			<div class="row">
 				<div class="col s12 center">
 					<a href="#" class="btn btn-large red lighten-1">Get Started</a>
 				</div>
 			</div>
+			<div class="spacer-thick"></div>
+			<div class="spacer-thick"></div>
 		</div>
 	</div>
 
@@ -73,16 +84,15 @@
 
 	<div class="container">
 		<span id="showing" class="scrollspy"></span>
-		<div class="spacer"></div>
-		<div class="spacer"></div>
+		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Now Showing</h3>
 			<i class="fa fa-map-marker" aria-hidden="true"></i><span
-				class="medium"> Singapore</span>
+				class="caption-normal thin"> Singapore</span>
 		</div>
 		<div class="row">
 			<div class="owl-carousel">
-				<c:forEach items="${ movieList }" var="movie">
+				<c:forEach items="${movieList}" var="movie">
 					<div class="item">
 						<div class="card-panel teal row">
 							<div class="col s12">
@@ -92,10 +102,14 @@
 							</div>
 
 							<div class="col s12">
-								<div class="spacer-small"></div>
-								<a href="" class="medium white-text"><c:out
+								<div class="spacer-thin"></div>
+								<a
+									href="/movie?is_id=<c:out
+									value="${movie.id}"></c:out>&tmdb_id=<c:out
+									value="${movie.tmdbId}"></c:out>&provider=is"
+									class="medium white-text truncate"><c:out
 										value="${movie.title}"></c:out></a>
-								<div class="spacer-small"></div>
+								<div class="spacer-thin"></div>
 							</div>
 						</div>
 					</div>
@@ -103,39 +117,62 @@
 			</div>
 		</div>
 
-		<div class="spacer"></div>
+		<div class="spacer-thick"></div>
+		<div class="divider"></div>
 
 		<span id="features" class="scrollspy"></span>
-		<div class="spacer"></div>
-		<div class="spacer"></div>
+		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Features</h3>
 		</div>
 		<div class="row">
-			<div class="col s12 l4">
-				<h5 class="center thin">Individual</h5>
+			<div class="icon-block">
+				<div class="col s10 m4 offset-s1">
+					<h1 class="center red-text text-lighten-2">
+						<i class="material-icons">local_movies</i>
+					</h1>
+					<h5 class="center thin">Personalized Movie Recommendations</h5>
+					<p class="center">Sign up for MoveVote and by rating some
+						movies, we can help you get more movies that you and/or your group
+						friends will like.</p>
+				</div>
 			</div>
 
-			<div class="col s12 l4">
-				<h5 class="center thin">Friends</h5>
+			<div class="icon-block">
+				<div class="col s10 m4 offset-s1">
+					<h1 class="center red-text text-lighten-2">
+						<i class="material-icons">access_time</i>
+					</h1>
+					<h5 class="center thin">Latest Movie Showing Time</h5>
+					<p class="center">Not sure when and where your latest movie
+						will be showing today and tomorrow? MoveVote can help you get all
+						these information for you.</p>
+				</div>
 			</div>
 
-			<div class="col s12 l4">
-				<h5 class="center thin">Couple</h5>
+			<div class="icon-block">
+				<div class="col s10 m4 offset-s1">
+					<h1 class="center red-text text-lighten-2">
+						<i class="material-icons">phonelink</i>
+					</h1>
+					<h5 class="center thin">Modern Responsive Design</h5>
+					<p class="center">To provide our user an optimal viewing and
+						interaction experience, we have adopt a modern responsive
+						framework based on Material Design by Google.</p>
+				</div>
 			</div>
 		</div>
 
-		<div class="spacer"></div>
+		<div class="spacer-thick"></div>
+		<div class="divider"></div>
 
 		<span id="team" class="scrollspy"></span>
-		<div class="spacer"></div>
-		<div class="spacer"></div>
+		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Meet the Team</h3>
-			<p class="caption">We are a team of students from National
+			<p class="caption-normal thin">We are a team of students from National
 				University of Singapore.</p>
 		</div>
-		<div class="spacer"></div>
 		<div class="row">
 			<div class="col s12 m6 center">
 				<div class="col s6 offset-s3">
@@ -165,8 +202,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="spacer"></div>
 	</div>
+
+	<div class="spacer-thick"></div>
 
 	<footer class="page-footer">
 		<div class="footer-copyright">
@@ -184,8 +222,6 @@
 	<script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			vph = $(window).height() - 56;
-			$('#hero').css('height', vph);
 			$(".button-collapse").sideNav();
 			$('.owl-carousel').owlCarousel({
 				margin : 30,
@@ -195,13 +231,6 @@
 				nav : true,
 				dots : false,
 			})
-		});
-
-		$(window).resize(function() {
-			vpw = $(window).width();
-			vph = $(window).height() - 56;
-
-			$('#hero').css('height', vph);
 		});
 	</script>
 </body>
