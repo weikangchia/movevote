@@ -1,6 +1,5 @@
 package com.appspot.movevote.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -49,7 +48,7 @@ public class HomeServlet extends HttpServlet {
 					.setGoogleClientId(
 							"477425429910-r99e3tmjtvst1qsfp0ttk9gcs9ffbq68.apps.googleusercontent.com")
 					.setProjectId("movevote")
-					.setWidgetUrl(Constant.PUB_HOSTNAME + "gitkit")
+					.setWidgetUrl(Constant.DEV_HOSTNAME + "gitkit")
 					.setServiceAccountEmail("weikangchia@gmail.com")
 					.setCookieName("gtoken")
 					.setKeyStream(
@@ -67,6 +66,7 @@ public class HomeServlet extends HttpServlet {
 			} else {
 				System.out.println("you are not login");
 			}
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 		} catch (GitkitClientException | JSONException e) {
 			e.printStackTrace();
