@@ -28,7 +28,7 @@
 			signInSuccessUrl : '/',
 			idps : [ "password", "google", "facebook" ],
 			idpButtons : 1,
-			oobActionUrl : '/',
+			oobActionUrl : '/gitkit',
 			siteName : 'MoveVote',
 		};
 		// The HTTP POST body should be escaped by the server to prevent XSS
