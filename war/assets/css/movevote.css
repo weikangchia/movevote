@@ -1,3 +1,13 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
 #hero {
 	background-position: center center;
 	background-size: cover;
@@ -17,35 +27,71 @@
 	font-weight: 200;
 }
 
-.caption {
+.caption-normal.thin {
 	font-size: 1.25rem;
 	font-weight: 300;
-	margin-bottom: 30px;
 }
 
-.spacer {
-	height: 2rem;
-	width: 100%;
+.caption-large.bold {
+	font-size: 2.25rem;
+	font-weight: 400;
 }
 
 .item {
-	width: 220px;
+	width: 200px;
 }
 
 .owl-carousel .item {
 	height: 10rem;
 }
 
+.uppercase {
+	text-transform: uppercase;
+}
+
+.nav-wrapper .profile_logo {
+	width: 34px;
+	height: 34px;
+	margin-bottom: 10px;
+	margin-right: 5px
+}
+
+.profile_logo {
+	width: 150px;
+	height: 150px;
+}
+
+.collapsible-body {
+	margin: 0;
+	padding: 1rem;
+}
+
 @media only screen and (max-width: 600px) {
-	.spacer-small {
+	.spacer-thin {
 		height: 0.5rem;
+		width: 100%;
+	}
+	.spacer-normal {
+		height: 1rem;
+		width: 100%;
+	}
+	.spacer-thick {
+		height: 2rem;
 		width: 100%;
 	}
 }
 
 @media only screen and (min-width: 601px) {
-	.spacer-small {
+	.spacer-thin {
 		height: 1rem;
+		width: 100%;
+	}
+	.spacer-normal {
+		height: 2rem;
+		width: 100%;
+	}
+	.spacer-thick {
+		height: 4rem;
 		width: 100%;
 	}
 }
