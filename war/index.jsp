@@ -103,10 +103,12 @@
 			<div class="spacer-thick"></div>
 			<div class="row">
 				<div class="col s12 center">
+					<img class="responsive-img circle profile_logo"
+						src="assets/img/logo.png">
 					<h1 id="hero-title" class="grey-text text-darken-5">
 						<span class="bold">Move</span><span class="thin">Vote</span>
 					</h1>
-					<h3 class="thin">Recommend movie to you and your friends</h3>
+					<h4 class="thin">Recommend movie to you and your friends</h4>
 				</div>
 			</div>
 			<div class="spacer-normal"></div>
@@ -221,6 +223,7 @@
 					</a> <a href="https://www.facebook.com/dten10" class="black-text">
 						<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
 					</a>
+					<div class="spacer-normal"></div>
 				</div>
 			</div>
 
@@ -236,6 +239,7 @@
 						class="black-text"> <i class="fa fa-facebook-square fa-2x"
 						aria-hidden="true"></i>
 					</a>
+					<div class="spacer-normal"></div>
 				</div>
 			</div>
 		</div>
