@@ -88,4 +88,4 @@ Link: [https://movevote.appspot.com](https://movevote.appspot.com)
 
 ## Video
 * Ignition @Hanger: [YouTube Link](https://youtu.be/hK8Z0QLRlbU?t=30m45s)
-* Intro Video: [YouTube Link](https://www.youtube.com/watch?v=HZTFhQe64RE)
+* Intro Video: [YouTube Link](https://youtu.be/BHlYEgWAAVw)
