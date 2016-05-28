@@ -1,11 +1,15 @@
 # MoveVote
 RECOMMEND MOVIE TO YOU AND YOUR FRIENDS
 
-Orbital 2016
+Orbital 2016<br>
+Team: Civil War<br>
+Member: David, Wei Kang<br>
+Level of achievement: Gemini
 
-Given so many choices today, many of us tends to have a hard time making decisions and it is almost impossible to make without additional information or guidance. Furthermore, many pieces of research have demonstrated that users’ marginal utility decreases when confronted with too many choices. Our aims for this summer project is to help users make better choices about which movies to watch.
+##Overview
+Given so many choices today, many of us tends to have a hard time making decisions and it is almost impossible to make without additional information or guidance. Furthermore many research have demonstrated that users’ marginal utility decreases when confronted with too many choices. Our aims for this summer project is to help people make better choices about which movies to watch.
 
-We proposed to build a collective intelligence web application (MoveVote) that can smartly predict and recommend movies that you and your friends will like. MoveVote is definitely very useful if you are planning to watch movies with a group of friends or with your loved ones.
+We proposed to build a collective intelligence web application that can smartly predict and recommend movies that you and your friends will like. MoveVote is definitely very useful if you are planning to watch movies with a group of friends or with your loved ones.
 
 Our team will employ a hybrid approach (both content-based filtering and collaborative filtering) to assist our users in their decision-making process. As content-based filtering and collaborative filtering have their own advantages and disadvantages, the hybrid approach will provide a promising extension. We will be leveraging on The Movie Database (TMDB) for pulling movie content information.
 
@@ -15,30 +19,37 @@ MoveVote will be built and hosted on Google App Engine, a platform for building 
 * Personalized Movie Recommendation - Sign up for MoveVote and by rating some movies, we can help you get more movies that you and/or your group of friends will like.
 * Latest Movie Showing Time - Not sure when and where your latest movie will be showing today and tomorrow? MoveVote can help you get all these information for you.
 * Modern Responsive Design - To provide our users an optimal viewing and interaction experience, we have adopted a modern responsive framework based on Material Design by Google.
-* Support multiple login options - Email, Google and Facebook (will implement more if time permits)
+* Support multiple login options - Email, Google and Facebook (will implement more if we have more time)
+* Cinema location - By leveraging on Google Maps, we can display a map to show them the direction to the Cinema that they want to go.
 
-## Timesheet
-| Wei Kang | David | Description |
-| :---: | :---: | --- |
-| 2 | 2 | Ignition Day 1 |
-| 8 | 8 | Project brainstorm and planning |
-| 3 | 3 | - Create accounts<br>- Install IDE and tools on our workstations |
-| 23 | - | Design prototype |
-| 3 | - | Explore Single Sign-On (SSO) platform |
-| 24 | - | Implement Google Identity Toolkit |
-| 2 | - | Explore movies database |
-| 2 | - | Explore TMDB movie database |
-| 2 | - | Prepare introduction video to include in milestone 1 |
+## User Stories
+1. As a user, I want to have all the information about the latest movies that are currently showing in our local cinema so that I do not have to check their websites individually.
+2. As a user, I want to know what other similar movies to the movie that I am currently watching.
+3. As a user, I want to know what are the movies that my friend and I would like to watch so that we can catch the movie together.
+4. As a user, I want to know how to go to the Cinema, so that I do not need to open another app just to find the location.
+5. As an administrator, I want to be able to update our movie database every day in order to ensure that the users get reliable and up-to-date information.
 
-David: 13 hours spent so far<br>
-Wei Kang: 69 hours spent so far
+For milestone 1, we have finished designing most of the user interface and have deployed a alpha version to Google App Engine. At this stage, users are able to register and login via using their email, Google and Facebook account. In addition, users are also able to see what are the current movies that are showing in our local cinema.
 
-## Team
-We are a team of students from National University of Singapore.
+For the next milestone, users will be able to see more information about the movies that are currently showing in the cinema (time and location). We will also be completing the registration process so that a confirmation email will be sent to users when they register with us as well as sending them links to reset their password. We planned to finish the movie recommendation engine by milestone 2. We will leave user testing and other fixes that the peer teams suggest in the last stage.
 
-[David Ten](https://www.linkedin.com/in/davidten)
+## Project Log
+Wei Kang has experienced with developing and deploying application to Google App Engine, as such he is able to provide the team guidance on how to kickstart the project and this allows the team to have more time to integrate more features into the project.
 
-[Wei Kang](https://www.linkedin.com/in/weikangchia)
+| Description | David | Wei Kang |
+| --- | :---: | :---: |
+| Liftoff Day 1 | 8 | 8 |
+| Liftoff Day 2 | 8 | 8 |
+| Project brainstorm and planning | 3 | 3 |
+| Install IDE and tools | - | 2 |
+| Design user interface | - | 23 |
+| Explore Single Sign-On (SSO) platform | - | 2 |
+| Implement Google Identity Toolkit | - | 24 |
+| Explore TMDB movie database api | - | 2 |
+| Preparation for milestone 1 | - | 1.5 |
+| **Total:** | 19 | 73.5 |
+
+We have finished 19 and 73.5 hours respectively towards the requirement.
 
 ## Mission
 - [ ] Attend at least 12 hours of workshops
