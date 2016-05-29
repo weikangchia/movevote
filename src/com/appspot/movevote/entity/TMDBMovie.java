@@ -134,11 +134,6 @@ public class TMDBMovie extends Movie {
 		this.reviewList = reviewList;
 	}
 
-	@Override
-	public String getImageUrl() {
-		return TMDBHelper.getAbsImageUrl(super.getImageUrl(), Constant.TMDB_IMAGE_POSTER_SIZE);
-	}
-
 	/**
 	 * Retrieve TMDB id based on a movie title
 	 * 
@@ -214,7 +209,19 @@ public class TMDBMovie extends Movie {
 				movie.setTitle(parentNode.get("original_title").asText());
 				movie.setOverview(
 						StringEscapeUtils.unescapeHtml4(parentNode.get("overview").asText()));
-				movie.setImageUrl(parentNode.get("poster_path").asText());
+
+				System.out.println(parentNode.get("poster_path").toString());
+				// if poster_path is empty we will set no-poster image
+				if (parentNode.get("poster_path") == null
+						|| parentNode.get("poster_path").toString().length() == 0
+						|| parentNode.get("poster_path").toString().equals("null")) {
+					movie.setImageUrl("/assets/img/no-poster.png");
+				} else {
+					movie.setImageUrl(
+							TMDBHelper.getAbsImageUrl(parentNode.get("poster_path").asText(),
+									Constant.TMDB_IMAGE_POSTER_SIZE));
+				}
+
 				movie.setReleaseDate(parentNode.get("release_date").asText());
 				movie.setTagLine(parentNode.get("tagline").asText());
 				movie.setDuration(parentNode.get("runtime").asInt());
