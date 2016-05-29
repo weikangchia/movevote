@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import com.appspot.movevote.helper.TMDBHelper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -210,7 +212,8 @@ public class TMDBMovie extends Movie {
 				JsonNode parentNode = mapper.readTree(jsonLine);
 
 				movie.setTitle(parentNode.get("original_title").asText());
-				movie.setOverview(parentNode.get("overview").asText());
+				movie.setOverview(
+						StringEscapeUtils.unescapeHtml4(parentNode.get("overview").asText()));
 				movie.setImageUrl(parentNode.get("poster_path").asText());
 				movie.setReleaseDate(parentNode.get("release_date").asText());
 				movie.setTagLine(parentNode.get("tagline").asText());
