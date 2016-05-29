@@ -106,205 +106,209 @@
 			</div>
 
 			<div class="col s12 m9">
-				<div class="row">
-					<h4>
-						<c:out value="${movie.title}"></c:out>
-						(
-						<c:out value="${fn:substring(movie.releaseDate, 0, 4)}"></c:out>
-						)
-					</h4>
-					<h6 class="uppercase">
-						<c:out value="${movie.tagLine}"></c:out>
-					</h6>
+				<h4>
+					<c:out value="${movie.title}"></c:out>
+					<c:if test="${fn:length(movie.releaseDate) gt 0}">
+						<c:out value="(${fn:substring(movie.releaseDate, 0, 4)})"></c:out>
+					</c:if>
+				</h4>
+				<h6 class="uppercase">
+					<c:out value="${movie.tagLine}"></c:out>
+				</h6>
+				<p>
+					<c:choose>
+						<c:when test="${fn:length(movie.releaseDate) eq 0}">
+							-
+						</c:when>
+						<c:otherwise>
+							<c:out value="${movie.releaseDate} | "></c:out>
+						</c:otherwise>
+					</c:choose>
+
+					<c:out value=" | ${duration} | "></c:out>
+					<c:out value="${movie.rating}/10"></c:out>
+
+				</p>
+
+				<c:forEach items="${ movie.genreList }" var="genre">
+					<div class="chip">
+						<c:out value="${genre.name}"></c:out>
+					</div>
+				</c:forEach>
+
+				<div class="section">
+					<ul class="tabs">
+						<li class="tab col s3"><a class="active" href="#overview">Overview</a></li>
+						<li class="tab col s3"><a href="#showing">Now Showing</a></li>
+						<li class="tab col s3"><a href="#trailer">Trailers</a></li>
+						<li class="tab col s3"><a href="#similar">Similar</a></li>
+						<li class="tab col s3"><a href="#review">Reviews</a></li>
+					</ul>
+				</div>
+
+				<div id="overview" class="col s12">
 					<p>
-						<c:out value="${movie.releaseDate}"></c:out>
-						|
-						<c:out value="${duration}"></c:out>
-						|
-						<c:out value="${movie.rating}"></c:out>
-						/10
+						<c:out value="${movie.overview}"></c:out>
 					</p>
 
-					<c:forEach items="${ movie.genreList }" var="genre">
-						<div class="chip">
-							<c:out value="${genre.name}"></c:out>
-						</div>
-					</c:forEach>
+					<div class="section">
+						<h5>Director</h5>
+						<c:forEach items="${ directorList }" var="director">
+							<div class="chip">
+								<c:out value="${director.name}"></c:out>
+							</div>
+						</c:forEach>
+
+						<h5>Cast</h5>
+						<c:forEach items="${ movie.castList }" var="cast">
+							<div class="chip">
+								<c:out value="${cast.name}"></c:out>
+							</div>
+						</c:forEach>
+					</div>
 
 					<div class="section">
-						<ul class="tabs">
-							<li class="tab col s3"><a class="active" href="#overview">Overview</a></li>
-							<li class="tab col s3"><a href="#showing">Now Showing</a></li>
-							<li class="tab col s3"><a href="#trailer">Trailers</a></li>
-							<li class="tab col s3"><a href="#similar">Similar</a></li>
-							<li class="tab col s3"><a href="#review">Reviews</a></li>
-						</ul>
+						<h5>How much you like this movie?</h5>
+						<div class="rating red-text text-lighten-2"></div>
 					</div>
+				</div>
 
-					<div id="overview" class="col s12">
-						<p>
-							<c:out value="${movie.overview}"></c:out>
-						</p>
-
-						<div class="section">
-							<h5>Director</h5>
-							<c:forEach items="${ directorList }" var="director">
-								<div class="chip">
-									<c:out value="${director.name}"></c:out>
-								</div>
-							</c:forEach>
-
-							<h5>Cast</h5>
-							<c:forEach items="${ movie.castList }" var="cast">
-								<div class="chip">
-									<c:out value="${cast.name}"></c:out>
-								</div>
-							</c:forEach>
-						</div>
-
-						<div class="section">
-							<h5>How much you like this movie?</h5>
-							<div class="rating red-text text-lighten-2"></div>
-						</div>
-					</div>
-
-					<div id="trailer" class="col s12">
-						<c:if test="${fn:length(movie.youTubeVideoList) eq 0}">
-							<p class="center-align">No trailer available yet.</p>
-						</c:if>
-						<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
-							<c:forEach items="${ movie.youTubeVideoList }" var="video">
-								<h6>
-									<c:out value="${video.name}"></c:out>
-								</h6>
-								<div class="video-container">
-									<iframe width="853" height="480"
-										src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
+				<div id="trailer" class="col s12">
+					<c:if test="${fn:length(movie.youTubeVideoList) eq 0}">
+						<p class="center-align">No trailer available yet.</p>
+					</c:if>
+					<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
+						<c:forEach items="${ movie.youTubeVideoList }" var="video">
+							<h6>
+								<c:out value="${video.name}"></c:out>
+							</h6>
+							<div class="video-container">
+								<iframe width="853" height="480"
+									src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
 										?rel=0"
-										frameborder="0" allowfullscreen></iframe>
-								</div>
-								<div class="spacer-thin"></div>
-							</c:forEach>
-						</c:if>
-					</div>
+									frameborder="0" allowfullscreen></iframe>
+							</div>
+							<div class="spacer-thin"></div>
+						</c:forEach>
+					</c:if>
+				</div>
 
-					<div id="similar" class="col s12">
-						<c:if test="${fn:length(movie.similarList) eq 0}">
-							<p class="center-align">
-								Not enough data to recommend any movies based on
-								<c:out value="${movie.title}"></c:out>
-								yet.
-							</p>
-						</c:if>
-						<c:if test="${fn:length(movie.similarList) gt 0}">
-							<div class="row">
-								<c:forEach items="${ movie.similarList }" var="similar">
-									<c:choose>
-										<c:when test="${fn:length(similar.title) lt 25}">
-											<c:set var="truncateTitle" value="${similar.title}" />
-										</c:when>
-										<c:otherwise>
-											<c:set var="truncateTitle"
-												value="${fn:substring(similar.title, 0, 20)}..." />
-										</c:otherwise>
-									</c:choose>
+				<div id="similar" class="col s12">
+					<c:if test="${fn:length(movie.similarList) eq 0}">
+						<p class="center-align">
+							Not enough data to recommend any movies based on
+							<c:out value="${movie.title}"></c:out>
+							yet.
+						</p>
+					</c:if>
+					<c:if test="${fn:length(movie.similarList) gt 0}">
+						<div class="row">
+							<c:forEach items="${ movie.similarList }" var="similar">
+								<c:choose>
+									<c:when test="${fn:length(similar.title) lt 25}">
+										<c:set var="truncateTitle" value="${similar.title}" />
+									</c:when>
+									<c:otherwise>
+										<c:set var="truncateTitle"
+											value="${fn:substring(similar.title, 0, 20)}..." />
+									</c:otherwise>
+								</c:choose>
 
-									<c:choose>
-										<c:when test="${fn:length(similar.overview) lt 200}">
-											<c:set var="truncateOverview" value="${similar.overview}" />
-										</c:when>
-										<c:otherwise>
-											<c:set var="truncateOverview"
-												value="${fn:substring(similar.overview, 0, 200)}..." />
-										</c:otherwise>
-									</c:choose>
-									<div class="col s12 m6">
-										<div class="card small">
-											<div class="card-image waves-effect waves-block waves-light">
-												<img class="activator"
-													src="<c:out value="${similar.imageUrl}"></c:out>">
-											</div>
-											<div class="card-content">
-												<span class="card-title activator grey-text text-darken-4"><c:out
-														value="${truncateTitle}"></c:out><i
-													class="material-icons right">more_vert</i> </span>
-											</div>
-											<div class="card-reveal">
-												<span class="card-title grey-text text-darken-4"><c:out
-														value="${similar.title}"></c:out><i
-													class="material-icons right">close</i> </span>
-												<p>
-													<c:out value="${truncateOverview}"></c:out>
-												</p>
-											</div>
-											<div class="card-action">
-												<a href="#">More info</a>
-											</div>
+								<c:choose>
+									<c:when test="${fn:length(similar.overview) lt 200}">
+										<c:set var="truncateOverview" value="${similar.overview}" />
+									</c:when>
+									<c:otherwise>
+										<c:set var="truncateOverview"
+											value="${fn:substring(similar.overview, 0, 200)}..." />
+									</c:otherwise>
+								</c:choose>
+								<div class="col s12 m6">
+									<div class="card small">
+										<div class="card-image waves-effect waves-block waves-light">
+											<img class="activator"
+												src="<c:out value="${similar.imageUrl}"></c:out>">
+										</div>
+										<div class="card-content">
+											<span class="card-title activator grey-text text-darken-4"><c:out
+													value="${truncateTitle}"></c:out><i
+												class="material-icons right">more_vert</i> </span>
+										</div>
+										<div class="card-reveal">
+											<span class="card-title grey-text text-darken-4"><c:out
+													value="${similar.title}"></c:out><i
+												class="material-icons right">close</i> </span>
+											<p>
+												<c:out value="${truncateOverview}"></c:out>
+											</p>
+										</div>
+										<div class="card-action">
+											<a href="#">More info</a>
 										</div>
 									</div>
-								</c:forEach>
-							</div>
-						</c:if>
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
+				</div>
+
+				<div id="review" class="col s12">
+					<c:if test="${fn:length(movie.reviewList) eq 0}">
+						<p class="center-align">Not review yet.</p>
+					</c:if>
+					<c:if test="${fn:length(movie.reviewList) gt 0}">
+						<ul class="collection">
+							<c:forEach items="${ movie.reviewList }" var="review">
+								<li class="collection-item avatar"><i
+									class="material-icons circle green">person</i> <span
+									class="title"><c:out value="${review.author.name }"></c:out></span>
+									<div class="more">
+										<c:out value="${review.content }" escapeXml="false"></c:out>
+									</div></li>
+							</c:forEach>
+						</ul>
+					</c:if>
+				</div>
+				<div id="showing" class="col s12">
+					<div class="input-field col s12">
+						<select>
+							<option value="" disabled selected>Select a Date</option>
+							<option value="1">Today</option>
+							<option value="2">Tomorrow</option>
+							<option value="3">Tuesday</option>
+						</select>
 					</div>
 
-					<div id="review" class="col s12">
-						<c:if test="${fn:length(movie.reviewList) eq 0}">
-							<p class="center-align">Not review yet.</p>
-						</c:if>
-						<c:if test="${fn:length(movie.reviewList) gt 0}">
-							<ul class="collection">
-								<c:forEach items="${ movie.reviewList }" var="review">
-									<li class="collection-item avatar"><i
-										class="material-icons circle green">person</i> <span
-										class="title"><c:out value="${review.author.name }"></c:out></span>
-										<div class="more">
-											<c:out value="${review.content }" escapeXml="false"></c:out>
-										</div></li>
-								</c:forEach>
-							</ul>
-						</c:if>
-					</div>
-					<div id="showing" class="col s12">
-						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>Select a Date</option>
-								<option value="1">Today</option>
-								<option value="2">Tomorrow</option>
-								<option value="3">Tuesday</option>
-							</select>
-						</div>
-
-						<div class="col s12">
-							<ul class="collapsible popout" data-collapsible="accordion">
-								<li>
-									<div class="collapsible-header active">
-										<i class="material-icons">theaters</i>Cathay AMK Hub
-									</div>
-									<div class="collapsible-body">
-										<h6>Standard</h6>
-										<a href="">07:20 PM</a>, <a href="">10:30 PM</a>
-									</div>
-								</li>
-								<li>
-									<div class="collapsible-header">
-										<i class="material-icons">theaters</i>GV Yishun
-									</div>
-									<div class="collapsible-body">
-										<h6>Standard</h6>
-										<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
-									</div>
-								</li>
-								<li>
-									<div class="collapsible-header">
-										<i class="material-icons">theaters</i>Shaw Nex
-									</div>
-									<div class="collapsible-body">
-										<h6>Standard</h6>
-										<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
-									</div>
-								</li>
-							</ul>
-						</div>
+					<div class="col s12">
+						<ul class="collapsible popout" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header active">
+									<i class="material-icons">theaters</i>Cathay AMK Hub
+								</div>
+								<div class="collapsible-body">
+									<h6>Standard</h6>
+									<a href="">07:20 PM</a>, <a href="">10:30 PM</a>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">theaters</i>GV Yishun
+								</div>
+								<div class="collapsible-body">
+									<h6>Standard</h6>
+									<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">theaters</i>Shaw Nex
+								</div>
+								<div class="collapsible-body">
+									<h6>Standard</h6>
+									<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
+								</div>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
