@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="assets/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="assets/css/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+<link type="text/css" rel="stylesheet" href="assets/css/bars-movie.css" />
+
+<style>
+.morecontent span {
+	display: none;
+}
+
+.morelink {
+	display: block;
+}
+</style>
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>MoveVote - Movie recommendation</title>
+</head>
+
+<body>
+	<nav>
+		<div class="nav-wrapper container">
+			<a href="#" class="brand-logo grey-text text-lighten-5"><span
+				class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
+				data-activates="mobile-navbar" class="button-collapse"><i
+				class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#">Logout</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="spacer"></div>
+		<div class="spacer"></div>
+		<div class="row">
+			<div class="col s12 m4">
+				<div class="col s6 offset-s3 m12 center">
+					<img class="responsive-img"
+						src="assets/img/sample/Captain_America_Civil_War_poster.jpg">
+					<h6>Do you like this movie?</h6>
+					<div class="rating red-text text-lighten-1"></div>
+				</div>
+			</div>
+
+			<div class="col s12 m8">
+				<div class="row">
+					<h4>Captain America: Civil War (2016)</h4>
+					<h6 class="uppercase">Divided We Fall</h6>
+					<p>2h 27min | 8.5/10</p>
+
+					<div class="chip">Action</div>
+					<div class="chip">Thriller</div>
+					<div class="chip">Science Fiction</div>
+
+					<p>Following the events of Age of Ultron, the collective
+						governments of the world pass an act designed to regulate all
+						superhuman activity. This polarizes opinion amongst the Avengers,
+						causing two factions to side with Iron Man or Captain America,
+						which causes an epic battle between former allies.</p>
+
+					<div class="section">
+						<h5>Director</h5>
+						<div class="chip">
+							<img
+								src="http://image.tmdb.org/t/p/w45/mwokQ8u2RgeFRkDUtcNctTgd8bg.jpg"
+								alt="Contact Person"> Anthony Russo
+						</div>
+						<div class="chip">
+							<img
+								src="http://image.tmdb.org/t/p/w45//5bMVczVDqLJFpfLQZhQ4hhwkSQD.jpg"
+								alt="Contact Person"> Joe Russo
+						</div>
+
+						<h5>Cast</h5>
+
+						<div class="chip">
+							<img
+								src="http://image.tmdb.org/t/p/w45/mwokQ8u2RgeFRkDUtcNctTgd8bg.jpg"
+								alt="Contact Person"> Anthony Russo
+						</div>
+						<div class="chip">
+							<img
+								src="http://image.tmdb.org/t/p/w45//5bMVczVDqLJFpfLQZhQ4hhwkSQD.jpg"
+								alt="Contact Person"> Joe Russo
+						</div>
+						<div class="chip">
+							<img
+								src="http://image.tmdb.org/t/p/w45/mwokQ8u2RgeFRkDUtcNctTgd8bg.jpg"
+								alt="Contact Person"> Anthony Russo
+						</div>
+						<div class="chip">
+							<img
+								src="http://image.tmdb.org/t/p/w45/mwokQ8u2RgeFRkDUtcNctTgd8bg.jpg"
+								alt="Contact Person"> Anthony Russo
+						</div>
+					</div>
+
+					<div class="section">
+						<ul class="tabs">
+							<li class="tab col s3"><a class="active" href="#showing">Now
+									Showing</a></li>
+							<li class="tab col s3"><a href="#trailer">Trailers</a></li>
+							<li class="tab col s3"><a href="#similar">Similar</a></li>
+							<li class="tab col s3"><a href="#review">Reviews</a></li>
+						</ul>
+					</div>
+
+					<div id="trailer" class="col s12">
+						<h6>Official Trailer 1</h6>
+						<div class="video-container">
+							<iframe width="853" height="480"
+								src="//www.youtube.com/embed/43NWzay3W4s?rel=0" frameborder="0"
+								allowfullscreen></iframe>
+						</div>
+
+						<div class="spacer"></div>
+
+						<h6>Official Trailer 2</h6>
+						<div class="video-container">
+							<iframe width="853" height="480"
+								src="//www.youtube.com/embed/dKrVegVI0Us?rel=0" frameborder="0"
+								allowfullscreen></iframe>
+						</div>
+					</div>
+					<div id="similar" class="col s12">
+						<div class="row">
+							<div class="col s4">
+								<img class="responsive-img" src="assets/img/sample/deadpool.jpg">
+								<h6 class="center">Deadpool</h6>
+							</div>
+
+							<div class="col s4">
+								<img class="responsive-img" src="assets/img/sample/antman.jpg">
+								<h6 class="center">Ant-Man</h6>
+							</div>
+
+							<div class="col s4">
+								<img class="responsive-img" src="assets/img/sample/batman.jpg">
+								<h6 class="center">Batman v Superman: Dawn of Justice</h6>
+							</div>
+							<div class="col s4">
+								<img class="responsive-img" src="assets/img/sample/deadpool.jpg">
+								<h6 class="center">Deadpool</h6>
+							</div>
+
+							<div class="col s4">
+								<img class="responsive-img" src="assets/img/sample/antman.jpg">
+								<h6 class="center">Ant-Man</h6>
+							</div>
+
+							<div class="col s4">
+								<img class="responsive-img" src="assets/img/sample/batman.jpg">
+								<h6 class="center">Batman v Superman: Dawn of Justice</h6>
+							</div>
+						</div>
+					</div>
+					<div id="review" class="col s12">
+						<ul class="collection">
+							<li class="collection-item avatar"><i
+								class="material-icons circle green">person</i> <span
+								class="title">Frank Ochieng</span>
+								<div class="more">Well another super-sized Marvel Comics
+									superhero saga hits the big screen with the selected savior
+									Captain America taking the top billing on the marquee. Thus,
+									the pulsating popcorn pleaser **Captain America: Civil War**
+									arrives on the scene to giddy audiences that have been loyal
+									and fixated on the successful spring of mighty Marvel heroes
+									that have been paraded to viewers throughout the last few
+									years.</div></li>
+							<li class="collection-item avatar"><i
+								class="material-icons circle green">person</i> <span
+								class="title">Frank Ochieng</span>
+								<div class="more">Well another super-sized Marvel Comics
+									superhero saga hits the big screen with the selected savior
+									Captain America taking the top billing on the marquee. Thus,
+									the pulsating popcorn pleaser **Captain America: Civil War**
+									arrives on the scene to giddy audiences that have been loyal
+									and fixated on the successful spring of mighty Marvel heroes
+									that have been paraded to viewers throughout the last few
+									years.</div></li>
+						</ul>
+					</div>
+					<div id="showing" class="col s12">
+						<div class="input-field col s12">
+							<select>
+								<option value="" disabled selected>Select a Date</option>
+								<option value="1">Today</option>
+								<option value="2">Tomorrow</option>
+								<option value="3">Tuesday</option>
+							</select>
+						</div>
+
+						<div class="col s12">
+							<ul class="collapsible popout" data-collapsible="accordion">
+								<li>
+									<div class="collapsible-header active">
+										<i class="material-icons">map</i>Cathay AMK Hub
+									</div>
+									<div class="collapsible-body">
+										<h6>Standard</h6>
+										<a href="">07:20 PM</a>, <a href="">10:30 PM</a>
+									</div>
+								</li>
+								<li>
+									<div class="collapsible-header">
+										<i class="material-icons">map</i>GV Yishun
+									</div>
+									<div class="collapsible-body">
+										<h6>Standard</h6>
+										<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
+									</div>
+								</li>
+								<li>
+									<div class="collapsible-header">
+										<i class="material-icons">map</i>Shaw Nex
+									</div>
+									<div class="collapsible-body">
+										<h6>Standard</h6>
+										<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="spacer"></div>
+	<div class="spacer"></div>
+
+	<footer class="page-footer">
+		<div class="footer-copyright">
+			<div class="container white-text">
+				<i class="fa fa-copyright" aria-hidden="true"></i> 2016 Copyright
+				Civil War <span class="right">Made using Materialize</span>
+			</div>
+		</div>
+	</footer>
+
+	<!--Import jQuery before materialize.js-->
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/jquery.star.rating.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$(".button-collapse").sideNav();
+
+			$('ul.tabs').tabs();
+
+			$('select').material_select();
+
+			$('.rating').addRating();
+
+			// method to set rating
+			var i = 1;
+			$('.rating').find('i').each(function() {
+				if (i == 0) {
+					return false;
+				}
+				$(this).text('favorite');
+				i--;
+			});
+		});
+
+		var showChar = 100; // shows 100 character by default
+		var ellipsestext = "...";
+		var moretext = "Show more";
+		var lesstext = "Show less";
+
+		$('.more')
+				.each(
+						function() {
+							var content = $(this).html();
+
+							if (content.length > showChar) {
+
+								var c = content.substr(0, showChar);
+								var h = content.substr(showChar, content.length
+										- showChar);
+
+								var html = c
+										+ '<span class="moreellipses">'
+										+ ellipsestext
+										+ '&nbsp;</span><span class="morecontent"><span>'
+										+ h
+										+ '</span>&nbsp;&nbsp;<a href="" class="morelink">'
+										+ moretext + '</a></span>';
+
+								$(this).html(html);
+							}
+
+						});
+
+		$(".morelink").click(function() {
+			if ($(this).hasClass("less")) {
+				$(this).removeClass("less");
+				$(this).html(moretext);
+			} else {
+				$(this).addClass("less");
+				$(this).html(lesstext);
+			}
+			$(this).parent().prev().toggle();
+			$(this).prev().toggle();
+			return false;
+		});
+	</script>
+</body>
+
+</html>

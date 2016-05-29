@@ -3,7 +3,7 @@
 
 <head>
 <!--Import Google Icon Font-->
-<link href="http://fonts.googleapis.com/icon?family=Material+Icons"
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
@@ -47,7 +47,6 @@
 				<li><a href="#features"><i class="material-icons">event_note</i></a></li>
 				<li><a href="mobile.html" class="dropdown-button" href="#!"
 					data-activates="profile-dropdown"><i class="material-icons">more_vert</i></a></li>
-
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
 				<li><a id="toggle-search" href="#search">Search</a></li>
@@ -357,8 +356,6 @@
 	<script>
 		$(document).ready(
 				function() {
-					vph = $(window).height() - 56;
-					$('#hero').css('height', vph);
 					$(".button-collapse").sideNav();
 
 					$(document).ready(function() {
@@ -377,13 +374,6 @@
 								return false;
 							});
 				});
-
-		$(window).resize(function() {
-			vpw = $(window).width();
-			vph = $(window).height() - 56;
-
-			$('#hero').css('height', vph);
-		});
 	</script>
 	<script type="text/javascript" src="assets/js/autocomplete.js"></script>
 </body>
