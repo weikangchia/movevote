@@ -11,7 +11,7 @@ public class User extends Person {
 	public User(String id, String name, String profilePath, String email) {
 		super(id, name, profilePath);
 		if (profilePath == null || profilePath.equals("")) {
-			setProfilePath("/assets/img/profile/empty_profile.png");
+			setProfilePath("/assets/img/profile/no-profile.png");
 		}
 		this.setEmail(email);
 	}
