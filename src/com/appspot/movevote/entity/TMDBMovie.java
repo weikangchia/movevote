@@ -348,7 +348,9 @@ public class TMDBMovie extends Movie {
 				for (int i = 0; i < resultNodes.size(); i++) {
 					TMDBMovie similarMovie = new TMDBMovie(resultNodes.get(i).get("id").asText(),
 							resultNodes.get(i).get("title").asText(),
-							resultNodes.get(i).get("poster_path").asText());
+							TMDBHelper.getAbsImageUrl(
+									resultNodes.get(i).get("poster_path").asText(),
+									Constant.TMDB_IMAGE_POSTER_SIZE));
 					similarMovie.setOverview(resultNodes.get(i).get("overview").asText());
 					movie.similarList.add(similarMovie);
 				}
