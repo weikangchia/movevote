@@ -45,22 +45,23 @@ public class HomeServlet extends HttpServlet {
 
 		// check if user is login
 		boolean isLoggedIn = false;
-		GitkitHelper gitHelper = new GitkitHelper(this);
+		GitkitHelper gitkitHelper = new GitkitHelper(this);
 
-		GitkitUser gitkitUser = gitHelper.validateLogin(request);
+		GitkitUser gitkitUser = gitkitHelper.validateLogin(request);
 
 		if (gitkitUser != null) {
 			isLoggedIn = true;
+
 			User userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
 					gitkitUser.getPhotoUrl(), gitkitUser.getEmail());
 			request.setAttribute("userInfo", userInfo);
-
+			
 			// incomplete method: check if user email is verified
 			Cookie[] cookies = request.getCookies();
 			for (int i = 0; i < cookies.length; i++) {
 				if (cookies[i].getName().equals(Constant.GIT_COOKIE_NAME)) {
 					try {
-						JsonObject json = gitHelper.getGitkitClient()
+						JsonObject json = gitkitHelper.getGitkitClient()
 								.validateTokenToJson(cookies[i].getValue());
 						System.out.println(json.get("verified"));
 					} catch (GitkitClientException e) {
