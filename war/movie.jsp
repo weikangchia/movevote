@@ -121,7 +121,7 @@
 							-
 						</c:when>
 						<c:otherwise>
-							<c:out value="${movie.releaseDate} | "></c:out>
+							<c:out value="${movie.releaseDate}"></c:out>
 						</c:otherwise>
 					</c:choose>
 
