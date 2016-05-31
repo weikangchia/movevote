@@ -25,17 +25,15 @@ main {
 }
 
 .thin {
-	font-weight: 200;
-}
-
-.caption-normal.thin {
-	font-size: 1.25rem;
 	font-weight: 300;
 }
 
-.caption-large.bold {
+.caption-normal {
+	font-size: 1.25rem;
+}
+
+.caption-large {
 	font-size: 2.25rem;
-	font-weight: 400;
 }
 
 .item {
