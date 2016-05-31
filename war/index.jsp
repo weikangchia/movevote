@@ -30,74 +30,75 @@
 </head>
 
 <body>
-	<c:if test="${isLoggedIn}">
-		<ul id="dropdown1" class="dropdown-content">
-			<li><a
-				href="${pageContext.request.contextPath}/user-profile.html">Profile</a></li>
-			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-					out</a></li>
-		</ul>
-		<ul id="dropdown2" class="dropdown-content">
-			<li><a
-				href="${pageContext.request.contextPath}/user-profile.html">Profile</a></li>
-			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-					out</a></li>
-		</ul>
-	</c:if>
-
-	<nav>
-		<div class="nav-wrapper container">
-			<a href="${pageContext.request.contextPath}/home"
-				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-				class="button-collapse"><i class="material-icons">menu</i></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a id="toggle-search" href="#"><i
-						class="material-icons tooltipped" data-position="bottom"
-						data-delay="50" data-tooltip="search">search</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
-				<c:choose>
-					<c:when test="${not isLoggedIn}">
-						<li><a
-							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-								in</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a class="dropdown-button" href="#!"
-							data-activates="dropdown1"><img class="circle profile_logo"
-								align="middle"
-								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-									value="${userInfo.name}"></c:out><i
-								class="material-icons right">arrow_drop_down</i></a></li>
-					</c:otherwise>
-				</c:choose>
+	<header>
+		<c:if test="${isLoggedIn}">
+			<ul id="dropdown1" class="dropdown-content">
+				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+						out</a></li>
 			</ul>
-			<ul class="side-nav" id="mobile-navbar">
-				<li><a id="toggle-search" href="#">Search</a></li>
-				<li><a href="#">Discover</a></li>
-				<li><a href="#">Group</a></li>
-				<c:choose>
-					<c:when test="${not isLoggedIn}">
-						<li><a
-							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-								in</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a class="dropdown-button" href="#!"
-							data-activates="dropdown2"><img class="circle profile_logo"
-								align="middle"
-								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-									value="${userInfo.name}"></c:out><i
-								class="material-icons right">arrow_drop_down</i></a></li>
-					</c:otherwise>
-				</c:choose>
+			<ul id="dropdown2" class="dropdown-content">
+				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+						out</a></li>
 			</ul>
-		</div>
-	</nav>
+		</c:if>
 
+		<nav>
+			<div class="nav-wrapper container">
+				<a href="${pageContext.request.contextPath}/home"
+					class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+					class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+					class="button-collapse"><i class="material-icons">menu</i></a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a id="toggle-search" href="#"><i
+							class="material-icons tooltipped" data-position="bottom"
+							data-delay="50" data-tooltip="search">search</i></a></li>
+					<li><a href="#"><i class="material-icons tooltipped"
+							data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
+					<li><a href="#"><i class="material-icons tooltipped"
+							data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+					<c:choose>
+						<c:when test="${not isLoggedIn}">
+							<li><a
+								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+									in</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a class="dropdown-button" href="#!"
+								data-activates="dropdown1"><img class="circle profile_logo"
+									align="middle"
+									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+										value="${userInfo.name}"></c:out><i
+									class="material-icons right">arrow_drop_down</i></a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+				<ul class="side-nav" id="mobile-navbar">
+					<li><a id="toggle-search" href="#">Search</a></li>
+					<li><a href="#">Discover</a></li>
+					<li><a href="#">Group</a></li>
+					<c:choose>
+						<c:when test="${not isLoggedIn}">
+							<li><a
+								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+									in</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a class="dropdown-button" href="#!"
+								data-activates="dropdown2"><img class="circle profile_logo"
+									align="middle"
+									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+										value="${userInfo.name}"></c:out><i
+									class="material-icons right">arrow_drop_down</i></a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<main>
 	<div id="hero">
 		<div class="container">
 			<div class="spacer-thick"></div>
@@ -108,7 +109,7 @@
 					<h1 id="hero-title" class="grey-text text-darken-5">
 						<span class="bold">Move</span><span class="thin">Vote</span>
 					</h1>
-					<h4 class="thin">Recommend movie to you and your friends</h4>
+					<h5 class="thin">Recommend movie to you and your friends</h5>
 				</div>
 			</div>
 			<div class="spacer-normal"></div>
@@ -246,6 +247,7 @@
 	</div>
 
 	<div class="spacer-thick"></div>
+	</main>
 
 	<footer class="page-footer">
 		<div class="footer-copyright">
