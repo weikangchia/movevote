@@ -24,6 +24,16 @@ public class Constant {
 	public static final String GIT_PROJECT_ID = "movevote";
 	public static final String GIT_DEV_WIDGET_URL = DEV_HOSTNAME + "gitkit";
 	public static final String GIT_PUB_WIDGET_URL = PUB_HOSTNAME + "gitkit";
-
 	public static final String LOGIN_PATH = "/gitkit?mode=select";
+
+	// MailJet
+	public static final String MAILJET_API_Key = "c5bac2520255752262e21a9bdff488e4";
+	public static final String MAILJET_Secret_Key = "ff41dd63e9d30dc8c2c84321c3f5246d";
+
+	// DataStore
+	// tables
+	public static final String DS_TABLE_INSING_MOVIE = "now_showing_insing_movie";
+	public static final String DS_TABLE_USER = "user";
+	public static final String DS_TABLE_MOVIE_EVENT = "movie_event";
+	public static final String DS_TABLE_TMDB_MOVIE= "tmdb_movie";
 }

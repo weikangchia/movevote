@@ -26,73 +26,77 @@
 </head>
 
 <body>
-	<header>
-		<c:if test="${isLoggedIn}">
-			<ul id="dropdown1" class="dropdown-content">
-				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-						out</a></li>
-			</ul>
-			<ul id="dropdown2" class="dropdown-content">
-				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-						out</a></li>
-			</ul>
-		</c:if>
+	<c:if test="${isLoggedIn}">
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+			<li><a
+				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+					account</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+		<ul id="dropdown2" class="dropdown-content">
+			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+			<li><a
+				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+					account</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+	</c:if>
 
-		<nav>
-			<div class="nav-wrapper container">
-				<a href="${pageContext.request.contextPath}/home"
-					class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-					class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-					class="button-collapse"><i class="material-icons">menu</i></a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a id="toggle-search" href="#"><i
-							class="material-icons tooltipped" data-position="bottom"
-							data-delay="50" data-tooltip="search">search</i></a></li>
-					<li><a href="#"><i class="material-icons tooltipped"
-							data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-					<li><a href="#"><i class="material-icons tooltipped"
-							data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
-					<c:choose>
-						<c:when test="${not isLoggedIn}">
-							<li><a
-								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-									in</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a class="dropdown-button" href="#!"
-								data-activates="dropdown1"><img class="circle profile_logo"
-									align="middle"
-									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-										value="${userInfo.name}"></c:out><i
-									class="material-icons right">arrow_drop_down</i></a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-				<ul class="side-nav" id="mobile-navbar">
-					<li><a id="toggle-search" href="#">Search</a></li>
-					<li><a href="#">Discover</a></li>
-					<li><a href="#">Group</a></li>
-					<c:choose>
-						<c:when test="${not isLoggedIn}">
-							<li><a
-								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-									in</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a class="dropdown-button" href="#!"
-								data-activates="dropdown2"><img class="circle profile_logo"
-									align="middle"
-									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-										value="${userInfo.name}"></c:out><i
-									class="material-icons right">arrow_drop_down</i></a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-		</nav>
-	</header>
+	<nav>
+		<div class="nav-wrapper container">
+			<a href="${pageContext.request.contextPath}/home"
+				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+				class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a id="toggle-search" href="#"><i
+						class="material-icons tooltipped" data-position="bottom"
+						data-delay="50" data-tooltip="search">search</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown1"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a id="toggle-search" href="#">Search</a></li>
+				<li><a href="#">Discover</a></li>
+				<li><a href="#">Group</a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown2"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</nav>
 
 	<main>
 	<div class="red lighten-2">
@@ -102,24 +106,29 @@
 				<div class="col s6 m4 offset-s3 offset-m4 center">
 					<img class="responsive-img circle profile_logo"
 						src="<c:out value="${userInfo.profilePath}"></c:out>">
-					<h5 class="bold white-text center thin">
+					<h5 class="white-text thin">
 						<c:out value="${userInfo.name}"></c:out>
 					</h5>
 				</div>
 			</div>
 
 			<div class="row center white-text">
+				<div class="spacer-thin"></div>
 				<div class="col s10 m6 offset-m3 offset-s1">
-					<div class="col s4">
-						<span class="caption-large thin">2</span><br />friends
+					<div class="row">
+						<div class="col s4">
+							<span class="caption-large thin">2</span><br />friends
+						</div>
+						<div class="col s4">
+							<span class="caption-large thin">22</span><br />to watch
+						</div>
+						<div class="col s4">
+							<span class="caption-large thin">10</span><br />watched
+						</div>
 					</div>
-					<div class="col s4">
-						<span class="caption-large thin">22</span><br />to watch
-					</div>
-					<div class="col s4">
-						<span class="caption-large thin">10</span><br />watched
-					</div>
+
 				</div>
+				<div class="spacer-thin"></div>
 			</div>
 		</div>
 	</div>

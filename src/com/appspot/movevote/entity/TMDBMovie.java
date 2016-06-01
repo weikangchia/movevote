@@ -149,8 +149,6 @@ public class TMDBMovie extends Movie {
 					+ "&query=" + URLEncoder.encode(query, "UTF-8") + "&year="
 					+ Calendar.getInstance().get(Calendar.YEAR);
 
-			System.out.println(urlStr);
-
 			URL url = new URL(urlStr);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
