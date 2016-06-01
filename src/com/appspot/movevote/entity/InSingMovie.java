@@ -103,17 +103,22 @@ public class InSingMovie extends Movie {
 								movieMap.put(inSingId, new InSingMovie(inSingId, title, imageUrl));
 							}
 						} else {
-							System.out.println("error");
+							log.info("Unable to connect to " + Constant.INSING_HOSTNAME + "movies/"
+									+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3]
+									+ "/showtimes");
 						}
 					} catch (Exception ex2) {
-						log.warning("Unable to retrieve inSing movie id: " + inSingId);
+						log.info("Error while trying to parse data from " + Constant.INSING_HOSTNAME
+								+ "movies/" + splitInSingIdArr[2] + "/" + splitInSingIdArr[3]
+								+ "/showtimes");
 					}
 				}
 			} else {
 				log.warning("Unable to connect to " + Constant.INSING_HOSTNAME + "movies/");
 			}
 		} catch (Exception ex) {
-			log.warning("Unable to parse data from " + Constant.INSING_HOSTNAME + "movies/");
+			log.warning("Error while trying to parse data from " + Constant.INSING_HOSTNAME
+					+ "movies/");
 		}
 		return movieMap;
 	}
@@ -150,19 +155,20 @@ public class InSingMovie extends Movie {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 		for (Map.Entry<String, InSingMovie> entry : movieMap.entrySet()) {
 			InSingMovie newMovie = entry.getValue();
-			Entity movieEntity = new Entity("InSing_Movie", newMovie.getId());
+			Entity movieEntity = new Entity(Constant.DS_TABLE_INSING_MOVIE, newMovie.getId());
 			movieEntity.setProperty("title", StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
 			movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
 			movieEntity.setProperty("tmdbId", newMovie.getTmdbId());
 			dataStore.put(movieEntity);
+
+			movieEntity = new Entity(Constant.DS_TABLE_TMDB_MOVIE, newMovie.getTmdbId());
+			movieEntity.setProperty("title", StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
+			movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
+			dataStore.put(movieEntity);
 		}
 
-		// debug purpose
-		System.out.println("Curr size: " + currMovieEntityList.size());
-		System.out.println("New size: " + movieMap.size());
-		System.out.println("Remove size: " + removeList.size());
-
-		log.info(movieMap.size() + " new movies are stored into the datastore.");
+		log.info(movieMap.size() + " new movies are added into the datastore and "
+				+ removeList.size() + " old movies are removed from the datastore.");
 	}
 
 	/**
@@ -174,7 +180,7 @@ public class InSingMovie extends Movie {
 	public static List<Entity> retrieveMovieListKeysOnly() {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 
-		Query q = new Query("InSing_Movie").setKeysOnly();
+		Query q = new Query(Constant.DS_TABLE_INSING_MOVIE).setKeysOnly();
 		PreparedQuery pq = dataStore.prepare(q);
 
 		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder.withDefaults());
@@ -192,7 +198,7 @@ public class InSingMovie extends Movie {
 	public static ArrayList<InSingMovie> retrieveMovieList() {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 
-		Query q = new Query("InSing_Movie").addSort("title");
+		Query q = new Query(Constant.DS_TABLE_INSING_MOVIE).addSort("title");
 		PreparedQuery pq = dataStore.prepare(q);
 
 		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder.withDefaults());
@@ -223,7 +229,7 @@ public class InSingMovie extends Movie {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 
 		for (String key : removeList) {
-			dataStore.delete(KeyFactory.createKey("InSing_Movie", key));
+			dataStore.delete(KeyFactory.createKey(Constant.DS_TABLE_INSING_MOVIE, key));
 		}
 	}
 }
