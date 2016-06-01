@@ -59,24 +59,4 @@
     <filter-name>AuthenticationFilter</filter-name>
     <url-pattern>/AuthenticationFilter</url-pattern>
   </filter-mapping>
-  <servlet>
-    <description></description>
-    <display-name>UserServlet</display-name>
-    <servlet-name>UserServlet</servlet-name>
-    <servlet-class>com.appspot.movevote.controller.UserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserServlet</servlet-name>
-    <url-pattern>/user</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>CallbackServlet</display-name>
-    <servlet-name>CallbackServlet</servlet-name>
-    <servlet-class>com.appspot.movevote.controller.CallbackServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CallbackServlet</servlet-name>
-    <url-pattern>/callback</url-pattern>
-  </servlet-mapping>
 </web-app>

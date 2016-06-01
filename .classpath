@@ -18,7 +18,5 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-core-2.7.4.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-databind-2.7.4.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/mailjet-client-4.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/http-client-java-0.89.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

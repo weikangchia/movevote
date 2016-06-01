@@ -16,7 +16,7 @@ public class GitkitHelper {
 
 	public GitkitHelper(GenericServlet gServlet) throws IOException {
 		this.gitkitClient = GitkitClient.newBuilder().setGoogleClientId(Constant.GIT_CLIENT_ID)
-				.setProjectId(Constant.GIT_PROJECT_ID).setWidgetUrl(Constant.GIT_PUB_WIDGET_URL)
+				.setProjectId(Constant.GIT_PROJECT_ID).setWidgetUrl(Constant.GIT_DEV_WIDGET_URL)
 				.setServiceAccountEmail(Constant.GIT_SERVICE_ACCOUNT_EMAIL)
 				.setCookieName(Constant.GIT_COOKIE_NAME)
 				.setKeyStream(new FileInputStream(gServlet.getServletContext()
