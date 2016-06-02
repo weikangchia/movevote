@@ -85,6 +85,11 @@ main {
 	height: auto;
 }
 
+.collapsible-body {
+	margin: 0;
+	padding: 1rem;
+}
+
 /* rating star */
 i {
 	cursor: pointer;
