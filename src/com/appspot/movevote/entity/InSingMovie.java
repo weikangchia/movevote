@@ -1,6 +1,7 @@
 package com.appspot.movevote.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,6 +168,7 @@ public class InSingMovie extends Movie {
 				movieEntity.setProperty("title",
 						StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
 				movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
+				movieEntity.setProperty("last_update", new Date());
 				dataStore.put(movieEntity);
 			}
 		}
