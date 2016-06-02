@@ -119,7 +119,7 @@
 			<div class="spacer-normal"></div>
 			<div class="row">
 				<div class="col s12 center">
-					<a href="#" class="btn btn-large red lighten-1">Get Started</a>
+					<a href="${pageContext.request.contextPath}/gitkit?mode=select" class="btn btn-large red lighten-1">Get Started</a>
 				</div>
 			</div>
 			<div class="spacer-thick"></div>
