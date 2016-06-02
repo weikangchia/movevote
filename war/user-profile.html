@@ -65,10 +65,8 @@
 		<div class="container">
 			<div class="spacer-thick"></div>
 			<div class="row">
-				<div class="col s6 m4 offset-s3 offset-m4 center">
-					<img class="responsive-img circle profile_logo"
-						src="assets/img/profile/wei_kang.jpg">
-					<h5 class="bold white-text center thin">Wei Kang</h5>
+				<div class="col s10 offset-s1 center">
+					<h3 class="bold white-text center">Wei Kang</h3>
 				</div>
 			</div>
 
@@ -94,10 +92,93 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs">
+					<li class="tab col s3"><a class="active" href="#tellme">Tell
+							Me</a></li>
 					<li class="tab col s3"><a class="active" href="#friends">Friends</a></li>
 					<li class="tab col s3"><a href="#to-watch">To Watch</a></li>
 					<li class="tab col s3"><a href="#watched">Watched</a></li>
 				</ul>
+			</div>
+
+			<div id="tellme" class="col s12">
+
+
+				<div class="row">
+					<div class="spacer-thin"></div>
+					<div class="col s12">
+						<div class="card-panel teal lighten-2">
+							<span class="white-text">Hi Wei Kang! Can you tell us how
+								much you like the movies below as this will help us to recommend
+								movies that you will like.</span>
+						</div>
+					</div>
+
+					<div class="col s12 cards-container">
+
+						<div class="card-panel white">
+							<div class="row">
+								<div class="col s4">
+									<img class="responsive-img" src="assets/img/sample/antman.jpg">
+								</div>
+
+								<div class="col s8">
+									<h5>Title</h5>
+
+									<div class="movie-desc">I am a very simple card. I am
+										good at containing small bits of information. I am convenient
+										because I require little markup to use effectively. I am
+										similar to what is called a panel in other frameworks.</div>
+									<div class="spacer-thin"></div>
+									<div id="rate1" class="red-text text-lighten-1"
+										data-id="271110"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-panel white">
+							<div class="row">
+								<div class="col s4">
+									<img class="responsive-img" src="assets/img/sample/antman.jpg">
+								</div>
+
+								<div class="col s8">
+									<h5>Title</h5>
+
+									<div class="movie-desc">I am a very simple card. I am
+										good at containing small bits of information. I am convenient
+										because I require little markup to use effectively. I am
+										similar to what is called a panel in other frameworks.</div>
+									<div class="spacer-thin"></div>
+									<div id="rate2" class="red-text text-lighten-1"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-panel white">
+							<div class="row">
+								<div class="col s4">
+									<img class="responsive-img" src="assets/img/sample/antman.jpg">
+								</div>
+
+								<div class="col s8">
+									<h5>Title</h5>
+
+									<div class="text-wrapper">
+										<div class="small">
+											<p>I am a very simple card. I am good at containing small
+												bits of information. I am convenient because I require
+												little markup to use effectively. I am similar to what is
+												called a panel in other frameworks.</p>
+										</div>
+										<a href="#">Click to read more</a>
+									</div>
+									<div class="spacer-thin"></div>
+									<div id="rate3" class="red-text text-lighten-1"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div id="friends" class="col s12">
@@ -137,15 +218,76 @@
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/jquery.star.rating.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.shorten.min.js"></script>
 	<script>
-		$(document).ready(function() {
-			$(".button-collapse").sideNav({});
-			$(".dropdown-button").dropdown({
-				constrain_width : false,
-				alignment : 'right',
-				belowOrigin : true,
-			});
-		});
+		$(document)
+				.ready(
+						function() {
+							$(".button-collapse").sideNav({});
+							$(".dropdown-button").dropdown({
+								constrain_width : false,
+								alignment : 'right',
+								belowOrigin : true,
+							});
+
+							$('#rate1').addRating({
+								fieldName : 'rating1',
+								fieldId : 'rating1',
+							});
+							$('#rate2').addRating({
+								fieldName : 'rating2',
+								fieldId : 'rating2',
+							});
+							$('#rate3').addRating({
+								fieldName : 'rating3',
+								fieldId : 'rating3',
+							});
+							$('#rate4').addRating({
+								fieldName : 'rating4',
+								fieldId : 'rating4',
+							});
+							$('#rate5').addRating({
+								fieldName : 'rating5',
+								fieldId : 'rating5',
+							});
+
+							$('#rate1')
+									.click(
+											function() {
+												var tmdbId = $("#rate1").data(
+														"id");
+												var rating = $("#rating1").val();
+												$
+														.ajax({
+															type : "POST",
+															url : "/movie",
+															data : "tmdbId="
+																	+ tmdbId
+																	+ "&action=rate&rating="
+																	+ rating,
+															dataType : "json",
+
+															//if received a response from the server
+															success : function(
+																	data) {
+																if (!data.success) {
+																	Materialize
+																			.toast(
+																					"An error has occured, please try again later.",
+																					3000);
+																}
+															}
+														});
+											})
+
+							$(".movie-desc").shorten({
+								showChars : 120,
+								moreText : 'read more',
+								lessText : 'read less'
+							});
+						});
 	</script>
 </body>
 
