@@ -30,15 +30,17 @@
 	<c:if test="${isLoggedIn}">
 		<ul id="dropdown1" class="dropdown-content">
 			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-			<li><a href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+			<li><a
+				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
 					account</a></li>
 			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
 					out</a></li>
 		</ul>
 		<ul id="dropdown2" class="dropdown-content">
 			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-			<li><a href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
-					account</a></li>	
+			<li><a
+				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+					account</a></li>
 			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
 					out</a></li>
 		</ul>
@@ -265,7 +267,7 @@
 								<li class="collection-item avatar"><i
 									class="material-icons circle green">person</i> <span
 									class="title"><c:out value="${review.author.name }"></c:out></span>
-									<div class="more">
+									<div class="review-text">
 										<c:out value="${review.content }" escapeXml="false"></c:out>
 									</div></li>
 							</c:forEach>
@@ -336,6 +338,7 @@
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
 	<script type="text/javascript"
 		src="assets/js/jquery.star.rating.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.shorten.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$(".button-collapse").sideNav({});
@@ -352,6 +355,12 @@
 				belowOrigin : true,
 			});
 
+			$(".review-text").shorten({
+				showChars : 200,
+				moreText : 'read more',
+				lessText : 'read less'
+			});
+
 			// method to set rating
 			var i = 1;
 			$('.rating').find('i').each(function() {
@@ -361,48 +370,7 @@
 				$(this).text('favorite');
 				i--;
 			});
-		});
 
-		var showChar = 100; // shows 100 character by default
-		var ellipsestext = "...";
-		var moretext = "Read more";
-		var lesstext = "Collapse";
-
-		$('.more')
-				.each(
-						function() {
-							var content = $(this).html();
-
-							if (content.length > showChar) {
-
-								var c = content.substr(0, showChar);
-								var h = content.substr(showChar, content.length
-										- showChar);
-
-								var html = c
-										+ '<span class="moreellipses">'
-										+ ellipsestext
-										+ '&nbsp;</span><span class="morecontent"><span>'
-										+ h
-										+ '</span>&nbsp;&nbsp;<a href="" class="morelink">'
-										+ moretext + '</a></span>';
-
-								$(this).html(html);
-							}
-
-						});
-
-		$(".morelink").click(function() {
-			if ($(this).hasClass("less")) {
-				$(this).removeClass("less");
-				$(this).html(moretext);
-			} else {
-				$(this).addClass("less");
-				$(this).html(lesstext);
-			}
-			$(this).parent().prev().toggle();
-			$(this).prev().toggle();
-			return false;
 		});
 	</script>
 </body>
