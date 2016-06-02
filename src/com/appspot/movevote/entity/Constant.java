@@ -30,10 +30,16 @@ public class Constant {
 	public static final String MAILJET_API_Key = "c5bac2520255752262e21a9bdff488e4";
 	public static final String MAILJET_Secret_Key = "ff41dd63e9d30dc8c2c84321c3f5246d";
 
+	// movie action
+	public static final String MOVIE_EVENT_ACTION_CLICK = "click";
+	public static final String MOVIE_EVENT_ACTION_RATE = "rate";
+	public static final String MOVIE_EVENT_ACTION_WANT_TO_WATCH = "want_to_watch";
+	public static final String MOVIE_EVENT_ACTION_WATCH = "watch";
+
 	// DataStore
 	// tables
 	public static final String DS_TABLE_INSING_MOVIE = "now_showing_insing_movie";
 	public static final String DS_TABLE_USER = "user";
 	public static final String DS_TABLE_MOVIE_EVENT = "movie_event";
-	public static final String DS_TABLE_TMDB_MOVIE= "tmdb_movie";
+	public static final String DS_TABLE_TMDB_MOVIE = "tmdb_movie";
 }
