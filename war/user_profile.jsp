@@ -103,17 +103,14 @@
 		<div class="container">
 			<div class="spacer-thick"></div>
 			<div class="row">
-				<div class="col s6 m4 offset-s3 offset-m4 center">
-					<img class="responsive-img circle profile_logo"
-						src="<c:out value="${userInfo.profilePath}"></c:out>">
-					<h5 class="white-text thin">
+				<div class="col s10 offset-s1 center">
+					<h4 class="white-text">
 						<c:out value="${userInfo.name}"></c:out>
-					</h5>
+					</h4>
 				</div>
 			</div>
 
 			<div class="row center white-text">
-				<div class="spacer-thin"></div>
 				<div class="col s10 m6 offset-m3 offset-s1">
 					<div class="row">
 						<div class="col s4">
@@ -146,21 +143,21 @@
 
 			<div id="friends" class="col s12">
 				<div class="spacer-thin"></div>
-				<div class="col s12">
-					<ul class="collection">
-						<li class="collection-item avatar"><img
-							src="assets/img/profile/david_ten.jpg" alt="" class="circle">
-							<span class="title">David</span>
-							<p>1 movie watched</p> <a href="#!" class="secondary-content"><i
-								class="material-icons">clear</i></a></li>
-						<li class="collection-item avatar"><i
-							class="material-icons circle green">person</i> <span
-							class="title">Wei Han</span>
-							<p>6 movie watched</p> <a href="#!" class="secondary-content"><i
-								class="material-icons">clear</i></a></li>
-					</ul>
-				</div>
+				<ul class="collection">
+					<li class="collection-item avatar"><img
+						src="assets/img/profile/david_ten.jpg" alt="" class="circle">
+						<span class="title">David</span>
+						<p>1 movie watched</p> <a href="#!" class="secondary-content"><i
+							class="material-icons">clear</i></a></li>
+					<li class="collection-item avatar"><i
+						class="material-icons circle green">person</i> <span class="title">Wei
+							Han</span>
+						<p>6 movie watched</p> <a href="#!" class="secondary-content"><i
+							class="material-icons">clear</i></a></li>
+				</ul>
 			</div>
+
+
 			<div id="to-watch" class="col s12">Test 2</div>
 			<div id="watched" class="col s12">Test 3</div>
 		</div>
