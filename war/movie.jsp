@@ -174,7 +174,7 @@
 
 					<div class="section">
 						<h5>How much you like this movie?</h5>
-						<div class="rating red-text text-lighten-2"></div>
+						<div id="rate" class="red-text text-lighten-1" data-id="271110"></div>
 					</div>
 				</div>
 
@@ -347,7 +347,10 @@
 
 			$('select').material_select();
 
-			$('.rating').addRating();
+			$('#rate').addRating({
+				fieldName : 'rating',
+				fieldId : 'rating',
+			});
 
 			$(".dropdown-button").dropdown({
 				constrain_width : false,

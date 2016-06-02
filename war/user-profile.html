@@ -102,18 +102,18 @@
 
 			<div id="tellme" class="col s12">
 
-
 				<div class="row">
 					<div class="spacer-thin"></div>
 					<div class="col s12">
 						<div class="card-panel teal lighten-2">
 							<span class="white-text">Hi Wei Kang! Can you tell us how
-								much you like the movies below as this will help us to recommend
-								movies that you will like.</span>
+								much you like the movie shown below and the more movies you
+								rate, we will be able to recommend you more movies that you will
+								like.</span>
 						</div>
 					</div>
 
-					<div class="col s12 cards-container">
+					<div class="col s12">
 
 						<div class="card-panel white">
 							<div class="row">
@@ -123,60 +123,21 @@
 
 								<div class="col s8">
 									<h5>Title</h5>
-
+									<p>2016-04-27 | 2h 26min | 6.9/10</p>
+									<div class="chip">Action</div>
+									<div class="chip">Adventure</div>
+									<div class="chip">Triller</div>
+									<div class="spacer-thin"></div>
 									<div class="movie-desc">I am a very simple card. I am
 										good at containing small bits of information. I am convenient
 										because I require little markup to use effectively. I am
 										similar to what is called a panel in other frameworks.</div>
 									<div class="spacer-thin"></div>
-									<div id="rate1" class="red-text text-lighten-1"
-										data-id="271110"></div>
+									<div id="rate" class="red-text text-lighten-1" data-id="271110"></div>
 								</div>
 							</div>
 						</div>
 
-						<div class="card-panel white">
-							<div class="row">
-								<div class="col s4">
-									<img class="responsive-img" src="assets/img/sample/antman.jpg">
-								</div>
-
-								<div class="col s8">
-									<h5>Title</h5>
-
-									<div class="movie-desc">I am a very simple card. I am
-										good at containing small bits of information. I am convenient
-										because I require little markup to use effectively. I am
-										similar to what is called a panel in other frameworks.</div>
-									<div class="spacer-thin"></div>
-									<div id="rate2" class="red-text text-lighten-1"></div>
-								</div>
-							</div>
-						</div>
-
-						<div class="card-panel white">
-							<div class="row">
-								<div class="col s4">
-									<img class="responsive-img" src="assets/img/sample/antman.jpg">
-								</div>
-
-								<div class="col s8">
-									<h5>Title</h5>
-
-									<div class="text-wrapper">
-										<div class="small">
-											<p>I am a very simple card. I am good at containing small
-												bits of information. I am convenient because I require
-												little markup to use effectively. I am similar to what is
-												called a panel in other frameworks.</p>
-										</div>
-										<a href="#">Click to read more</a>
-									</div>
-									<div class="spacer-thin"></div>
-									<div id="rate3" class="red-text text-lighten-1"></div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -232,33 +193,17 @@
 								belowOrigin : true,
 							});
 
-							$('#rate1').addRating({
-								fieldName : 'rating1',
-								fieldId : 'rating1',
-							});
-							$('#rate2').addRating({
-								fieldName : 'rating2',
-								fieldId : 'rating2',
-							});
-							$('#rate3').addRating({
-								fieldName : 'rating3',
-								fieldId : 'rating3',
-							});
-							$('#rate4').addRating({
-								fieldName : 'rating4',
-								fieldId : 'rating4',
-							});
-							$('#rate5').addRating({
-								fieldName : 'rating5',
-								fieldId : 'rating5',
+							$('#rate').addRating({
+								fieldName : 'rating',
+								fieldId : 'rating',
 							});
 
-							$('#rate1')
+							$('#rate')
 									.click(
 											function() {
-												var tmdbId = $("#rate1").data(
+												var tmdbId = $("#rate").data(
 														"id");
-												var rating = $("#rating1").val();
+												var rating = $("#rating").val();
 												$
 														.ajax({
 															type : "POST",
@@ -283,7 +228,7 @@
 											})
 
 							$(".movie-desc").shorten({
-								showChars : 120,
+								showChars : 200,
 								moreText : 'read more',
 								lessText : 'read less'
 							});
