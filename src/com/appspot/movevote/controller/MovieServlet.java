@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.MovieEvent;
-import com.appspot.movevote.entity.MovieEventActionEnum;
 import com.appspot.movevote.entity.TMDBMovie;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
+import com.google.gson.JsonObject;
 import com.google.identitytoolkit.GitkitUser;
 
 /**
@@ -84,13 +84,58 @@ public class MovieServlet extends HttpServlet {
 
 				// store this click event
 				MovieEvent event = new MovieEvent(userInfo.getId(), tmdbId,
-						MovieEventActionEnum.CLICK);
-				event.storeAction();
+						Constant.MOVIE_EVENT_ACTION_CLICK);
+				event.storeEventRecord();
 			}
 
 			request.setAttribute("isLoggedIn", isLoggedIn);
 
 			getServletContext().getRequestDispatcher("/movie.jsp").forward(request, response);
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		if (req.getParameter("tmdbId") == null || req.getParameter("action") == null
+				|| (req.getParameter("action").equals(Constant.MOVIE_EVENT_ACTION_RATE)
+						&& req.getParameter("rating") == null)) {
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+		} else {
+			JsonObject respObj = new JsonObject();
+
+			// check if user is login
+			GitkitHelper gitkitHelper = new GitkitHelper(this);
+			GitkitUser gitkitUser = gitkitHelper.validateLogin((HttpServletRequest) req);
+
+			if (gitkitUser == null) {
+				resp.sendRedirect(req.getContextPath() + Constant.LOGIN_PATH);
+				respObj.addProperty("success", false);
+			} else {
+				String tmdbId = req.getParameter("tmdbId");
+				String action = req.getParameter("action");
+
+				try {
+					switch (action) {
+					case Constant.MOVIE_EVENT_ACTION_RATE:
+
+						int rating = Integer.parseInt(req.getParameter("rating"));
+						MovieEvent event = new MovieEvent(gitkitUser.getLocalId(), tmdbId,
+								Constant.MOVIE_EVENT_ACTION_RATE, rating);
+						event.storeEventRecord();
+
+						break;
+					}
+
+					respObj.addProperty("success", true);
+				} catch (NumberFormatException nfe) {
+					respObj.addProperty("success", false);
+					System.out.println(nfe.getMessage());
+				}
+			}
+
+			resp.getWriter().println(respObj.toString());
 		}
 	}
 }
