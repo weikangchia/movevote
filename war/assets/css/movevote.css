@@ -60,19 +60,6 @@ main {
 	height: 150px;
 }
 
-.collapsible-body {
-	margin: 0;
-	padding: 1rem;
-}
-
-.morecontent span {
-	display: none;
-}
-
-.morelink {
-	display: block;
-}
-
 .spacer-thin {
 	height: 1rem;
 	width: 100%;
@@ -86,4 +73,45 @@ main {
 .spacer-thick {
 	height: 4rem;
 	width: 100%;
+}
+
+/* more content */
+.small {
+	height: 80px;
+	overflow: hidden;
+}
+
+.big {
+	height: auto;
+}
+
+/* rating star */
+i {
+	cursor: pointer;
+}
+
+/* card flow layout */
+.cards-container {
+	column-break-inside: avoid;
+}
+
+.cards-container .card-panel {
+	display: inline-block;
+	overflow: visible;
+}
+
+@media only screen and (max-width: 600px) {
+	.cards-container {
+		-webkit-column-count: 1;
+		-moz-column-count: 1;
+		column-count: 1;
+	}
+}
+
+@media only screen and (min-width: 601px) {
+	.cards-container {
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+	}
 }
