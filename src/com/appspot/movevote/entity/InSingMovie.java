@@ -161,10 +161,14 @@ public class InSingMovie extends Movie {
 			movieEntity.setProperty("tmdbId", newMovie.getTmdbId());
 			dataStore.put(movieEntity);
 
-			movieEntity = new Entity(Constant.DS_TABLE_TMDB_MOVIE, newMovie.getTmdbId());
-			movieEntity.setProperty("title", StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
-			movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
-			dataStore.put(movieEntity);
+			// if tmdbId is null, don't store it into the tmdb movie table
+			if (newMovie.getTmdbId() != null) {
+				movieEntity = new Entity(Constant.DS_TABLE_TMDB_MOVIE, newMovie.getTmdbId());
+				movieEntity.setProperty("title",
+						StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
+				movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
+				dataStore.put(movieEntity);
+			}
 		}
 
 		log.info(movieMap.size() + " new movies are added into the datastore and "
