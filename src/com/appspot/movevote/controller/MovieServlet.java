@@ -35,8 +35,6 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
 		// send error if one of this parameter are null
 		if (request.getParameter("provider") == null || request.getParameter("is_id") == null
 				|| request.getParameter("tmdb_id") == null) {
@@ -48,7 +46,7 @@ public class MovieServlet extends HttpServlet {
 
 			switch (provider) {
 			case Constant.PROVIDER_INSING:
-				TMDBMovie movie = TMDBMovie.retrieveTMDBIdById(tmdbId);
+				TMDBMovie movie = TMDBMovie.getTMDBMovie(tmdbId);
 				request.setAttribute("movie", movie);
 
 				// convert movie.duration to string format
