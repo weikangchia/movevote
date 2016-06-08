@@ -1,9 +1,5 @@
 package com.appspot.movevote.entity;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,13 +8,13 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import com.appspot.movevote.helper.InternetHelper;
 import com.appspot.movevote.helper.TMDBHelper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TMDBMovie extends Movie {
 	private static final Logger log = Logger.getLogger(TMDBMovie.class.getName());
-	private static final int INIT_CREW_CAPACITY = 30;
 
 	private String tagLine;
 	private String overview;
@@ -36,7 +32,7 @@ public class TMDBMovie extends Movie {
 		super(id);
 		genreList = new ArrayList<Genre>();
 		castList = new ArrayList<Cast>();
-		setCrewMapList(new HashMap<String, ArrayList<Crew>>(INIT_CREW_CAPACITY));
+		setCrewMapList(new HashMap<String, ArrayList<Crew>>());
 		youTubeVideoList = new ArrayList<YouTubeVideo>();
 		similarList = new ArrayList<TMDBMovie>();
 		setReviewList(new ArrayList<Review>());
@@ -135,53 +131,49 @@ public class TMDBMovie extends Movie {
 	}
 
 	/**
-	 * Retrieve TMDB id based on a movie title
+	 * Find TMDB movie id based on movie title
 	 * 
-	 * @param query
+	 * @param title
 	 *            movie title
 	 * @return id: tmdbId
 	 */
-	public static String retrieveTMDBIdByQuery(String query) {
+	public static String findTMDBId(String title) {
 		String id = null;
 
 		try {
 			String urlStr = Constant.TMDB_HOSTNAME + "search/movie?api_key=" + Constant.TMDB_API_KEY
-					+ "&query=" + URLEncoder.encode(query, "UTF-8") + "&year="
+					+ "&query=" + URLEncoder.encode(title, "UTF-8") + "&year="
 					+ Calendar.getInstance().get(Calendar.YEAR);
 
-			URL url = new URL(urlStr);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
+			InternetHelper internetHelper = new InternetHelper(urlStr);
+			String json = internetHelper.downloadJson();
 
-			if (connection.getResponseCode() == Internet.SUCCESS) {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String jsonLine = br.readLine();
-
+			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(jsonLine);
+				JsonNode parentNode = mapper.readTree(json);
 				JsonNode resultNode = parentNode.findPath("results");
 
 				if (resultNode.size() > 0) {
 					id = resultNode.get(0).get("id").asText();
 				}
+			} else {
+				return id;
 			}
 		} catch (Exception ex) {
-			log.warning("Unable to retrieve tmdb id for " + query);
+			log.warning("Unable to retrieve tmdb id for " + title);
 		}
 
 		return id;
 	}
 
 	/**
-	 * Retrieve TMDB id based on a tmdb id
+	 * Get TMDB movie based on tmdb id
 	 * 
 	 * @param id
 	 *            tmdb id
 	 * @return TMDBMovie object
 	 */
-	public static TMDBMovie retrieveTMDBIdById(String id) {
+	public static TMDBMovie getTMDBMovie(String id) {
 		TMDBMovie movie = new TMDBMovie(id);
 
 		// retrieve main movie details
@@ -189,20 +181,12 @@ public class TMDBMovie extends Movie {
 			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			System.out.println(urlStr);
+			InternetHelper internetHelper = new InternetHelper(urlStr);
+			String json = internetHelper.downloadJson();
 
-			URL url = new URL(urlStr);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-
-			if (connection.getResponseCode() == Internet.SUCCESS) {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String jsonLine = br.readLine();
-
+			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(jsonLine);
+				JsonNode parentNode = mapper.readTree(json);
 
 				movie.setTitle(parentNode.get("original_title").asText());
 				movie.setOverview(
@@ -241,20 +225,12 @@ public class TMDBMovie extends Movie {
 			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/credits?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			System.out.println(urlStr);
+			InternetHelper internetHelper = new InternetHelper(urlStr);
+			String json = internetHelper.downloadJson();
 
-			URL url = new URL(urlStr);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-
-			if (connection.getResponseCode() == Internet.SUCCESS) {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String jsonLine = br.readLine();
-
+			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(jsonLine);
+				JsonNode parentNode = mapper.readTree(json);
 
 				// retrieve cast list
 				JsonNode castNodes = parentNode.path("cast");
@@ -294,22 +270,12 @@ public class TMDBMovie extends Movie {
 			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/videos?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			System.out.println(urlStr);
+			InternetHelper internetHelper = new InternetHelper(urlStr);
+			String json = internetHelper.downloadJson();
 
-			URL url = new URL(urlStr);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-
-			if (connection.getResponseCode() == Internet.SUCCESS) {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String jsonLine = br.readLine();
-
+			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(jsonLine);
-
-				// retrieve cast list
+				JsonNode parentNode = mapper.readTree(json);
 				JsonNode videoNodes = parentNode.path("results");
 				for (int i = 0; i < videoNodes.size(); i++) {
 					movie.youTubeVideoList
@@ -326,20 +292,12 @@ public class TMDBMovie extends Movie {
 			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/similar?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			System.out.println(urlStr);
+			InternetHelper internetHelper = new InternetHelper(urlStr);
+			String json = internetHelper.downloadJson();
 
-			URL url = new URL(urlStr);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-
-			if (connection.getResponseCode() == Internet.SUCCESS) {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String jsonLine = br.readLine();
-
+			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(jsonLine);
+				JsonNode parentNode = mapper.readTree(json);
 
 				// retrieve movie details
 				JsonNode resultNodes = parentNode.path("results");
@@ -362,20 +320,12 @@ public class TMDBMovie extends Movie {
 			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/reviews?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			System.out.println(urlStr);
+			InternetHelper internetHelper = new InternetHelper(urlStr);
+			String json = internetHelper.downloadJson();
 
-			URL url = new URL(urlStr);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-
-			if (connection.getResponseCode() == Internet.SUCCESS) {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String jsonLine = br.readLine();
-
+			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(jsonLine);
+				JsonNode parentNode = mapper.readTree(json);
 
 				// retrieve review details
 				JsonNode resultNodes = parentNode.path("results");

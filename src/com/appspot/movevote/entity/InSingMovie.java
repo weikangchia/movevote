@@ -1,5 +1,6 @@
 package com.appspot.movevote.entity;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class InSingMovie extends Movie {
 
 		try {
 			Response mainResponse = Jsoup.connect(Constant.INSING_HOSTNAME + "movies/").execute();
-			if (mainResponse.statusCode() == Internet.SUCCESS) {
+			if (mainResponse.statusCode() == HttpURLConnection.HTTP_OK) {
 				log.info("Connected successfully to " + Constant.INSING_HOSTNAME + "movies/");
 
 				Document doc = mainResponse.parse();
@@ -89,12 +90,12 @@ public class InSingMovie extends Movie {
 								+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3] + "/showtimes")
 								.execute();
 
-						if (detailResponse.statusCode() == Internet.SUCCESS) {
+						if (detailResponse.statusCode() == HttpURLConnection.HTTP_OK) {
 							Document doc2 = detailResponse.parse();
 							Element movieImageElement = doc2.select("figure[class^=thumbnail")
 									.select("a").select("img").first();
 
-							String tmdbId = TMDBMovie.retrieveTMDBIdByQuery(title);
+							String tmdbId = TMDBMovie.findTMDBId(title);
 							String imageUrl = movieImageElement.attr("src");
 
 							if (tmdbId != null) {
