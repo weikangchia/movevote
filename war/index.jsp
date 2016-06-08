@@ -116,12 +116,16 @@
 					<h5 class="thin">Recommend movie to you and your friends</h5>
 				</div>
 			</div>
-			<div class="spacer-normal"></div>
-			<div class="row">
-				<div class="col s12 center">
-					<a href="${pageContext.request.contextPath}/gitkit?mode=select" class="btn btn-large red lighten-1">Get Started</a>
+
+			<c:if test="${not isLoggedIn}">
+				<div class="spacer-normal"></div>
+				<div class="row">
+					<div class="col s12 center">
+						<a href="${pageContext.request.contextPath}/gitkit?mode=select"
+							class="btn btn-large red lighten-1">Get Started</a>
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="spacer-thick"></div>
 			<div class="spacer-thick"></div>
 		</div>
