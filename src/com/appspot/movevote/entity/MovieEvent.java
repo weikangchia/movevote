@@ -1,10 +1,13 @@
 package com.appspot.movevote.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilter;
@@ -20,6 +23,15 @@ public class MovieEvent {
 	private String eventAction;
 	private int rating;
 
+	public MovieEvent() {
+
+	}
+
+	public MovieEvent(String userId, String eventAction) {
+		this.userId = userId;
+		this.eventAction = eventAction;
+	}
+
 	public MovieEvent(String userId, String tmdbId, String eventAction) {
 		this.userId = userId;
 		this.tmdbId = tmdbId;
@@ -34,7 +46,7 @@ public class MovieEvent {
 	public void storeEventRecord() {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 
-		Entity eventEntity = getEventRecord();
+		Entity eventEntity = getSpecificEventRecord();
 		if (eventEntity == null) {
 			eventEntity = new Entity(Constant.DS_TABLE_MOVIE_EVENT);
 			eventEntity.setProperty("userId", userId);
@@ -60,7 +72,7 @@ public class MovieEvent {
 		dataStore.put(eventEntity);
 	}
 
-	private Entity getEventRecord() {
+	public Entity getSpecificEventRecord() {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 
 		Filter tmdbIdFilter = new FilterPredicate("tmdbId", FilterOperator.EQUAL, tmdbId);
@@ -75,6 +87,39 @@ public class MovieEvent {
 		Entity eventEntity = pq.asSingleEntity();
 
 		return eventEntity;
+	}
+
+	public List<Entity> getSpecificEventRecords() {
+		List<Entity> entityList = new ArrayList<Entity>();
+		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
+
+		Filter userIdFilter = new FilterPredicate("userId", FilterOperator.EQUAL, userId);
+		Filter actionFilter = new FilterPredicate("action", FilterOperator.EQUAL, eventAction);
+
+		CompositeFilter movieEventCompFilter = CompositeFilterOperator.and(userIdFilter,
+				actionFilter);
+		Query query = new Query(Constant.DS_TABLE_MOVIE_EVENT).setFilter(movieEventCompFilter);
+
+		PreparedQuery pq = dataStore.prepare(query);
+		for (Entity entity : pq.asIterable()) {
+			entityList.add(entity);
+		}
+
+		return entityList;
+	}
+
+	public int getSpecificEventRecordCount() {
+		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
+
+		Filter userIdFilter = new FilterPredicate("userId", FilterOperator.EQUAL, userId);
+		Filter actionFilter = new FilterPredicate("action", FilterOperator.EQUAL, eventAction);
+
+		CompositeFilter movieEventCompFilter = CompositeFilterOperator.and(userIdFilter,
+				actionFilter);
+		Query query = new Query(Constant.DS_TABLE_MOVIE_EVENT).setFilter(movieEventCompFilter);
+
+		PreparedQuery pq = dataStore.prepare(query);
+		return pq.countEntities(FetchOptions.Builder.withDefaults());
 	}
 
 	public String getEventId() {
