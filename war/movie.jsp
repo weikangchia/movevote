@@ -173,8 +173,21 @@
 					</div>
 
 					<div class="section">
-						<h5>How much you like this movie?</h5>
-						<div id="rate" class="red-text text-lighten-1" data-id="271110"></div>
+						<c:choose>
+							<c:when test="${ hasRated }">
+								<h5 id="rateTitle">You have rated</h5>
+								<div id="rate" class="red-text text-lighten-1"
+									data-id="<c:out value="${movie.id}"></c:out>"
+									data-prevRating="<c:out value="${rating}"></c:out>"
+									onclick="rateMovie()"></div>
+							</c:when>
+							<c:otherwise>
+								<h5 id="rateTitle">How much you like this movie?</h5>
+								<div id="rate" class="red-text text-lighten-1"
+									data-id="<c:out value="${movie.id}"></c:out>"
+									data-prevRating="0" onclick="rateMovie()"></div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 
@@ -348,8 +361,8 @@
 			$('select').material_select();
 
 			$('#rate').addRating({
-				fieldName : 'rating',
-				fieldId : 'rating',
+				fieldName : 'rateRating',
+				fieldId : 'rateRating',
 			});
 
 			$(".dropdown-button").dropdown({
@@ -365,16 +378,41 @@
 			});
 
 			// method to set rating
-			var i = 1;
-			$('.rating').find('i').each(function() {
+			var i = $("#rate").attr("data-prevRating");
+			$('#rate').find('i').each(function() {
 				if (i == 0) {
 					return false;
 				}
-				$(this).text('favorite');
+				$(this).text('star');
 				i--;
 			});
 
 		});
+
+		function rateMovie() {
+			var tmdbId = $("#rate").attr("data-id");
+			var rating = $("#rateRating").val();
+			$
+					.ajax({
+						type : "POST",
+						url : "/movie",
+						data : "tmdbId=" + tmdbId + "&action=rate&rating="
+								+ rating,
+						dataType : "json",
+
+						//if received a response from the server
+						success : function(data) {
+							if (data.success) {
+								$("#rateTitle").html("You have rated");
+							} else {
+								Materialize
+										.toast(
+												"An error has occured, please try again later.",
+												3000);
+							}
+						}
+					});
+		}
 	</script>
 </body>
 
