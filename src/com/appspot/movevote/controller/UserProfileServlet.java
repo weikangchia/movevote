@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.appspot.movevote.entity.Constant;
+import com.appspot.movevote.entity.MovieEvent;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
 import com.google.identitytoolkit.GitkitClientException;
@@ -119,6 +120,12 @@ public class UserProfileServlet extends HttpServlet {
 					}
 				}
 			}
+
+			// check if user has rated 5 movies already
+			MovieEvent event = new MovieEvent(userInfo.getId(), Constant.MOVIE_EVENT_ACTION_RATE);
+			int rateCount = event.getSpecificEventRecordCount();
+
+			request.setAttribute("rateCount", rateCount);
 		}
 
 		request.setAttribute("isLoggedIn", isLoggedIn);

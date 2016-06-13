@@ -1,6 +1,8 @@
 package com.appspot.movevote.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,9 @@ import com.appspot.movevote.entity.MovieEvent;
 import com.appspot.movevote.entity.TMDBMovie;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
+import com.google.appengine.api.datastore.Entity;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.identitytoolkit.GitkitUser;
 
@@ -35,11 +40,32 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// send error if one of this parameter are null
-		if (request.getParameter("provider") == null || request.getParameter("is_id") == null
-				|| request.getParameter("tmdb_id") == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		// check if user is login
+		boolean isLoggedIn = false;
+		boolean isVerified = false;
+		User userInfo = null;
+		GitkitHelper gitkitHelper = new GitkitHelper(this);
+		GitkitUser gitkitUser = gitkitHelper.validateLogin((HttpServletRequest) request);
+
+		if (gitkitUser == null) {
+			response.sendRedirect(request.getContextPath() + Constant.LOGIN_PATH);
 		} else {
+			isLoggedIn = true;
+			isVerified = User.checkIsUserVerified(request.getCookies(),
+					gitkitHelper.getGitkitClient());
+
+			userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
+					gitkitUser.getPhotoUrl(), gitkitUser.getEmail(),
+					gitkitUser.getCurrentProvider(), isVerified);
+
+			request.setAttribute("userInfo", userInfo);
+		}
+
+		request.setAttribute("isLoggedIn", isLoggedIn);
+
+		// send error if one of this parameter are null
+		if (request.getParameter("provider") != null && request.getParameter("is_id") != null
+				&& request.getParameter("tmdb_id") != null) {
 			String provider = request.getParameter("provider");
 			String inSingId = request.getParameter("is_id");
 			String tmdbId = request.getParameter("tmdb_id");
@@ -61,34 +87,93 @@ public class MovieServlet extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 
-			// check if user is login
-			boolean isLoggedIn = false;
-			boolean isVerified = false;
-			GitkitHelper gitkitHelper = new GitkitHelper(this);
-			GitkitUser gitkitUser = gitkitHelper.validateLogin((HttpServletRequest) request);
+			// store this click event
+			MovieEvent event = new MovieEvent(userInfo.getId(), tmdbId,
+					Constant.MOVIE_EVENT_ACTION_CLICK);
+			event.storeEventRecord();
 
-			if (gitkitUser == null) {
-				response.sendRedirect(request.getContextPath() + Constant.LOGIN_PATH);
+			// check if user has rated this movie
+			event.setEventAction(Constant.MOVIE_EVENT_ACTION_RATE);
+			Entity eventEntity = event.getSpecificEventRecord();
+			if (eventEntity == null) {
+				request.setAttribute("hasRated", false);
 			} else {
-				isLoggedIn = true;
-				isVerified = User.checkIsUserVerified(request.getCookies(),
-						gitkitHelper.getGitkitClient());
-
-				User userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
-						gitkitUser.getPhotoUrl(), gitkitUser.getEmail(),
-						gitkitUser.getCurrentProvider(), isVerified);
-
-				request.setAttribute("userInfo", userInfo);
-
-				// store this click event
-				MovieEvent event = new MovieEvent(userInfo.getId(), tmdbId,
-						Constant.MOVIE_EVENT_ACTION_CLICK);
-				event.storeEventRecord();
+				request.setAttribute("hasRated", true);
+				request.setAttribute("rating", eventEntity.getProperty("rating"));
 			}
 
-			request.setAttribute("isLoggedIn", isLoggedIn);
-
 			getServletContext().getRequestDispatcher("/movie.jsp").forward(request, response);
+		} else if (request.getParameter("action") != null) {
+			String action = request.getParameter("action");
+			JsonObject respObj = new JsonObject();
+			switch (action) {
+			case Constant.MOVIE_EVENT_ACTION_RATE:
+				int skip = 0;
+				int page = 1;
+
+				if (request.getParameter("skip") != null
+						&& request.getParameter("skip").length() > 0
+						&& request.getParameter("page") != null
+						&& request.getParameter("page").length() > 0) {
+					try {
+						skip = Integer.parseInt(request.getParameter("skip"));
+						page = Integer.parseInt(request.getParameter("page"));
+					} catch (NumberFormatException nfe) {
+					}
+				} else {
+					respObj.addProperty("success", false);
+				}
+
+				// pick movies from 10 year ago and above only
+				int year = Calendar.getInstance().get(Calendar.YEAR) - 10;
+				TMDBMovie movie = null;
+				do {
+					// get a list of movie
+					ArrayList<TMDBMovie> movieList = TMDBMovie.getNewDiscoverList(year, page, 4.5);
+					for (int i = skip; i < movieList.size(); i++) {
+						MovieEvent movieEvent = new MovieEvent(userInfo.getId(),
+								movieList.get(i).getId(), Constant.MOVIE_EVENT_ACTION_RATE);
+						if (movieEvent.getSpecificEventRecord() == null) {
+							movie = movieList.get(i);
+
+							if (i == movieList.size() - 1) { // end of page
+								page++;
+								skip = 0;
+							} else { // still have movie in this page
+								skip = i + 1;
+							}
+							break;
+						}
+					}
+
+					if (movie == null) {
+						page++;
+					}
+				} while (movie == null);
+
+				respObj.addProperty("tmdbId", movie.getId());
+				respObj.addProperty("success", true);
+				respObj.addProperty("title", movie.getTitle());
+				respObj.addProperty("overview", movie.getOverview());
+				respObj.addProperty("imageUrl", movie.getImageUrl());
+				respObj.addProperty("imageBackdropUrl", movie.getImageBackUrl());
+				respObj.addProperty("rating", movie.getRating());
+				respObj.addProperty("releaseDate", movie.getReleaseDate());
+				respObj.addProperty("tmdbId", movie.getId());
+				respObj.addProperty("skip", skip);
+				respObj.addProperty("page", page);
+
+				JsonElement genreList = new Gson().toJsonTree(movie.getGenreList());
+				respObj.add("genreList", genreList);
+
+				response.getWriter().println(respObj.toString());
+				break;
+			default:
+				// not one of the provider
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
+		} else {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
 
@@ -117,7 +202,6 @@ public class MovieServlet extends HttpServlet {
 				try {
 					switch (action) {
 					case Constant.MOVIE_EVENT_ACTION_RATE:
-
 						int rating = Integer.parseInt(req.getParameter("rating"));
 						MovieEvent event = new MovieEvent(gitkitUser.getLocalId(), tmdbId,
 								Constant.MOVIE_EVENT_ACTION_RATE, rating);
