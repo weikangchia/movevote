@@ -79,4 +79,14 @@
     <servlet-name>CallbackServlet</servlet-name>
     <url-pattern>/callback</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TellMeServlet</display-name>
+    <servlet-name>TellMeServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.TellMeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TellMeServlet</servlet-name>
+    <url-pattern>/movie/tell_me</url-pattern>
+  </servlet-mapping>
 </web-app>
