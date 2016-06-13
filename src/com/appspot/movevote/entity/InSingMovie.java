@@ -34,7 +34,7 @@ public class InSingMovie extends Movie {
 
 	public InSingMovie(String id, String title, String imageUrl) {
 		super(id, title, imageUrl);
-		this.setTmdbId("");
+		this.setTmdbId(null);
 	}
 
 	public InSingMovie(String id, String title, String imageUrl, String tmdbID) {
@@ -80,7 +80,6 @@ public class InSingMovie extends Movie {
 				for (Element movieElement : movieListElements) {
 					String[] splitInSingIdArr = movieElement.select("figure").select("a")
 							.attr("href").split("/");
-					System.out.println(splitInSingIdArr[3]);
 					String inSingId = splitInSingIdArr[3].substring(3,
 							splitInSingIdArr[3].length());
 					String title = movieElement.select("figure").select("a").attr("title");
