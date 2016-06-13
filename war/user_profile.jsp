@@ -132,6 +132,68 @@
 
 	<div class="container">
 		<div class="spacer-normal"></div>
+
+		<c:if test="${rateCount < 6}">
+			<div class="row">
+				<div class="spacer-thin"></div>
+				<div class="col s12">
+					<div class="card-panel teal lighten-2">
+						<span class="white-text">It seems that you have not rated
+							enough movie yet. Please rate the movies below so that we can
+							recommend you more movies that you will like.</span>
+					</div>
+				</div>
+				<div class="col s12">
+					<div class="card white">
+						<div class="card-content">
+							<div id="rateLoadingPanel" class="row center">
+								<div class="col s12">
+									<div class="preloader-wrapper small active">
+										<div class="spinner-layer spinner-red-only">
+											<div class="circle-clipper left">
+												<div class="circle"></div>
+											</div>
+											<div class="gap-patch">
+												<div class="circle"></div>
+											</div>
+											<div class="circle-clipper right">
+												<div class="circle"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="rateLoadedPanel" class="row hide">
+								<div class="col s12 m4 l3">
+									<img id="rateImg" class="responsive-img hide-on-small-only"
+										src=""> <img id="rateImgBackdrop"
+										class="responsive-img hide-on-med-and-up" src="">
+								</div>
+								<div class="col s12 m8 l9">
+									<h5 id="rateTitle"></h5>
+									<p id="rateSubText"></p>
+									<div class="spacer-thin"></div>
+									<div id="rateGenre"></div>
+									<div class="spacer-thin"></div>
+									<div id="rateDesc"></div>
+									<div class="spacer-thin"></div>
+									<div id="rateWidget"></div>
+								</div>
+							</div>
+						</div>
+						<div id="rateMsgPanel" class="row hide center">
+							<p id="rateErrorMsg" class="col s10 offset-s1">So
+								embarrassing, we are unable to generate any more movies for you
+								to rate.</p>
+						</div>
+						<div id="rateCardAction" class="card-action hide">
+							<a id="rateSkip" href="javascript:void(0)">Skip</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs">
@@ -179,6 +241,8 @@
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/jquery.star.rating.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$(".button-collapse").sideNav({});
@@ -187,7 +251,103 @@
 				alignment : 'right',
 				belowOrigin : true,
 			});
+
+			getRateMovie(0, 1);
 		});
+
+		function rateMovie() {
+			var tmdbId = $("#rate").attr("data-id");
+			var next = $("#rateSkip").attr("data-skip");
+			var page = $("#rateSkip").attr("data-page");
+			var rating = $("#rateRating").val();
+			$
+					.ajax({
+						type : "POST",
+						url : "/movie",
+						data : "tmdbId=" + tmdbId + "&action=rate&rating="
+								+ rating,
+						dataType : "json",
+
+						//if received a response from the server
+						success : function(data) {
+							if (!data.success) {
+								Materialize
+										.toast(
+												"An error has occured, please try again later.",
+												3000);
+							} else {
+								getRateMovie(next);
+							}
+						}
+					});
+		}
+
+		function getRateMovie(skip, page) {
+			$
+					.ajax({
+						url : "/movie",
+						data : "action=rate&skip=" + skip + "&page=" + page,
+						dataType : "json",
+						beforeSend : function() {
+							$("#rateLoadingPanel").attr("class", "row center");
+							$("#rateLoadedPanel").attr("class", "row hide");
+							$("#rateMsgPanel").attr("class", "row hide");
+							$("#rateCardAction").attr("class", "row hide");
+						},
+						success : function(data) {
+							if (!data.success) {
+								$("#rateLoadingPanel")
+										.attr("class", "row hide");
+								$("#rateLoadedPanel").attr("class", "row hide");
+								$("#rateMsgPanel").attr("class", "row center");
+								$("#rateCardAction").attr("class", "row hide");
+							} else {
+								initializeRate();
+								$("#rateSkip").attr("data-skip", data.skip);
+								$("#rateSkip").attr("data-page", data.page);
+								$("#rateSkip").attr(
+										"onclick",
+										'getRateMovie(' + data.skip + ','
+												+ data.page + ');');
+								$("#rate").attr("data-id", data.tmdbId);
+								$("#rateImg").attr("src", data.imageUrl);
+								$("#rateImgBackdrop").attr("src",
+										data.imageBackdropUrl);
+								$("#rateTitle").html(data.title);
+								$("#rateDesc").html(data.overview);
+								$("#rateSubText").html(
+										data.releaseDate + " | " + data.rating
+												+ "/10");
+
+								$.each(data.genreList, function(index, obj) {
+									$('#rateGenre').append(
+											'<div class="chip">' + obj.name
+													+ '</div>');
+								});
+
+								$("#rateCardAction").attr("class",
+										"card-action");
+								$("#rateLoadingPanel")
+										.attr("class", "row hide");
+								$("#rateLoadedPanel").attr("class", "row");
+							}
+						}
+					});
+		}
+
+		function initializeRate() {
+			// empty all children first
+			$('#rateGenre').empty();
+			$("#rateWidget").empty();
+
+			$("#rateWidget")
+					.append(
+							'<div id="rate" class="red-text text-lighten-1" onclick="rateMovie()"></div>');
+			$('#rate').addRating({
+				fieldName : 'rateRating',
+				fieldId : 'rateRating',
+			});
+		}
 	</script>
 </body>
 
