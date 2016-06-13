@@ -1,5 +1,6 @@
 package com.appspot.movevote.entity;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.appspot.movevote.helper.InternetHelper;
 import com.appspot.movevote.helper.TMDBHelper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +29,7 @@ public class TMDBMovie extends Movie {
 	private ArrayList<YouTubeVideo> youTubeVideoList;
 	private ArrayList<TMDBMovie> similarList;
 	private ArrayList<Review> reviewList;
+	private String imageBackUrl;
 
 	public TMDBMovie(String id) {
 		super(id);
@@ -130,6 +133,14 @@ public class TMDBMovie extends Movie {
 		this.reviewList = reviewList;
 	}
 
+	public String getImageBackUrl() {
+		return imageBackUrl;
+	}
+
+	public void setImageBackUrl(String imageBackUrl) {
+		this.imageBackUrl = imageBackUrl;
+	}
+
 	/**
 	 * Find TMDB movie id based on movie title
 	 * 
@@ -141,11 +152,11 @@ public class TMDBMovie extends Movie {
 		String id = null;
 
 		try {
-			String urlStr = Constant.TMDB_HOSTNAME + "search/movie?api_key=" + Constant.TMDB_API_KEY
+			String url = Constant.TMDB_HOSTNAME + "search/movie?api_key=" + Constant.TMDB_API_KEY
 					+ "&query=" + URLEncoder.encode(title, "UTF-8") + "&year="
 					+ Calendar.getInstance().get(Calendar.YEAR);
 
-			InternetHelper internetHelper = new InternetHelper(urlStr);
+			InternetHelper internetHelper = new InternetHelper(url);
 			String json = internetHelper.downloadJson();
 
 			if (json != null) {
@@ -178,10 +189,10 @@ public class TMDBMovie extends Movie {
 
 		// retrieve main movie details
 		try {
-			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "?api_key="
+			String url = Constant.TMDB_HOSTNAME + "movie/" + id + "?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			InternetHelper internetHelper = new InternetHelper(urlStr);
+			InternetHelper internetHelper = new InternetHelper(url);
 			String json = internetHelper.downloadJson();
 
 			if (json != null) {
@@ -192,7 +203,6 @@ public class TMDBMovie extends Movie {
 				movie.setOverview(
 						StringEscapeUtils.unescapeHtml4(parentNode.get("overview").asText()));
 
-				System.out.println(parentNode.get("poster_path").toString());
 				// if poster_path is empty we will set no-poster image
 				if (parentNode.get("poster_path") == null
 						|| parentNode.get("poster_path").toString().length() == 0
@@ -222,10 +232,10 @@ public class TMDBMovie extends Movie {
 
 		// retrieve credits details
 		try {
-			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/credits?api_key="
+			String url = Constant.TMDB_HOSTNAME + "movie/" + id + "/credits?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			InternetHelper internetHelper = new InternetHelper(urlStr);
+			InternetHelper internetHelper = new InternetHelper(url);
 			String json = internetHelper.downloadJson();
 
 			if (json != null) {
@@ -267,10 +277,10 @@ public class TMDBMovie extends Movie {
 
 		// retrieve video details
 		try {
-			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/videos?api_key="
+			String url = Constant.TMDB_HOSTNAME + "movie/" + id + "/videos?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			InternetHelper internetHelper = new InternetHelper(urlStr);
+			InternetHelper internetHelper = new InternetHelper(url);
 			String json = internetHelper.downloadJson();
 
 			if (json != null) {
@@ -289,10 +299,10 @@ public class TMDBMovie extends Movie {
 
 		// retrieve similar movies
 		try {
-			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/similar?api_key="
+			String url = Constant.TMDB_HOSTNAME + "movie/" + id + "/similar?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			InternetHelper internetHelper = new InternetHelper(urlStr);
+			InternetHelper internetHelper = new InternetHelper(url);
 			String json = internetHelper.downloadJson();
 
 			if (json != null) {
@@ -317,10 +327,10 @@ public class TMDBMovie extends Movie {
 
 		// retrieve reviews
 		try {
-			String urlStr = Constant.TMDB_HOSTNAME + "movie/" + id + "/reviews?api_key="
+			String url = Constant.TMDB_HOSTNAME + "movie/" + id + "/reviews?api_key="
 					+ Constant.TMDB_API_KEY;
 
-			InternetHelper internetHelper = new InternetHelper(urlStr);
+			InternetHelper internetHelper = new InternetHelper(url);
 			String json = internetHelper.downloadJson();
 
 			if (json != null) {
@@ -340,5 +350,78 @@ public class TMDBMovie extends Movie {
 		}
 
 		return movie;
+	}
+
+	public static ArrayList<TMDBMovie> getNewDiscoverList(int year, int page, double voteAvg) {
+		ArrayList<TMDBMovie> movieList = new ArrayList<TMDBMovie>();
+
+		String url = Constant.TMDB_HOSTNAME + "discover/movie?api_key=" + Constant.TMDB_API_KEY
+				+ "&primary_release_date.gte=" + year + "&page=" + page + "&vote_average.gte="
+				+ voteAvg + "&vote_count.gte=" + 2;
+		System.out.println(url);
+
+		try {
+			InternetHelper internetHelper = new InternetHelper(url);
+			String json = internetHelper.downloadJson();
+
+			if (json != null) {
+				ObjectMapper mapper = new ObjectMapper();
+				JsonNode parentNode = mapper.readTree(json);
+
+				JsonNode resultNodes = parentNode.path("results");
+
+				for (int i = 0; i < resultNodes.size(); i++) {
+					JsonNode movieNode = resultNodes.get(i);
+					TMDBMovie movie = new TMDBMovie(movieNode.get("id").asText());
+
+					if (movieNode.get("original_language").asText().equals("en")
+							|| movieNode.get("original_language").asText().equals("cn")) {
+
+						if (movieNode.get("poster_path") == null
+								|| movieNode.get("poster_path").toString().length() == 0
+								|| movieNode.get("poster_path").toString().equals("null")) {
+							movie.setImageUrl("/assets/img/no-poster.png");
+						} else {
+							movie.setImageUrl(
+									TMDBHelper.getAbsImageUrl(movieNode.get("poster_path").asText(),
+											Constant.TMDB_IMAGE_POSTER_SIZE));
+						}
+
+						if (movieNode.get("backdrop_path") == null
+								|| movieNode.get("backdrop_path").toString().length() == 0
+								|| movieNode.get("backdrop_path").toString().equals("null")) {
+							movie.setImageBackUrl("/assets/img/no-poster.png");
+						} else {
+							movie.setImageBackUrl(TMDBHelper.getAbsImageUrl(
+									movieNode.get("backdrop_path").asText(),
+									Constant.TMDB_IMAGE_POSTER_SIZE));
+						}
+
+						movie.setTitle(movieNode.get("original_title").asText());
+						movie.setOverview(StringEscapeUtils
+								.unescapeHtml4(movieNode.get("overview").asText()));
+						movie.setReleaseDate(movieNode.get("release_date").asText());
+						movie.setRating(movieNode.get("vote_average").asDouble());
+
+						// get the genres
+						for (int g = 0; g < resultNodes.get(i).get("genre_ids").size(); g++) {
+							int genreId = resultNodes.get(i).get("genre_ids").get(g).asInt();
+							movie.getGenreList()
+									.add(new Genre(genreId, GenreEnum.getById(genreId).getName()));
+						}
+
+						movieList.add(movie);
+					}
+				}
+			}
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return movieList;
 	}
 }
