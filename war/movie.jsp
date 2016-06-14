@@ -294,8 +294,10 @@
 					data-title2="<c:out value="${ title2 }"></c:out>">
 					<div class="input-field col s12">
 						<select id="showingSelector">
-							<option value="<c:out value="${ today }"></c:out>" selected>Today</option>
-							<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow</option>
+							<option value="<c:out value="${ today }"></c:out>" selected>Today (<c:out value="${ today }"></c:out>)
+							</option>
+							<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow (<c:out value="${ tomorrow }"></c:out>)
+							</option>
 						</select>
 					</div>
 
