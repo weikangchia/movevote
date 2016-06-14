@@ -293,6 +293,7 @@
 							$("#rateLoadedPanel").attr("class", "row hide");
 							$("#rateMsgPanel").attr("class", "row hide");
 							$("#rateCardAction").attr("class", "row hide");
+							initializeRate();
 						},
 						success : function(data) {
 							if (!data.success) {
@@ -302,7 +303,6 @@
 								$("#rateMsgPanel").attr("class", "row center");
 								$("#rateCardAction").attr("class", "row hide");
 							} else {
-								initializeRate();
 								$("#rateSkip").attr("data-skip", data.skip);
 								$("#rateSkip").attr("data-page", data.page);
 								$("#rateSkip").attr(
