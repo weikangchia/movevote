@@ -20,7 +20,7 @@ public class InternetHelper {
 		}
 	}
 
-	public String downloadJson() {
+	public String getHtmlData() {
 		String json = null;
 
 		try {
