@@ -35,6 +35,7 @@ public class Constant {
 	public static final String MOVIE_EVENT_ACTION_RATE = "rate";
 	public static final String MOVIE_EVENT_ACTION_WANT_TO_WATCH = "want_to_watch";
 	public static final String MOVIE_EVENT_ACTION_WATCH = "watch";
+	public static final String MOVIE_EVENT_ACTION_SHOWTIME = "showtime";
 
 	// DataStore
 	// tables
