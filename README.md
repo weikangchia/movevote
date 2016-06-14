@@ -47,9 +47,11 @@ Wei Kang has experienced with developing and deploying application to Google App
 | Implement Google Identity Toolkit | - | 24 |
 | Explore TMDB movie database api | - | 2 |
 | Preparation for milestone 1 | - | 1.5 |
-| **Total:** | 19 | 73.5 |
+| Implement movie rating function | - | 12 |
+| Implement movie showtimes function | - | 16 |
+| **Total:** | 19 | 101.5 |
 
-We have finished 19 and 73.5 hours respectively towards the requirement.
+We have finished 19 and 101.5 hours respectively towards the requirement.
 
 ## Mission
 - [ ] Attend at least 12 hours of workshops
@@ -65,7 +67,9 @@ We have finished 19 and 73.5 hours respectively towards the requirement.
 - [X] Implement Google Identity Toolkit (able to login and register)
 
 ### Milestone 2
-- [ ] Implement Google Identity Toolkit (send email for verification and change password)
+- [X] Implement Google Identity Toolkit (send email for verification and change password)
+- [X] Implement movie showtimes
+- [X] Implement movie rating
 - [ ] Design recommendation engine
 - [ ] Implement recommendation engine
 
@@ -87,6 +91,7 @@ We have finished 19 and 73.5 hours respectively towards the requirement.
 * [Google Identity Toolkit Java Client](https://github.com/google/identity-toolkit-java-client) - a very good Java library for google Idenity Toolkit services.
 * [Google cron.xml Reference](https://cloud.google.com/appengine/docs/java/config/cronref) - provides details on the options for cron job in Google App Engine
 * [Material Palette](http://www.materialpalette.com/) - to get some reference to generate some colors
+* [jQuery Star Rating plugin](https://github.com/jvv/jquery-star-rating-plugin) - a simple star rating plugin which uses Googles Materialize Icons.
 
 ### Software used
 * PowerPoint - to prepare slides
