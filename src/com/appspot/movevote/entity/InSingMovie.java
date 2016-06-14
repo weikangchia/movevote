@@ -27,19 +27,22 @@ public class InSingMovie extends Movie {
 	private static final Logger log = Logger.getLogger(InSingMovie.class.getName());
 
 	private String tmdbId;
+	private String title2;
 
 	public InSingMovie(String id) {
 		super(id);
 	}
 
-	public InSingMovie(String id, String title, String imageUrl) {
+	public InSingMovie(String id, String title, String title2, String imageUrl) {
 		super(id, title, imageUrl);
 		this.setTmdbId(null);
+		this.title2 = title2;
 	}
 
-	public InSingMovie(String id, String title, String imageUrl, String tmdbID) {
+	public InSingMovie(String id, String title, String title2, String imageUrl, String tmdbID) {
 		super(id, title, imageUrl);
 		this.setTmdbId(tmdbID);
+		this.title2 = title2;
 	}
 
 	public String getTmdbId() {
@@ -48,6 +51,14 @@ public class InSingMovie extends Movie {
 
 	public void setTmdbId(String tmdbId) {
 		this.tmdbId = tmdbId;
+	}
+
+	public String getTitle2() {
+		return title2;
+	}
+
+	public void setTitle2(String title2) {
+		this.title2 = title2;
 	}
 
 	public boolean equals(Object obj) {
@@ -83,7 +94,7 @@ public class InSingMovie extends Movie {
 					String inSingId = splitInSingIdArr[3].substring(3,
 							splitInSingIdArr[3].length());
 					String title = movieElement.select("figure").select("a").attr("title");
-
+					String title2 = splitInSingIdArr[2];
 					try {
 						Response detailResponse = Jsoup.connect(Constant.INSING_HOSTNAME + "movies/"
 								+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3] + "/showtimes")
@@ -99,9 +110,10 @@ public class InSingMovie extends Movie {
 
 							if (tmdbId != null) {
 								movieMap.put(inSingId,
-										new InSingMovie(inSingId, title, imageUrl, tmdbId));
+										new InSingMovie(inSingId, title, title2, imageUrl, tmdbId));
 							} else {
-								movieMap.put(inSingId, new InSingMovie(inSingId, title, imageUrl));
+								movieMap.put(inSingId,
+										new InSingMovie(inSingId, title, title2, imageUrl));
 							}
 						} else {
 							log.info("Unable to connect to " + Constant.INSING_HOSTNAME + "movies/"
@@ -158,6 +170,7 @@ public class InSingMovie extends Movie {
 			InSingMovie newMovie = entry.getValue();
 			Entity movieEntity = new Entity(Constant.DS_TABLE_INSING_MOVIE, newMovie.getId());
 			movieEntity.setProperty("title", StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
+			movieEntity.setProperty("title2", newMovie.getTitle2());
 			movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
 			movieEntity.setProperty("tmdbId", newMovie.getTmdbId());
 			dataStore.put(movieEntity);
@@ -215,6 +228,7 @@ public class InSingMovie extends Movie {
 					&& movieEntity.getProperty("tmdbId").toString().length() > 0) {
 				movieList.add(new InSingMovie(movieEntity.getKey().getName(),
 						movieEntity.getProperty("title").toString(),
+						movieEntity.getProperty("title2").toString(),
 						movieEntity.getProperty("imageUrl").toString(),
 						movieEntity.getProperty("tmdbId").toString()));
 			}
@@ -237,5 +251,65 @@ public class InSingMovie extends Movie {
 		for (String key : removeList) {
 			dataStore.delete(KeyFactory.createKey(Constant.DS_TABLE_INSING_MOVIE, key));
 		}
+	}
+
+	public static HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> getShowTime(
+			String id, String title2, String date) {
+		HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> showPlaceHashMap = new HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>>();
+
+		try {
+			String showUrl = "http://www.insing.com/movies/" + title2 + "/id-" + id + "/showtimes/";
+			if (date != null) {
+				showUrl = "http://www.insing.com/movies/" + title2 + "/id-" + id + "/showtimes/?d="
+						+ date;
+			}
+
+			Response response = Jsoup.connect(showUrl).execute();
+			if (response.statusCode() == HttpURLConnection.HTTP_OK) {
+				Document doc = response.parse();
+				Elements cinemaElementList = doc.select("article[class^=cinema-showtime]");
+
+				System.out.println(cinemaElementList.size());
+
+				for (Element cinemaElement : cinemaElementList) {
+					String cinemaName = cinemaElement.select("div[class^=cinemas-name]").html();
+					String address = "Singapore";
+
+					HashMap<String, ArrayList<InSingMovieShowTime>> showTimeHashMap = new HashMap<String, ArrayList<InSingMovieShowTime>>();
+
+					// get showtimes list
+					Elements showTimesElementList = cinemaElement
+							.select("li[class^=showtimes slot-time-format");
+					for (Element showTimeElement : showTimesElementList) {
+						String format = showTimeElement.attr("format");
+						String timing = showTimeElement.select("a").html();
+						String url = showTimeElement.select("a").attr("onclick");
+
+						if (cinemaName.startsWith("GV")) {
+							url = "http://www.gv.com.sg/";
+						} else {
+							int startIndex = url.indexOf("this.href='");
+							url = url.substring(startIndex + 11, url.length() - 1);
+						}
+
+						if (!showTimeHashMap.containsKey(format)) {
+							showTimeHashMap.put(format, new ArrayList<InSingMovieShowTime>());
+						}
+
+						((ArrayList<InSingMovieShowTime>) showTimeHashMap.get(format))
+								.add(new InSingMovieShowTime(format, url, timing));
+					}
+
+					showPlaceHashMap.put(new InSingMovieShowPlace(cinemaName, address),
+							showTimeHashMap);
+				}
+			} else {
+				System.out.println("unable to connect");
+			}
+		} catch (Exception ex) {
+			System.out.println("unable to parse data");
+		}
+
+		return showPlaceHashMap;
 	}
 }

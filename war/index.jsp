@@ -155,7 +155,8 @@
 								<div class="spacer-thin"></div>
 								<a
 									href="/movie?is_id=<c:out
-									value="${movie.id}"></c:out>&tmdb_id=<c:out
+									value="${movie.id}"></c:out>&title2=<c:out
+									value="${movie.title2}"></c:out>&tmdb_id=<c:out
 									value="${movie.tmdbId}"></c:out>&provider=is"
 									class="medium white-text truncate"><c:out
 										value="${movie.title}"></c:out></a>

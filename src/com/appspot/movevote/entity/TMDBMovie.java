@@ -157,7 +157,7 @@ public class TMDBMovie extends Movie {
 					+ Calendar.getInstance().get(Calendar.YEAR);
 
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -193,7 +193,7 @@ public class TMDBMovie extends Movie {
 					+ Constant.TMDB_API_KEY;
 
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -236,7 +236,7 @@ public class TMDBMovie extends Movie {
 					+ Constant.TMDB_API_KEY;
 
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -281,7 +281,7 @@ public class TMDBMovie extends Movie {
 					+ Constant.TMDB_API_KEY;
 
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -303,7 +303,7 @@ public class TMDBMovie extends Movie {
 					+ Constant.TMDB_API_KEY;
 
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -331,7 +331,7 @@ public class TMDBMovie extends Movie {
 					+ Constant.TMDB_API_KEY;
 
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -362,7 +362,7 @@ public class TMDBMovie extends Movie {
 
 		try {
 			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.downloadJson();
+			String json = internetHelper.getHtmlData();
 
 			if (json != null) {
 				ObjectMapper mapper = new ObjectMapper();
