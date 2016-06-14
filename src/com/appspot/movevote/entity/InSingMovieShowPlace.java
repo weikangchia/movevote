@@ -1,6 +1,6 @@
 package com.appspot.movevote.entity;
 
-public class InSingMovieShowPlace {
+public class InSingMovieShowPlace implements Comparable<InSingMovieShowPlace> {
 	private String cinemaName;
 	private String address;
 
@@ -36,5 +36,11 @@ public class InSingMovieShowPlace {
 
 	public String toString() {
 		return cinemaName;
+	}
+
+	@Override
+	public int compareTo(InSingMovieShowPlace o) {
+		// TODO Auto-generated method stub
+		return cinemaName.compareTo(o.cinemaName);
 	}
 }

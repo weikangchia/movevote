@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -199,7 +200,11 @@ public class MovieServlet extends HttpServlet {
 					} else {
 						respObj.addProperty("success", true);
 						JsonArray cinemaArray = new JsonArray();
-						for (Map.Entry<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> entry : showPlaceHashMap
+
+						Map<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> sortedShowPlaceHashMap = new TreeMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>>(
+								showPlaceHashMap);
+
+						for (Map.Entry<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> entry : sortedShowPlaceHashMap
 								.entrySet()) {
 							InSingMovieShowPlace key = entry.getKey();
 							HashMap<String, ArrayList<InSingMovieShowTime>> value = entry
