@@ -200,6 +200,7 @@
 							<h6>
 								<c:out value="${video.name}"></c:out>
 							</h6>
+							<div class="spacer-thin"></div>
 							<div class="video-container">
 								<iframe width="853" height="480"
 									src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
@@ -287,46 +288,46 @@
 						</ul>
 					</c:if>
 				</div>
-				<div id="showing" class="col s12">
+
+				<div id="showing" class="col s12"
+					data-id="<c:out value="${ inSingId }"></c:out>"
+					data-title2="<c:out value="${ title2 }"></c:out>">
 					<div class="input-field col s12">
-						<select>
-							<option value="" disabled selected>Select a Date</option>
-							<option value="1">Today</option>
-							<option value="2">Tomorrow</option>
-							<option value="3">Tuesday</option>
+						<select id="showingSelector">
+							<option value="<c:out value="${ today }"></c:out>" selected>Today</option>
+							<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow</option>
 						</select>
 					</div>
 
-					<div class="col s12">
-						<ul class="collapsible popout" data-collapsible="accordion">
-							<li>
-								<div class="collapsible-header active">
-									<i class="material-icons">theaters</i>Cathay AMK Hub
+					<div id="showingLoading" class="col s12 center">
+						<div class="preloader-wrapper small active">
+							<div class="spinner-layer spinner-red-only">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
 								</div>
-								<div class="collapsible-body">
-									<h6>Standard</h6>
-									<a href="">07:20 PM</a>, <a href="">10:30 PM</a>
+								<div class="gap-patch">
+									<div class="circle"></div>
 								</div>
-							</li>
-							<li>
-								<div class="collapsible-header">
-									<i class="material-icons">theaters</i>GV Yishun
+								<div class="circle-clipper right">
+									<div class="circle"></div>
 								</div>
-								<div class="collapsible-body">
-									<h6>Standard</h6>
-									<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
-								</div>
-							</li>
-							<li>
-								<div class="collapsible-header">
-									<i class="material-icons">theaters</i>Shaw Nex
-								</div>
-								<div class="collapsible-body">
-									<h6>Standard</h6>
-									<a href="">08:20 PM</a>, <a href="">10:50 PM</a>
-								</div>
-							</li>
-						</ul>
+							</div>
+						</div>
+					</div>
+
+					<div id="showingLoaded" class="col s12 hide">
+						<ul id="showingAccordion" class="collapsible popout"
+							data-collapsible="accordion"></ul>
+						<div class="spacer-normal"></div>
+						<p>
+							<b>Note:</b> Please remember to still check the right movie
+							details before making your final bookings at the respective
+							cinemas.
+						</p>
+					</div>
+
+					<div id="showingError" class="col s12 hide center">
+						<p>No showing time.</p>
 					</div>
 				</div>
 			</div>
@@ -387,7 +388,125 @@
 				i--;
 			});
 
+			// fetch movie showing time
+			fetchShowingTime(null);
+
+			$("#showingSelector").change(function() {
+				fetchShowingTime($(this).val());
+			})
 		});
+
+		function fetchShowingTime(date) {
+			var title2 = $("#showing").attr("data-title2");
+			var id = $("#showing").attr("data-id");
+
+			var dataParam;
+			if (date == null) {
+				dataParam = "action=showtime&id=" + id + "&title2=" + title2;
+			} else {
+				dataParam = "action=showtime&id=" + id + "&title2=" + title2
+						+ "&date=" + date;
+			}
+
+			$
+					.ajax({
+						type : "GET",
+						url : "/movie",
+						data : dataParam,
+						dataType : "json",
+						beforeSend : function() {
+							$("#showingError").attr("class",
+									"col s12 center hide");
+							$("#showingLoading")
+									.attr("class", "col s12 center");
+							$("#showingLoaded").attr("class",
+									"col s12 center hide");
+							$("#showingAccordion").empty();
+						},
+						//if received a response from the server
+						success : function(data) {
+							if (data.success) {
+								$
+										.each(
+												data.cinema,
+												function(arrayID, cinema) {
+													var cinemaName = cinema.name;
+													var cinemaAddress = cinema.address;
+
+													var body = '<li><div class="collapsible-header"><i class="material-icons">theaters</i>'
+															+ cinemaName
+															+ '</div><div class="collapsible-body">';
+
+													if (cinema.Standard) {
+														body += '<h6>Standard</h6>';
+														$
+																.each(
+																		cinema.Standard,
+																		function(
+																				arrayId,
+																				standard) {
+																			if (arrayId > 0) {
+																				body += ", ";
+																			}
+																			body += '<a href="' + standard.url + '">'
+																					+ standard.timing
+																					+ '</a> ';
+																		});
+													}
+
+													if (cinema.Atmos) {
+														body += '<h6>Atmos</h6>';
+														$
+																.each(
+																		cinema.Atmos,
+																		function(
+																				arrayId,
+																				atmos) {
+																			if (arrayId > 0) {
+																				body += ", ";
+																			}
+																			body += '<a href="' + atmos.url + '">'
+																					+ atmos.timing
+																					+ '</a> ';
+																		});
+													}
+
+													if (cinema.Digital) {
+														body += '<h6>Digital</h6>';
+														$
+																.each(
+																		cinema.Digital,
+																		function(
+																				arrayId,
+																				digital) {
+																			if (arrayId > 0) {
+																				body += ", ";
+																			}
+																			body += '<a href="' + digital.url + '">'
+																					+ digital.timing
+																					+ '</a> ';
+																		});
+													}
+
+													body += '</div></li>';
+													$("#showingAccordion")
+															.append(body);
+
+													$("#showingLoaded").attr(
+															"class", "col s12");
+													$("#showingLoading")
+															.attr("class",
+																	"col s12 hide center");
+												});
+							} else {
+								$("#showingError").attr("class",
+										"col s12 center");
+								$("#showingLoading").attr("class",
+										"col s12 hide center");
+							}
+						}
+					});
+		}
 
 		function rateMovie() {
 			var tmdbId = $("#rate").attr("data-id");
