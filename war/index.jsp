@@ -146,9 +146,15 @@
 					<div class="item">
 						<div class="card-panel teal row">
 							<div class="col s12">
-								<img src="<c:out
+								<a
+									href="/movie?is_id=<c:out
+									value="${movie.id}"></c:out>&title2=<c:out
+									value="${movie.title2}"></c:out>&tmdb_id=<c:out
+									value="${movie.tmdbId}"></c:out>&provider=is"><img
+									src="<c:out
 									value="${movie.imageUrl}"></c:out>"
-									class="responsive-img">
+									class="responsive-img"></a>
+
 							</div>
 
 							<div class="col s12">
