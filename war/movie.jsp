@@ -273,7 +273,7 @@
 
 				<div id="review" class="col s12">
 					<c:if test="${fn:length(movie.reviewList) eq 0}">
-						<p class="center-align">Not review yet.</p>
+						<p class="center-align">Not reviewed yet.</p>
 					</c:if>
 					<c:if test="${fn:length(movie.reviewList) gt 0}">
 						<ul class="collection">
