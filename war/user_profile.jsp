@@ -168,8 +168,8 @@
 							</div>
 							<div id="rateLoadedPanel" class="row hide">
 								<div class="col s12 m4 l3">
-									<img id="rateImg" class="responsive-img hide-on-small-only"
-										src=""> <img id="rateImgBackdrop"
+									<img id="rateImg" class="responsive-img hide-on-small-only">
+									<img id="rateImgBackdrop"
 										class="responsive-img hide-on-med-and-up" src="">
 								</div>
 								<div class="col s12 m8 l9">
@@ -178,10 +178,12 @@
 									<div class="spacer-thin"></div>
 									<div id="rateGenre"></div>
 									<div class="spacer-thin"></div>
-									<div class="input-field col s12 m8 l6" style="margin-left: -10px">
+									<div class="input-field col s12 m8 l6"
+										style="margin-left: -10px">
 										<select id="rateWatch">
-											<option value="" disabled selected>Choose your option</option>
-											<option value="want_to_watch">Want to Watch</option>
+											<option value="" disabled selected>Choose your
+												option</option>
+											<option value="want_to_watch">Want to watch</option>
 											<option value="watched">Watched</option>
 										</select><label>Have you watched?</label>
 									</div>
@@ -231,8 +233,22 @@
 			</div>
 
 
-			<div id="to-watch" class="col s12">Test 2</div>
-			<div id="watched" class="col s12">Test 3</div>
+			<div id="to-watch" class="col s12">
+				<div class="spacer-thin"></div>
+				<ul>
+					<c:forEach items="${wantToWatchList}" var="wantToWatch">
+						<li><c:out value="${wantToWatch}"></c:out></li>
+					</c:forEach>
+				</ul>
+			</div>
+			<div id="watched" class="col s12">
+				<div class="spacer-thin"></div>
+				<ul>
+					<c:forEach items="${watchList}" var="watched">
+						<li><c:out value="${watched}"></c:out></li>
+					</c:forEach>
+				</ul>
+			</div>
 		</div>
 	</div>
 
