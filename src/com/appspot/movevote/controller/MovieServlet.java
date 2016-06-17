@@ -82,7 +82,9 @@ public class MovieServlet extends HttpServlet {
 
 			switch (provider) {
 			case Constant.PROVIDER_INSING:
-				TMDBMovie movie = TMDBMovie.getTMDBMovie(tmdbId);
+				// TMDBMovie movie = TMDBMovie.getTMDBMovieOver(tmdbId);
+				TMDBMovie movie = new TMDBMovie(tmdbId);
+				movie.retrieveAll();
 				request.setAttribute("movie", movie);
 
 				// convert movie.duration to string format
@@ -161,7 +163,7 @@ public class MovieServlet extends HttpServlet {
 				TMDBMovie movie = null;
 				do {
 					// get a list of movie
-					ArrayList<TMDBMovie> movieList = TMDBMovie.getNewDiscoverList(year, page, 4.5);
+					ArrayList<TMDBMovie> movieList = TMDBMovie.retrieveNewDiscoverList(year, page, 4.5);
 					for (int i = skip; i < movieList.size(); i++) {
 						MovieEvent movieEvent = new MovieEvent(userInfo.getId(),
 								movieList.get(i).getId(), Constant.MOVIE_EVENT_ACTION_RATE);
