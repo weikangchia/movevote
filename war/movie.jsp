@@ -143,11 +143,10 @@
 
 				<div class="section">
 					<ul class="tabs">
-						<li class="tab col s3"><a class="active" href="#overview">Overview</a></li>
-						<li class="tab col s3"><a href="#showing">Now Showing</a></li>
-						<li class="tab col s3"><a href="#trailer">Trailers</a></li>
-						<li class="tab col s3"><a href="#similar">Similar</a></li>
-						<li class="tab col s3"><a href="#review">Reviews</a></li>
+						<li class="tab col s4"><a class="active" href="#overview">Overview</a></li>
+						<li class="tab col s4"><a href="#showing">Now Showing</a></li>
+						<li class="tab col s4"><a href="#similar">Similar</a></li>
+						<li class="tab col s4"><a href="#review">Reviews</a></li>
 					</ul>
 				</div>
 
@@ -188,28 +187,41 @@
 									data-prevRating="0" onclick="rateMovie()"></div>
 							</c:otherwise>
 						</c:choose>
+						<div class="input-field col s12 m8 l6" style="margin-left: -10px">
+							<h5>Have you watched?</h5>
+							<select id="rateWatch">
+								<option value="" disabled
+									<c:if test="${empty rateWatch }"> selected</c:if>>Choose your option</option>
+								<option value="want_to_watch"
+									<c:if test="${ rateWatch == 'want_to_watch'}"> selected</c:if>>Want to watch</option>
+								<option value="watched"
+									<c:if test="${ rateWatch == 'watched'}"> selected</c:if>>Watched</option>
+							</select>
+						</div>
+						<div style="clear: both;"></div>
 					</div>
-				</div>
 
-				<div id="trailer" class="col s12">
-					<c:if test="${fn:length(movie.youTubeVideoList) eq 0}">
-						<p class="center-align">No trailer available yet.</p>
-					</c:if>
-					<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
-						<c:forEach items="${ movie.youTubeVideoList }" var="video">
-							<h6>
-								<c:out value="${video.name}"></c:out>
-							</h6>
-							<div class="spacer-thin"></div>
-							<div class="video-container">
-								<iframe width="853" height="480"
-									src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
+					<div class="section">
+						<h5>Trailers</h5>
+						<c:if test="${fn:length(movie.youTubeVideoList) eq 0}">
+							<p class="center-align">No trailer available yet.</p>
+						</c:if>
+						<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
+							<c:forEach items="${ movie.youTubeVideoList }" var="video">
+								<h6>
+									<c:out value="${video.name}"></c:out>
+								</h6>
+								<div class="spacer-thin"></div>
+								<div class="video-container">
+									<iframe width="853" height="480"
+										src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
 										?rel=0"
-									frameborder="0" allowfullscreen></iframe>
-							</div>
-							<div class="spacer-thin"></div>
-						</c:forEach>
-					</c:if>
+										frameborder="0" allowfullscreen></iframe>
+								</div>
+								<div class="spacer-thin"></div>
+							</c:forEach>
+						</c:if>
+					</div>
 				</div>
 
 				<div id="similar" class="col s12">
@@ -294,9 +306,13 @@
 					data-title2="<c:out value="${ title2 }"></c:out>">
 					<div class="input-field col s12">
 						<select id="showingSelector">
-							<option value="<c:out value="${ today }"></c:out>" selected>Today (<c:out value="${ today }"></c:out>)
+							<option value="<c:out value="${ today }"></c:out>" selected>Today
+								(
+								<c:out value="${ today }"></c:out>)
 							</option>
-							<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow (<c:out value="${ tomorrow }"></c:out>)
+							<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow
+								(
+								<c:out value="${ tomorrow }"></c:out>)
 							</option>
 						</select>
 					</div>
@@ -396,7 +412,33 @@
 			$("#showingSelector").change(function() {
 				fetchShowingTime($(this).val());
 			})
+
+			$('#rateWatch').change(function() {
+				var tmdbId = $('#rate').attr("data-id");
+				var action = $('#rateWatch').val();
+				watchMovie(tmdbId, action);
+			})
 		});
+
+		function watchMovie(tmdbId, value) {
+			$
+					.ajax({
+						type : "POST",
+						url : "/movie",
+						data : "tmdbId=" + tmdbId + "&action=" + value,
+						dataType : "json",
+
+						//if received a response from the server
+						success : function(data) {
+							if (!data.success) {
+								Materialize
+										.toast(
+												"An error has occured, please try again later.",
+												3000);
+							}
+						}
+					});
+		}
 
 		function fetchShowingTime(date) {
 			var title2 = $("#showing").attr("data-title2");
