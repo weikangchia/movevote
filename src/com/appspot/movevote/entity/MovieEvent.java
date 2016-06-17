@@ -64,8 +64,12 @@ public class MovieEvent {
 			eventEntity.setProperty("last_update", new Date());
 			break;
 		case Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH:
+			eventEntity.setProperty("action", eventAction);
+			eventEntity.setProperty("last_update", new Date());
 			break;
 		case Constant.MOVIE_EVENT_ACTION_WATCH:
+			eventEntity.setProperty("action", eventAction);
+			eventEntity.setProperty("last_update", new Date());
 			break;
 		}
 
