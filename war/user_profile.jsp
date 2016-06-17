@@ -133,7 +133,7 @@
 	<div class="container">
 		<div class="spacer-normal"></div>
 
-		<c:if test="${rateCount < 6}">
+		<c:if test="${rateCount < 11}">
 			<div class="row">
 				<div class="spacer-thin"></div>
 				<div class="col s12">
