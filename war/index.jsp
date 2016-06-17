@@ -228,7 +228,8 @@
 		<div class="row center">
 			<h3 class="thin">Meet the Team</h3>
 			<p class="caption-normal thin">We are a team of students from
-				National University of Singapore.</p>
+				National University of Singapore.<br/>This is a project for Orbital
+				2016.</p>
 		</div>
 		<div class="row">
 			<div class="col s12 m6 center">
