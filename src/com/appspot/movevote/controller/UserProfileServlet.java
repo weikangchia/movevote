@@ -1,6 +1,8 @@
 package com.appspot.movevote.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -15,6 +17,7 @@ import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.MovieEvent;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
+import com.google.appengine.api.datastore.Entity;
 import com.google.identitytoolkit.GitkitClientException;
 import com.google.identitytoolkit.GitkitServerException;
 import com.google.identitytoolkit.GitkitUser;
@@ -124,18 +127,27 @@ public class UserProfileServlet extends HttpServlet {
 			// get numbers of movies that the user has rated
 			MovieEvent event = new MovieEvent(userInfo.getId(), Constant.MOVIE_EVENT_ACTION_RATE);
 			int rateCount = event.getSpecificEventRecordCount();
+			request.setAttribute("rateCount", rateCount);
 
 			// get number of movies that the user has watched
 			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WATCH);
-			int watchedCount = event.getSpecificEventRecordCount();
+			List<Entity> watchEntityList = event.getSpecificEventRecords();
+			request.setAttribute("watchedCount", watchEntityList.size());
+			ArrayList<String> watchList = new ArrayList<String>();
+			for (Entity watchEntity : watchEntityList) {
+				watchList.add(watchEntity.getProperty("tmdbId").toString());
+			}
+			request.setAttribute("watchList", watchList);
 
 			// get number of movies that the user want to watch
 			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
-			int wantToWatchCount = event.getSpecificEventRecordCount();
-
-			request.setAttribute("rateCount", rateCount);
-			request.setAttribute("watchedCount", watchedCount);
-			request.setAttribute("wantToWatchCount", wantToWatchCount);
+			List<Entity> wantToWatchEntityList = event.getSpecificEventRecords();
+			request.setAttribute("wantToWatchCount", wantToWatchEntityList.size());
+			ArrayList<String> wantToWatchList = new ArrayList<String>();
+			for (Entity wantToWatchEntity : wantToWatchEntityList) {
+				wantToWatchList.add(wantToWatchEntity.getProperty("tmdbId").toString());
+			}
+			request.setAttribute("wantToWatchList", wantToWatchList);
 		}
 
 		request.setAttribute("isLoggedIn", isLoggedIn);

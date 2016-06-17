@@ -121,6 +121,19 @@ public class MovieServlet extends HttpServlet {
 				request.setAttribute("rating", eventEntity.getProperty("rating"));
 			}
 
+			// check if user has watched this movie
+			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
+			eventEntity = event.getSpecificEventRecord();
+			if (eventEntity == null) {
+				event.setEventAction(Constant.MOVIE_EVENT_ACTION_WATCH);
+				eventEntity = event.getSpecificEventRecord();
+				if (eventEntity != null) {
+					request.setAttribute("rateWatch", Constant.MOVIE_EVENT_ACTION_WATCH);
+				}
+			} else {
+				request.setAttribute("rateWatch", Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
+			}
+
 			getServletContext().getRequestDispatcher("/movie.jsp").forward(request, response);
 		} else if (request.getParameter("action") != null) {
 			String action = request.getParameter("action");
