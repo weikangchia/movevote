@@ -125,7 +125,17 @@ public class UserProfileServlet extends HttpServlet {
 			MovieEvent event = new MovieEvent(userInfo.getId(), Constant.MOVIE_EVENT_ACTION_RATE);
 			int rateCount = event.getSpecificEventRecordCount();
 
+			// get number of movies that the user has watched
+			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WATCH);
+			int watchedCount = event.getSpecificEventRecordCount();
+
+			// get number of movies that the user want to watch
+			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
+			int wantToWatchCount = event.getSpecificEventRecordCount();
+
 			request.setAttribute("rateCount", rateCount);
+			request.setAttribute("watchedCount", watchedCount);
+			request.setAttribute("wantToWatchCount", wantToWatchCount);
 		}
 
 		request.setAttribute("isLoggedIn", isLoggedIn);
