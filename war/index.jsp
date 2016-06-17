@@ -52,9 +52,10 @@
 	<nav>
 		<div class="nav-wrapper container">
 			<a href="${pageContext.request.contextPath}/home"
-				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-				class="button-collapse"><i class="material-icons">menu</i></a>
+				class="brand-logo grey-text text-lighten-5 thin"><span
+				class="bold">M</span>ove<span class="bold">V</span>ote</a> <a href="#"
+				data-activates="mobile-navbar" class="button-collapse"><i
+				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a id="toggle-search" href="#"><i
 						class="material-icons tooltipped" data-position="bottom"
@@ -110,15 +111,15 @@
 				<div class="col s12 center">
 					<img class="responsive-img circle profile_logo"
 						src="assets/img/logo.png">
-					<h1 id="hero-title" class="grey-text text-darken-5">
-						<span class="bold">Move</span><span class="thin">Vote</span>
-					</h1>
+					<h2 id="hero-title" class="grey-text text-darken-5 thin">
+						<span class="bold">M</span>ove<span class="bold">V</span>ote
+					</h2>
 					<h5 class="thin">Recommend movie to you and your friends</h5>
 				</div>
 			</div>
 
 			<c:if test="${not isLoggedIn}">
-				<div class="spacer-normal"></div>
+				<div class="spacer-thin"></div>
 				<div class="row">
 					<div class="col s12 center">
 						<a href="${pageContext.request.contextPath}/gitkit?mode=select"
@@ -137,8 +138,9 @@
 		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Now Showing</h3>
-			<i class="fa fa-map-marker" aria-hidden="true"></i><span
-				class="caption-normal thin"> Singapore</span>
+			<i class="fa fa-map-marker red-text text-lighten-1"
+				aria-hidden="true"></i><span class="caption-normal thin">
+				Singapore</span>
 		</div>
 		<div class="row">
 			<div class="owl-carousel">
@@ -188,9 +190,9 @@
 						<i class="material-icons">local_movies</i>
 					</h1>
 					<h5 class="center thin">Personalized Movie Recommendations</h5>
-					<p class="center">Sign up for MoveVote and by rating some
-						movies, we can help you get more movies that you and/or your group
-						friends will like.</p>
+					<p class="center">Sign up for MoveVote and rate about 10
+						movies, after which we can help you get more movies that you
+						and/or your group friends will like.</p>
 				</div>
 			</div>
 
@@ -259,12 +261,49 @@
 				</div>
 			</div>
 		</div>
+
+		<c:choose>
+			<c:when test="${not isLoggedIn}">
+				<div class="spacer-thick"></div>
+				<div class="divider"></div>
+
+				<div class="spacer-thick"></div>
+				<div class="row center">
+					<h3 class="thin">Interested?</h3>
+					<p class="caption-normal thin">Sign up for free now.</p>
+					<div class="spacer-normal"></div>
+					<a href="${pageContext.request.contextPath}/gitkit?mode=select"
+						class="btn btn-large red lighten-1">Sign up</a>
+					<p>
+						Already have an account? <a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+							In</a>
+					</p>
+					<div class="spacer-normal"></div>
+				</div>
+			</c:when>
+			<c:otherwise>
+
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 	<div class="spacer-thick"></div>
 	</main>
 
 	<footer class="page-footer">
+		<div class="container white-text">
+			<div class="row">
+				<div class="col s12 m6">
+					<h5>About</h5>
+					<p>MoveVote is a web app designed for optimal viewing and
+						interaction experience that recommends you and your friends movies
+						that all of you will like. You will rate about 10 movies so that
+						we can know your individual movie preferences. If you do not know
+						the movie and can skip it.</p>
+				</div>
+			</div>
+		</div>
 		<div class="footer-copyright">
 			<div class="container white-text">
 				<i class="fa fa-copyright" aria-hidden="true"></i> 2016 Copyright
