@@ -121,7 +121,7 @@ public class UserProfileServlet extends HttpServlet {
 				}
 			}
 
-			// check if user has rated 5 movies already
+			// get numbers of movies that the user has rated
 			MovieEvent event = new MovieEvent(userInfo.getId(), Constant.MOVIE_EVENT_ACTION_RATE);
 			int rateCount = event.getSpecificEventRecordCount();
 
