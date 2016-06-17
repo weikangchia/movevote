@@ -260,15 +260,25 @@ public class MovieServlet extends HttpServlet {
 			} else {
 				String tmdbId = req.getParameter("tmdbId");
 				String action = req.getParameter("action");
+				MovieEvent event;
 
 				try {
 					switch (action) {
 					case Constant.MOVIE_EVENT_ACTION_RATE:
 						int rating = Integer.parseInt(req.getParameter("rating"));
-						MovieEvent event = new MovieEvent(gitkitUser.getLocalId(), tmdbId,
+						event = new MovieEvent(gitkitUser.getLocalId(), tmdbId,
 								Constant.MOVIE_EVENT_ACTION_RATE, rating);
 						event.storeEventRecord();
-
+						break;
+					case Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH:
+						event = new MovieEvent(gitkitUser.getLocalId(), tmdbId,
+								Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
+						event.storeEventRecord();
+						break;
+					case Constant.MOVIE_EVENT_ACTION_WATCH:
+						event = new MovieEvent(gitkitUser.getLocalId(), tmdbId,
+								Constant.MOVIE_EVENT_ACTION_WATCH);
+						event.storeEventRecord();
 						break;
 					}
 
