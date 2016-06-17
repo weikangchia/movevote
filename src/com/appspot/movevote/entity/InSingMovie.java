@@ -269,8 +269,6 @@ public class InSingMovie extends Movie {
 				Document doc = response.parse();
 				Elements cinemaElementList = doc.select("article[class^=cinema-showtime]");
 
-				System.out.println(cinemaElementList.size());
-
 				for (Element cinemaElement : cinemaElementList) {
 					String cinemaName = cinemaElement.select("div[class^=cinemas-name]").html();
 					String address = "Singapore";
