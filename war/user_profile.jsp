@@ -117,10 +117,12 @@
 							<span class="caption-large thin">2</span><br />friends
 						</div>
 						<div class="col s4">
-							<span class="caption-large thin">22</span><br />to watch
+							<span class="caption-large thin"><c:out
+									value="${ wantToWatchCount }"></c:out></span><br />to watch
 						</div>
 						<div class="col s4">
-							<span class="caption-large thin">10</span><br />watched
+							<span class="caption-large thin"><c:out
+									value="${ watchedCount }"></c:out></span><br />watched
 						</div>
 					</div>
 
@@ -139,8 +141,9 @@
 				<div class="col s12">
 					<div class="card-panel teal lighten-2">
 						<span class="white-text">It seems that you have not rated
-							enough movie yet. Please rate the movies below so that we can
-							recommend you more movies that you will like.</span>
+							enough movie yet. Please rate more movies so that we can know
+							your individual movie preferences. If you do not know the movie
+							and can skip it.</span>
 					</div>
 				</div>
 				<div class="col s12">
@@ -175,6 +178,14 @@
 									<div class="spacer-thin"></div>
 									<div id="rateGenre"></div>
 									<div class="spacer-thin"></div>
+									<div class="input-field col s12 m8 l6" style="margin-left: -10px">
+										<select id="rateWatch">
+											<option value="" disabled selected>Choose your option</option>
+											<option value="want_to_watch">Want to Watch</option>
+											<option value="watched">Watched</option>
+										</select><label>Have you watched?</label>
+									</div>
+									<div style="clear: both;"></div>
 									<div id="rateDesc"></div>
 									<div class="spacer-thin"></div>
 									<div id="rateWidget"></div>
@@ -252,8 +263,38 @@
 				belowOrigin : true,
 			});
 
+			$(document).ready(function() {
+				$('select').material_select();
+			});
+
+			$('#rateWatch').change(function() {
+				var tmdbId = $('#rate').attr("data-id");
+				var action = $('#rateWatch').val();
+				watchMovie(tmdbId, action);
+			})
+
 			getRateMovie(0, 1);
 		});
+
+		function watchMovie(tmdbId, value) {
+			$
+					.ajax({
+						type : "POST",
+						url : "/movie",
+						data : "tmdbId=" + tmdbId + "&action=" + value,
+						dataType : "json",
+
+						//if received a response from the server
+						success : function(data) {
+							if (!data.success) {
+								Materialize
+										.toast(
+												"An error has occured, please try again later.",
+												3000);
+							}
+						}
+					});
+		}
 
 		function rateMovie() {
 			var tmdbId = $("#rate").attr("data-id");
@@ -276,7 +317,7 @@
 												"An error has occured, please try again later.",
 												3000);
 							} else {
-								getRateMovie(next);
+								getRateMovie(next, page);
 							}
 						}
 					});
@@ -330,6 +371,8 @@
 								$("#rateLoadingPanel")
 										.attr("class", "row hide");
 								$("#rateLoadedPanel").attr("class", "row");
+								$("#rateWatch").val("");
+								$('select').material_select();
 							}
 						}
 					});
