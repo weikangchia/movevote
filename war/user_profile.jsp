@@ -232,12 +232,30 @@
 				</ul>
 			</div>
 
-
 			<div id="to-watch" class="col s12">
 				<div class="spacer-thin"></div>
 				<ul>
 					<c:forEach items="${wantToWatchList}" var="wantToWatch">
-						<li><c:out value="${wantToWatch}"></c:out></li>
+						<div class="col s6 m4">
+							<div class="card medium">
+								<div class="card-image">
+									<img
+										src="<c:out
+											value="${wantToWatch.imageUrl}"></c:out>">
+									<span class="card-title truncate black"
+										style="opacity: 0.8; width: 100%;"><c:out
+											value="${wantToWatch.title}"></c:out></span>
+								</div>
+								<div class="card-content">
+									<p>
+										<c:out value="${wantToWatch.overview}"></c:out>
+									</p>
+								</div>
+								<div class="card-action">
+									<a href="#">more info</a>
+								</div>
+							</div>
+						</div>
 					</c:forEach>
 				</ul>
 			</div>
@@ -245,7 +263,26 @@
 				<div class="spacer-thin"></div>
 				<ul>
 					<c:forEach items="${watchList}" var="watched">
-						<li><c:out value="${watched}"></c:out></li>
+						<div class="col s6 m4">
+							<div class="card medium">
+								<div class="card-image">
+									<img
+										src="<c:out
+											value="${watched.imageUrl}"></c:out>">
+									<span class="card-title truncate black"
+										style="opacity: 0.8; width: 100%;"><c:out
+											value="${watched.title}"></c:out></span>
+								</div>
+								<div class="card-content">
+									<p>
+										<c:out value="${watched.overview}"></c:out>
+									</p>
+								</div>
+								<div class="card-action">
+									<a href="#">more info</a>
+								</div>
+							</div>
+						</div>
 					</c:forEach>
 				</ul>
 			</div>

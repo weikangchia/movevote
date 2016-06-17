@@ -191,9 +191,11 @@
 							<h5>Have you watched?</h5>
 							<select id="rateWatch">
 								<option value="" disabled
-									<c:if test="${empty rateWatch }"> selected</c:if>>Choose your option</option>
+									<c:if test="${empty rateWatch }"> selected</c:if>>Choose
+									your option</option>
 								<option value="want_to_watch"
-									<c:if test="${ rateWatch == 'want_to_watch'}"> selected</c:if>>Want to watch</option>
+									<c:if test="${ rateWatch == 'want_to_watch'}"> selected</c:if>>Want
+									to watch</option>
 								<option value="watched"
 									<c:if test="${ rateWatch == 'watched'}"> selected</c:if>>Watched</option>
 							</select>
@@ -235,46 +237,23 @@
 					<c:if test="${fn:length(movie.similarList) gt 0}">
 						<div class="row">
 							<c:forEach items="${ movie.similarList }" var="similar">
-								<c:choose>
-									<c:when test="${fn:length(similar.title) lt 25}">
-										<c:set var="truncateTitle" value="${similar.title}" />
-									</c:when>
-									<c:otherwise>
-										<c:set var="truncateTitle"
-											value="${fn:substring(similar.title, 0, 20)}..." />
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="${fn:length(similar.overview) lt 200}">
-										<c:set var="truncateOverview" value="${similar.overview}" />
-									</c:when>
-									<c:otherwise>
-										<c:set var="truncateOverview"
-											value="${fn:substring(similar.overview, 0, 200)}..." />
-									</c:otherwise>
-								</c:choose>
-								<div class="col s12 m6">
-									<div class="card small">
-										<div class="card-image waves-effect waves-block waves-light">
-											<img class="activator"
-												src="<c:out value="${similar.imageUrl}"></c:out>">
+								<div class="col s6 m4">
+									<div class="card medium">
+										<div class="card-image">
+											<img
+												src="<c:out
+											value="${similar.imageUrl}"></c:out>">
+											<span class="card-title truncate black"
+												style="opacity: 0.8; width: 100%;"><c:out
+													value="${similar.title}"></c:out></span>
 										</div>
 										<div class="card-content">
-											<span class="card-title activator grey-text text-darken-4"><c:out
-													value="${truncateTitle}"></c:out><i
-												class="material-icons right">more_vert</i> </span>
-										</div>
-										<div class="card-reveal">
-											<span class="card-title grey-text text-darken-4"><c:out
-													value="${similar.title}"></c:out><i
-												class="material-icons right">close</i> </span>
 											<p>
-												<c:out value="${truncateOverview}"></c:out>
+												<c:out value="${similar.overview}"></c:out>
 											</p>
 										</div>
 										<div class="card-action">
-											<a href="#">More info</a>
+											<a href="#">more info</a>
 										</div>
 									</div>
 								</div>
