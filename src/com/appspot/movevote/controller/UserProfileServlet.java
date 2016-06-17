@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.MovieEvent;
+import com.appspot.movevote.entity.TMDBMovie;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
 import com.google.appengine.api.datastore.Entity;
@@ -133,9 +134,16 @@ public class UserProfileServlet extends HttpServlet {
 			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WATCH);
 			List<Entity> watchEntityList = event.getSpecificEventRecords();
 			request.setAttribute("watchedCount", watchEntityList.size());
-			ArrayList<String> watchList = new ArrayList<String>();
-			for (Entity watchEntity : watchEntityList) {
-				watchList.add(watchEntity.getProperty("tmdbId").toString());
+			ArrayList<TMDBMovie> watchList = new ArrayList<TMDBMovie>();
+			for (int i = 0; i < watchEntityList.size(); i++) {
+				// currently display five till we make pagination
+				if (i == 4) {
+					break;
+				}
+				TMDBMovie movie = new TMDBMovie(
+						watchEntityList.get(i).getProperty("tmdbId").toString());
+				movie.retrieveBasicDetails();
+				watchList.add(movie);
 			}
 			request.setAttribute("watchList", watchList);
 
@@ -143,9 +151,19 @@ public class UserProfileServlet extends HttpServlet {
 			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
 			List<Entity> wantToWatchEntityList = event.getSpecificEventRecords();
 			request.setAttribute("wantToWatchCount", wantToWatchEntityList.size());
-			ArrayList<String> wantToWatchList = new ArrayList<String>();
-			for (Entity wantToWatchEntity : wantToWatchEntityList) {
-				wantToWatchList.add(wantToWatchEntity.getProperty("tmdbId").toString());
+			ArrayList<TMDBMovie> wantToWatchList = new ArrayList<TMDBMovie>();
+			for (int i = 0; i < wantToWatchEntityList.size(); i++) {
+				// currently display five till we make pagination
+				if (i == 4) {
+					break;
+				}
+				if (i == 4) {
+					break;
+				}
+				TMDBMovie movie = new TMDBMovie(
+						wantToWatchEntityList.get(i).getProperty("tmdbId").toString());
+				movie.retrieveBasicDetails();
+				wantToWatchList.add(movie);
 			}
 			request.setAttribute("wantToWatchList", wantToWatchList);
 		}
