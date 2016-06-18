@@ -181,8 +181,7 @@
 									<div class="input-field col s12 m8 l6"
 										style="margin-left: -10px">
 										<select id="rateWatch">
-											<option value="" disabled selected>Choose your
-												option</option>
+											<option value="" disabled selected>Choose your option</option>
 											<option value="want_to_watch">Want to watch</option>
 											<option value="watched">Watched</option>
 										</select><label>Have you watched?</label>

@@ -191,11 +191,9 @@
 							<h5>Have you watched?</h5>
 							<select id="rateWatch">
 								<option value="" disabled
-									<c:if test="${empty rateWatch }"> selected</c:if>>Choose
-									your option</option>
+									<c:if test="${empty rateWatch }"> selected</c:if>>Choose your option</option>
 								<option value="want_to_watch"
-									<c:if test="${ rateWatch == 'want_to_watch'}"> selected</c:if>>Want
-									to watch</option>
+									<c:if test="${ rateWatch == 'want_to_watch'}"> selected</c:if>>Want to watch</option>
 								<option value="watched"
 									<c:if test="${ rateWatch == 'watched'}"> selected</c:if>>Watched</option>
 							</select>
