@@ -23,81 +23,108 @@
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<style>
+nav .nav-wrapper form, nav .nav-wrapper form .input-field {
+	height: 100%;
+}
+
+.progress {
+	margin: 0 !important;
+}
+</style>
+
 <title>MoveVote - Movie recommendation</title>
 </head>
 
 <body>
-	<c:if test="${isLoggedIn}">
-		<ul id="dropdown1" class="dropdown-content">
-			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-			<li><a
-				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
-					account</a></li>
-			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-					out</a></li>
-		</ul>
-		<ul id="dropdown2" class="dropdown-content">
-			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-			<li><a
-				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
-					account</a></li>
-			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-					out</a></li>
-		</ul>
-	</c:if>
+	<header>
+		<c:if test="${isLoggedIn}">
+			<ul id="dropdown1" class="dropdown-content">
+				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+				<li><a
+					href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+						account</a></li>
+				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+						out</a></li>
+			</ul>
+			<ul id="dropdown2" class="dropdown-content">
+				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+				<li><a
+					href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+						account</a></li>
+				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+						out</a></li>
+			</ul>
+		</c:if>
 
-	<nav>
-		<div class="nav-wrapper container">
-			<a href="${pageContext.request.contextPath}/home"
-				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-				class="button-collapse"><i class="material-icons">menu</i></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a id="toggle-search" href="#"><i
-						class="material-icons tooltipped" data-position="bottom"
-						data-delay="50" data-tooltip="search">search</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
-				<c:choose>
-					<c:when test="${not isLoggedIn}">
-						<li><a
-							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-								in</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a class="dropdown-button" href="#!"
-							data-activates="dropdown1"><img class="circle profile_logo"
-								align="middle"
-								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-									value="${userInfo.name}"></c:out><i
-								class="material-icons right">arrow_drop_down</i></a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-			<ul class="side-nav" id="mobile-navbar">
-				<li><a id="toggle-search" href="#">Search</a></li>
-				<li><a href="#">Discover</a></li>
-				<li><a href="#">Group</a></li>
-				<c:choose>
-					<c:when test="${not isLoggedIn}">
-						<li><a
-							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-								in</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a class="dropdown-button" href="#!"
-							data-activates="dropdown2"><img class="circle profile_logo"
-								align="middle"
-								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-									value="${userInfo.name}"></c:out><i
-								class="material-icons right">arrow_drop_down</i></a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
-	</nav>
+		<nav id="main">
+			<div class="nav-wrapper container">
+				<a href="${pageContext.request.contextPath}/home"
+					class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+					class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+					class="button-collapse"><i class="material-icons">menu</i></a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a id="toggle-search1" href="#"><i
+							class="material-icons tooltipped" data-position="bottom"
+							data-delay="50" data-tooltip="search">search</i></a></li>
+					<li><a href="#"><i class="material-icons tooltipped"
+							data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
+					<li><a href="#"><i class="material-icons tooltipped"
+							data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+					<c:choose>
+						<c:when test="${not isLoggedIn}">
+							<li><a
+								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+									in</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a class="dropdown-button" href="#!"
+								data-activates="dropdown1"><img class="circle profile_logo"
+									align="middle"
+									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+										value="${userInfo.name}"></c:out><i
+									class="material-icons right">arrow_drop_down</i></a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+				<ul class="side-nav" id="mobile-navbar">
+					<li><a id="toggle-search2" href="#">Search</a></li>
+					<li><a href="#">Discover</a></li>
+					<li><a href="#">Group</a></li>
+					<c:choose>
+						<c:when test="${not isLoggedIn}">
+							<li><a
+								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+									in</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a class="dropdown-button" href="#!"
+								data-activates="dropdown2"><img class="circle profile_logo"
+									align="middle"
+									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+										value="${userInfo.name}"></c:out><i
+									class="material-icons right">arrow_drop_down</i></a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
+		</nav>
+
+		<nav id="search" class="white" style="display: none;">
+			<div class="nav-wrapper container">
+				<form>
+					<div class="input-field">
+						<input id="search-input" type="search" placeholder="Search"
+							required> <label for="search"><i
+							class="material-icons">search</i></label>
+					</div>
+				</form>
+			</div>
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</nav>
+	</header>
 
 	<main>
 	<div class="container">
@@ -132,7 +159,6 @@
 
 					<c:out value=" | ${duration} | "></c:out>
 					<c:out value="${movie.rating}/10"></c:out>
-
 				</p>
 
 				<c:forEach items="${ movie.genreList }" var="genre">
@@ -144,7 +170,9 @@
 				<div class="section">
 					<ul class="tabs">
 						<li class="tab col s4"><a class="active" href="#overview">Overview</a></li>
-						<li class="tab col s4"><a href="#showing">Now Showing</a></li>
+						<c:if test="${ !empty inSingId }">
+							<li class="tab col s4"><a href="#showing">Now Showing</a></li>
+						</c:if>
 						<li class="tab col s4"><a href="#similar">Similar</a></li>
 						<li class="tab col s4"><a href="#review">Reviews</a></li>
 					</ul>
@@ -235,7 +263,7 @@
 					<c:if test="${fn:length(movie.similarList) gt 0}">
 						<div class="row">
 							<c:forEach items="${ movie.similarList }" var="similar">
-								<div class="col s6 m4">
+								<div class="col s6 m6 l4">
 									<div class="card medium">
 										<div class="card-image">
 											<img
@@ -251,7 +279,10 @@
 											</p>
 										</div>
 										<div class="card-action">
-											<a href="#">more info</a>
+											<a
+												href="${pageContext.request.contextPath}/movie?provider=tmdb&tmdb_id=<c:out
+											value="${similar.id}"></c:out>">more
+												info</a>
 										</div>
 									</div>
 								</div>
@@ -278,53 +309,51 @@
 					</c:if>
 				</div>
 
-				<div id="showing" class="col s12"
-					data-id="<c:out value="${ inSingId }"></c:out>"
-					data-title2="<c:out value="${ title2 }"></c:out>">
-					<div class="input-field col s12">
-						<select id="showingSelector">
-							<option value="<c:out value="${ today }"></c:out>" selected>Today
-								(
-								<c:out value="${ today }"></c:out>)
-							</option>
-							<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow
-								(
-								<c:out value="${ tomorrow }"></c:out>)
-							</option>
-						</select>
-					</div>
+				<c:if test="${ !empty inSingId }">
+					<div id="showing" class="col s12"
+						data-id="<c:out value="${ inSingId }"></c:out>"
+						data-title2="<c:out value="${ title2 }"></c:out>">
+						<div class="input-field col s12">
+							<select id="showingSelector">
+								<option value="<c:out value="${ today }"></c:out>" selected>Today (<c:out value="${ today }"></c:out>)
+								</option>
+								<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow (<c:out value="${ tomorrow }"></c:out>)
+								</option>
+							</select>
+						</div>
 
-					<div id="showingLoading" class="col s12 center">
-						<div class="preloader-wrapper small active">
-							<div class="spinner-layer spinner-red-only">
-								<div class="circle-clipper left">
-									<div class="circle"></div>
-								</div>
-								<div class="gap-patch">
-									<div class="circle"></div>
-								</div>
-								<div class="circle-clipper right">
-									<div class="circle"></div>
+						<div id="showingLoading" class="col s12 center">
+							<div class="preloader-wrapper small active">
+								<div class="spinner-layer spinner-red-only">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div id="showingLoaded" class="col s12 hide">
-						<ul id="showingAccordion" class="collapsible popout"
-							data-collapsible="accordion"></ul>
-						<div class="spacer-normal"></div>
-						<p>
-							<b>Note:</b> Please remember to still check the right movie
-							details before making your final bookings at the respective
-							cinemas.
-						</p>
-					</div>
+						<div id="showingLoaded" class="col s12 hide">
+							<ul id="showingAccordion" class="collapsible popout"
+								data-collapsible="accordion"></ul>
+							<div class="spacer-normal"></div>
+							<p>
+								<b>Note:</b> Please remember to still check the right movie
+								details before making your final bookings at the respective
+								cinemas.
+							</p>
+						</div>
 
-					<div id="showingError" class="col s12 hide center">
-						<p>No showing time.</p>
+						<div id="showingError" class="col s12 hide center">
+							<p>No showing time.</p>
+						</div>
 					</div>
-				</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -350,11 +379,28 @@
 	<script type="text/javascript" src="assets/js/jquery.shorten.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$(".button-collapse").sideNav({});
-
+			$(".button-collapse").sideNav();
 			$('ul.tabs').tabs();
-
 			$('select').material_select();
+
+			$('#toggle-search2').click(function() {
+				$('.button-collapse').sideNav('hide');
+				$('#search').show();
+				$('#search-input').focus();
+				$('#search-input').focusout(function() {
+					$('#search').hide();
+				});
+			});
+			$('#toggle-search1').click(function() {
+				$('#main').hide();
+				$('#search').show();
+
+				$('#search-input').focus();
+				$('#search-input').focusout(function() {
+					$('#search').hide();
+					$('#main').show();
+				});
+			});
 
 			$('#rate').addRating({
 				fieldName : 'rateRating',
@@ -383,13 +429,6 @@
 				i--;
 			});
 
-			// fetch movie showing time
-			fetchShowingTime(null);
-
-			$("#showingSelector").change(function() {
-				fetchShowingTime($(this).val());
-			})
-
 			$('#rateWatch').change(function() {
 				var tmdbId = $('#rate').attr("data-id");
 				var action = $('#rateWatch').val();
@@ -412,118 +451,6 @@
 										.toast(
 												"An error has occured, please try again later.",
 												3000);
-							}
-						}
-					});
-		}
-
-		function fetchShowingTime(date) {
-			var title2 = $("#showing").attr("data-title2");
-			var id = $("#showing").attr("data-id");
-
-			var dataParam;
-			if (date == null) {
-				dataParam = "action=showtime&id=" + id + "&title2=" + title2;
-			} else {
-				dataParam = "action=showtime&id=" + id + "&title2=" + title2
-						+ "&date=" + date;
-			}
-
-			$
-					.ajax({
-						type : "GET",
-						url : "/movie",
-						data : dataParam,
-						dataType : "json",
-						beforeSend : function() {
-							$("#showingError").attr("class",
-									"col s12 center hide");
-							$("#showingLoading")
-									.attr("class", "col s12 center");
-							$("#showingLoaded").attr("class",
-									"col s12 center hide");
-							$("#showingAccordion").empty();
-						},
-						//if received a response from the server
-						success : function(data) {
-							if (data.success) {
-								$
-										.each(
-												data.cinema,
-												function(arrayID, cinema) {
-													var cinemaName = cinema.name;
-													var cinemaAddress = cinema.address;
-
-													var body = '<li><div class="collapsible-header"><i class="material-icons">theaters</i>'
-															+ cinemaName
-															+ '</div><div class="collapsible-body">';
-
-													if (cinema.Standard) {
-														body += '<h6>Standard</h6>';
-														$
-																.each(
-																		cinema.Standard,
-																		function(
-																				arrayId,
-																				standard) {
-																			if (arrayId > 0) {
-																				body += ", ";
-																			}
-																			body += '<a href="' + standard.url + '">'
-																					+ standard.timing
-																					+ '</a> ';
-																		});
-													}
-
-													if (cinema.Atmos) {
-														body += '<h6>Atmos</h6>';
-														$
-																.each(
-																		cinema.Atmos,
-																		function(
-																				arrayId,
-																				atmos) {
-																			if (arrayId > 0) {
-																				body += ", ";
-																			}
-																			body += '<a href="' + atmos.url + '">'
-																					+ atmos.timing
-																					+ '</a> ';
-																		});
-													}
-
-													if (cinema.Digital) {
-														body += '<h6>Digital</h6>';
-														$
-																.each(
-																		cinema.Digital,
-																		function(
-																				arrayId,
-																				digital) {
-																			if (arrayId > 0) {
-																				body += ", ";
-																			}
-																			body += '<a href="' + digital.url + '">'
-																					+ digital.timing
-																					+ '</a> ';
-																		});
-													}
-
-													body += '</div></li>';
-													$("#showingAccordion")
-															.append(body);
-
-													$("#showingLoaded").attr(
-															"class", "col s12");
-													$("#showingLoading")
-															.attr("class",
-																	"col s12 hide center");
-												});
-							} else {
-								$("#showingError").attr("class",
-										"col s12 center");
-								$("#showingLoading").attr("class",
-										"col s12 hide center");
 							}
 						}
 					});
@@ -554,6 +481,133 @@
 					});
 		}
 	</script>
+
+	<c:if test="${ !empty inSingId }">
+		<script>
+			$(document).ready(function() {
+				// fetch movie showing time
+				fetchShowingTime(null);
+
+				$("#showingSelector").change(function() {
+					fetchShowingTime($(this).val());
+				})
+			});
+
+			function fetchShowingTime(date) {
+				var title2 = $("#showing").attr("data-title2");
+				var id = $("#showing").attr("data-id");
+
+				var dataParam;
+				if (date == null) {
+					dataParam = "action=showtime&id=" + id + "&title2="
+							+ title2;
+				} else {
+					dataParam = "action=showtime&id=" + id + "&title2="
+							+ title2 + "&date=" + date;
+				}
+
+				$
+						.ajax({
+							type : "GET",
+							url : "/movie",
+							data : dataParam,
+							dataType : "json",
+							beforeSend : function() {
+								$("#showingError").attr("class",
+										"col s12 center hide");
+								$("#showingLoading").attr("class",
+										"col s12 center");
+								$("#showingLoaded").attr("class",
+										"col s12 center hide");
+								$("#showingAccordion").empty();
+							},
+							//if received a response from the server
+							success : function(data) {
+								if (data.success) {
+									$
+											.each(
+													data.cinema,
+													function(arrayID, cinema) {
+														var cinemaName = cinema.name;
+														var cinemaAddress = cinema.address;
+
+														var body = '<li><div class="collapsible-header"><i class="material-icons">theaters</i>'
+																+ cinemaName
+																+ '</div><div class="collapsible-body">';
+
+														if (cinema.Standard) {
+															body += '<h6>Standard</h6>';
+															$
+																	.each(
+																			cinema.Standard,
+																			function(
+																					arrayId,
+																					standard) {
+																				if (arrayId > 0) {
+																					body += ", ";
+																				}
+																				body += '<a href="' + standard.url + '">'
+																						+ standard.timing
+																						+ '</a> ';
+																			});
+														}
+
+														if (cinema.Atmos) {
+															body += '<h6>Atmos</h6>';
+															$
+																	.each(
+																			cinema.Atmos,
+																			function(
+																					arrayId,
+																					atmos) {
+																				if (arrayId > 0) {
+																					body += ", ";
+																				}
+																				body += '<a href="' + atmos.url + '">'
+																						+ atmos.timing
+																						+ '</a> ';
+																			});
+														}
+
+														if (cinema.Digital) {
+															body += '<h6>Digital</h6>';
+															$
+																	.each(
+																			cinema.Digital,
+																			function(
+																					arrayId,
+																					digital) {
+																				if (arrayId > 0) {
+																					body += ", ";
+																				}
+																				body += '<a href="' + digital.url + '">'
+																						+ digital.timing
+																						+ '</a> ';
+																			});
+														}
+
+														body += '</div></li>';
+														$("#showingAccordion")
+																.append(body);
+
+														$("#showingLoaded")
+																.attr("class",
+																		"col s12");
+														$("#showingLoading")
+																.attr("class",
+																		"col s12 hide center");
+													});
+								} else {
+									$("#showingError").attr("class",
+											"col s12 center");
+									$("#showingLoading").attr("class",
+											"col s12 hide center");
+								}
+							}
+						});
+			}
+		</script>
+	</c:if>
 </body>
 
 </html>
