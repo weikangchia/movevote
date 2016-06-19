@@ -192,7 +192,7 @@
 					<h5 class="center thin">Personalized Movie Recommendations</h5>
 					<p class="center">Sign up for MoveVote and rate about 10
 						movies, after which we can help you get more movies that you
-						and/or your group friends will like.</p>
+						and/or your group of friends will like.</p>
 				</div>
 			</div>
 
@@ -301,7 +301,7 @@
 						interaction experience that recommends you and your friends movies
 						that all of you will like. You will rate about 10 movies so that
 						we can know your individual movie preferences. If you do not know
-						the movie and can skip it.</p>
+						the movie, you can skip it.</p>
 				</div>
 			</div>
 		</div>
