@@ -72,36 +72,42 @@ public class MovieServlet extends HttpServlet {
 		request.setAttribute("isLoggedIn", isLoggedIn);
 
 		// send error if one of this parameter are null
-		if (request.getParameter("provider") != null && request.getParameter("is_id") != null
-				&& request.getParameter("tmdb_id") != null
-				&& request.getParameter("title2") != null) {
+		if (request.getParameter("provider") != null && request.getParameter("tmdb_id") != null) {
 			String provider = request.getParameter("provider");
-			String inSingId = request.getParameter("is_id");
 			String tmdbId = request.getParameter("tmdb_id");
-			String title2 = request.getParameter("title2");
+
+			TMDBMovie movie = new TMDBMovie(tmdbId);
+			movie.retrieveAll();
+			request.setAttribute("movie", movie);
+
+			// convert movie.duration to string format
+			int hours = movie.getDuration() / 60;
+			int minutes = movie.getDuration() % 60;
+			String duration = hours + "h " + String.format("%02d", minutes) + "min";
+			request.setAttribute("duration", duration);
+			request.setAttribute("directorList", movie.getCrewMapList().get("Director"));
 
 			switch (provider) {
 			case Constant.PROVIDER_INSING:
-				// TMDBMovie movie = TMDBMovie.getTMDBMovieOver(tmdbId);
-				TMDBMovie movie = new TMDBMovie(tmdbId);
-				movie.retrieveAll();
-				request.setAttribute("movie", movie);
+				if (request.getParameter("title2") != null
+						&& request.getParameter("is_id") != null) {
+					String inSingId = request.getParameter("is_id");
+					String title2 = request.getParameter("title2");
 
-				// convert movie.duration to string format
-				int hours = movie.getDuration() / 60;
-				int minutes = movie.getDuration() % 60;
-				String duration = hours + "h " + String.format("%02d", minutes) + "min";
-				request.setAttribute("duration", duration);
-				request.setAttribute("directorList", movie.getCrewMapList().get("Director"));
-				request.setAttribute("title2", title2);
-				request.setAttribute("inSingId", inSingId);
+					request.setAttribute("title2", title2);
+					request.setAttribute("inSingId", inSingId);
 
-				// get today and tomorrow date
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				Calendar cal = Calendar.getInstance();
-				request.setAttribute("today", formatter.format(cal.getTime()));
-				cal.add(Calendar.DATE, 1);
-				request.setAttribute("tomorrow", formatter.format(cal.getTime()));
+					// get today and tomorrow date for now showing
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+					request.setAttribute("today", formatter.format(cal.getTime()));
+					cal.add(Calendar.DATE, 1);
+					request.setAttribute("tomorrow", formatter.format(cal.getTime()));
+				} else {
+					response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				}
+				break;
+			case Constant.PROVIDER_TMDB:
 				break;
 			default:
 				// not one of the provider
@@ -163,7 +169,8 @@ public class MovieServlet extends HttpServlet {
 				TMDBMovie movie = null;
 				do {
 					// get a list of movie
-					ArrayList<TMDBMovie> movieList = TMDBMovie.retrieveNewDiscoverList(year, page, 4.5);
+					ArrayList<TMDBMovie> movieList = TMDBMovie.retrieveNewDiscoverList(year, page,
+							4.5);
 					for (int i = skip; i < movieList.size(); i++) {
 						MovieEvent movieEvent = new MovieEvent(userInfo.getId(),
 								movieList.get(i).getId(), Constant.MOVIE_EVENT_ACTION_RATE);
@@ -246,7 +253,7 @@ public class MovieServlet extends HttpServlet {
 				response.getWriter().println(respObj.toString());
 				break;
 			default:
-				// not one of the provider
+				// not one of the action
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 		} else {
