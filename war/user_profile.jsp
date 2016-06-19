@@ -251,7 +251,8 @@
 									</p>
 								</div>
 								<div class="card-action">
-									<a href="#">more info</a>
+									<a href="${pageContext.request.contextPath}/movie?provider=tmdb&tmdb_id=<c:out
+											value="${wantToWatch.id}"></c:out>">more info</a>
 								</div>
 							</div>
 						</div>
@@ -278,7 +279,8 @@
 									</p>
 								</div>
 								<div class="card-action">
-									<a href="#">more info</a>
+									<a href="${pageContext.request.contextPath}/movie?provider=tmdb&tmdb_id=<c:out
+											value="${watched.id}"></c:out>">more info</a>
 								</div>
 							</div>
 						</div>
