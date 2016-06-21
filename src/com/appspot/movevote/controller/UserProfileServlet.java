@@ -59,6 +59,7 @@ public class UserProfileServlet extends HttpServlet {
 
 		if (gitkitUser == null) {
 			response.sendRedirect(request.getContextPath() + Constant.LOGIN_PATH);
+			return;
 		} else {
 			isLoggedIn = true;
 			isVerified = User.checkIsUserVerified(request.getCookies(),
