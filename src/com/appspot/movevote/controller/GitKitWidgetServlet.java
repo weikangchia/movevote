@@ -52,7 +52,6 @@ public class GitKitWidgetServlet extends HttpServlet {
 		boolean isLoggedIn = false;
 		boolean isVerified = false;
 		GitkitHelper gitkitHelper = new GitkitHelper(this);
-
 		GitkitUser gitkitUser = gitkitHelper.validateLogin(request);
 
 		if (gitkitUser != null) {
@@ -146,8 +145,7 @@ public class GitKitWidgetServlet extends HttpServlet {
 								.property(Email.SUBJECT,
 										"Verify your new sign-in email for movevote")
 								.property(Email.HTMLPART,
-										"<p>Hello " + gitkitUser.getName()
-												+ ",</p><p>You have just requested to change your sign-in email to "
+										"<p>Hi,</p><p>You have just requested to change your sign-in email to "
 												+ oobResponse.getRecipient()
 												+ "</p><p>Follow this link to finish changing your email address.</p><a href=\""
 												+ oobResponse.getOobUrl().get() + "\">"
@@ -161,8 +159,7 @@ public class GitKitWidgetServlet extends HttpServlet {
 								.property(Email.FROMEMAIL, "weikangchia@gmail.com")
 								.property(Email.SUBJECT, "Reset your password for movevote")
 								.property(Email.HTMLPART,
-										"<p>Hello " + gitkitUser.getName()
-												+ ",</p><p>Follow this link to reset your movevote password for your "
+										"<p>Hi,</p><p>Follow this link to reset your movevote password for your "
 												+ oobResponse.getRecipient() + " account.</p>"
 												+ "<a href=\"" + oobResponse.getOobUrl().get()
 												+ "\">" + oobResponse.getOobUrl().get()
