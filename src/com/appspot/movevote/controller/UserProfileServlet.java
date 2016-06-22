@@ -1,8 +1,6 @@
 package com.appspot.movevote.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -13,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.appspot.movevote.db.SurveyDB;
+import com.appspot.movevote.db.UserDB;
 import com.appspot.movevote.entity.Constant;
-import com.appspot.movevote.entity.MovieEvent;
-import com.appspot.movevote.entity.TMDBMovie;
+import com.appspot.movevote.entity.Survey;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
-import com.google.appengine.api.datastore.Entity;
 import com.google.identitytoolkit.GitkitClientException;
 import com.google.identitytoolkit.GitkitServerException;
 import com.google.identitytoolkit.GitkitUser;
@@ -75,7 +73,7 @@ public class UserProfileServlet extends HttpServlet {
 			boolean isNewUser = userInfo.isNewUser();
 
 			if (isNewUser) {
-				userInfo.createNewUser();
+				UserDB.createNewUser(userInfo.getId(), userInfo.getName());
 				if (!userInfo.isVerified()) {
 					// generate the verification link
 					String verificationLink = null;
@@ -126,47 +124,19 @@ public class UserProfileServlet extends HttpServlet {
 				}
 			}
 
-			// get numbers of movies that the user has rated
-			MovieEvent event = new MovieEvent(userInfo.getId(), Constant.MOVIE_EVENT_ACTION_RATE);
-			int rateCount = event.getSpecificEventRecordCount();
-			request.setAttribute("rateCount", rateCount);
-
-			// get number of movies that the user has watched
-			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WATCH);
-			List<Entity> watchEntityList = event.getSpecificEventRecords();
-			request.setAttribute("watchedCount", watchEntityList.size());
-			ArrayList<TMDBMovie> watchList = new ArrayList<TMDBMovie>();
-			for (int i = 0; i < watchEntityList.size(); i++) {
-				// currently display five till we make pagination
-				if (i == 4) {
-					break;
-				}
-				TMDBMovie movie = new TMDBMovie(
-						watchEntityList.get(i).getProperty("tmdbId").toString());
-				movie.retrieveBasicDetails();
-				watchList.add(movie);
+			Survey survey = SurveyDB.getSurvey(gitkitUser.getLocalId());
+			int surveyGenresCategory = 0;
+			if (survey == null) {
+				SurveyDB.storeSurvey(new Survey(gitkitUser.getLocalId(), surveyGenresCategory));
+			} else {
+				surveyGenresCategory = survey.getGenresCategory();
 			}
-			request.setAttribute("watchList", watchList);
 
-			// get number of movies that the user want to watch
-			event.setEventAction(Constant.MOVIE_EVENT_ACTION_WANT_TO_WATCH);
-			List<Entity> wantToWatchEntityList = event.getSpecificEventRecords();
-			request.setAttribute("wantToWatchCount", wantToWatchEntityList.size());
-			ArrayList<TMDBMovie> wantToWatchList = new ArrayList<TMDBMovie>();
-			for (int i = 0; i < wantToWatchEntityList.size(); i++) {
-				// currently display five till we make pagination
-				if (i == 4) {
-					break;
-				}
-				if (i == 4) {
-					break;
-				}
-				TMDBMovie movie = new TMDBMovie(
-						wantToWatchEntityList.get(i).getProperty("tmdbId").toString());
-				movie.retrieveBasicDetails();
-				wantToWatchList.add(movie);
+			if (surveyGenresCategory == 7) {
+				request.setAttribute("hasSurvey", false);
+			} else {
+				request.setAttribute("hasSurvey", true);
 			}
-			request.setAttribute("wantToWatchList", wantToWatchList);
 		}
 
 		request.setAttribute("isLoggedIn", isLoggedIn);
@@ -180,6 +150,5 @@ public class UserProfileServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 	}
 }

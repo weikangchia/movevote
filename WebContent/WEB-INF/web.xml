@@ -81,12 +81,42 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>TellMeServlet</display-name>
-    <servlet-name>TellMeServlet</servlet-name>
-    <servlet-class>com.appspot.movevote.controller.TellMeServlet</servlet-class>
+    <display-name>InitializeUserDBCronServlet</display-name>
+    <servlet-name>InitializeUserDBCronServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.cron.InitializeUserDBCronServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>TellMeServlet</servlet-name>
-    <url-pattern>/movie/tell_me</url-pattern>
+    <servlet-name>InitializeUserDBCronServlet</servlet-name>
+    <url-pattern>/cron/initialize/user_db</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InitializeTMDBCronServlet</display-name>
+    <servlet-name>InitializeTMDBCronServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.cron.InitializeTMDBCronServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InitializeTMDBCronServlet</servlet-name>
+    <url-pattern>/cron/initialize/tmdb</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RatingServet</display-name>
+    <servlet-name>RatingServet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.RatingServet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RatingServet</servlet-name>
+    <url-pattern>/RatingServet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SurveyServlet</display-name>
+    <servlet-name>SurveyServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.SurveyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SurveyServlet</servlet-name>
+    <url-pattern>/survey</url-pattern>
   </servlet-mapping>
 </web-app>

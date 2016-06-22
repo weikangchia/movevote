@@ -23,108 +23,76 @@
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-nav .nav-wrapper form, nav .nav-wrapper form .input-field {
-	height: 100%;
-}
-
-.progress {
-	margin: 0 !important;
-}
-</style>
-
 <title>MoveVote - Movie recommendation</title>
 </head>
 
 <body>
-	<header>
-		<c:if test="${isLoggedIn}">
-			<ul id="dropdown1" class="dropdown-content">
-				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
-						account</a></li>
-				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-						out</a></li>
-			</ul>
-			<ul id="dropdown2" class="dropdown-content">
-				<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
-						account</a></li>
-				<li><a href="${pageContext.request.contextPath}/sign_out">Sign
-						out</a></li>
-			</ul>
-		</c:if>
+	<c:if test="${isLoggedIn}">
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+			<li><a
+				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+					account</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+		<ul id="dropdown2" class="dropdown-content">
+			<li><a href="${pageContext.request.contextPath}/user_profile">Profile</a></li>
+			<li><a
+				href="${pageContext.request.contextPath}/gitkit?mode=manageAccount">Manage
+					account</a></li>
+			<li><a href="${pageContext.request.contextPath}/sign_out">Sign
+					out</a></li>
+		</ul>
+	</c:if>
 
-		<nav id="main">
-			<div class="nav-wrapper container">
-				<a href="${pageContext.request.contextPath}/home"
-					class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-					class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-					class="button-collapse"><i class="material-icons">menu</i></a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a id="toggle-search1" href="#"><i
-							class="material-icons tooltipped" data-position="bottom"
-							data-delay="50" data-tooltip="search">search</i></a></li>
-					<li><a href="#"><i class="material-icons tooltipped"
-							data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-					<li><a href="#"><i class="material-icons tooltipped"
-							data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
-					<c:choose>
-						<c:when test="${not isLoggedIn}">
-							<li><a
-								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-									in</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a class="dropdown-button" href="#!"
-								data-activates="dropdown1"><img class="circle profile_logo"
-									align="middle"
-									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-										value="${userInfo.name}"></c:out><i
-									class="material-icons right">arrow_drop_down</i></a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-				<ul class="side-nav" id="mobile-navbar">
-					<li><a id="toggle-search2" href="#">Search</a></li>
-					<li><a href="#">Discover</a></li>
-					<li><a href="#">Group</a></li>
-					<c:choose>
-						<c:when test="${not isLoggedIn}">
-							<li><a
-								href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-									in</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a class="dropdown-button" href="#!"
-								data-activates="dropdown2"><img class="circle profile_logo"
-									align="middle"
-									src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
-										value="${userInfo.name}"></c:out><i
-									class="material-icons right">arrow_drop_down</i></a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-		</nav>
-
-		<nav id="search" class="white" style="display: none;">
-			<div class="nav-wrapper container">
-				<form>
-					<div class="input-field">
-						<input id="search-input" type="search" placeholder="Search"
-							required> <label for="search"><i
-							class="material-icons">search</i></label>
-					</div>
-				</form>
-			</div>
-			<div class="progress">
-				<div class="indeterminate"></div>
-			</div>
-		</nav>
-	</header>
+	<nav id="main">
+		<div class="nav-wrapper container">
+			<a href="${pageContext.request.contextPath}/home"
+				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+				class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50"
+						data-tooltip="recommend movie">movie</i></a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown1"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+			<ul class="side-nav" id="mobile-navbar">
+				<li><a id="toggle-search2" href="#">Search</a></li>
+				<li><a href="#">Recommend Movie</a></li>
+				<c:choose>
+					<c:when test="${not isLoggedIn}">
+						<li><a
+							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+								in</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a class="dropdown-button" href="#!"
+							data-activates="dropdown2"><img class="circle profile_logo"
+								align="middle"
+								src="<c:out value="${userInfo.profilePath}"></c:out>"> <c:out
+									value="${userInfo.name}"></c:out><i
+								class="material-icons right">arrow_drop_down</i></a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</nav>
 
 	<main>
 	<div class="container">
@@ -144,9 +112,6 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 						<c:out value="(${fn:substring(movie.releaseDate, 0, 4)})"></c:out>
 					</c:if>
 				</h4>
-				<h6 class="uppercase">
-					<c:out value="${movie.tagLine}"></c:out>
-				</h6>
 				<p>
 					<c:choose>
 						<c:when test="${fn:length(movie.releaseDate) eq 0}">
@@ -174,7 +139,7 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 							<li class="tab col s4"><a href="#showing">Now Showing</a></li>
 						</c:if>
 						<li class="tab col s4"><a href="#similar">Similar</a></li>
-						<li class="tab col s4"><a href="#review">Reviews</a></li>
+						<li class="tab col s4"><a href="#trailer">Trailers</a></li>
 					</ul>
 				</div>
 
@@ -205,6 +170,7 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 								<h5 id="rateTitle">You have rated</h5>
 								<div id="rate" class="red-text text-lighten-1"
 									data-id="<c:out value="${movie.id}"></c:out>"
+									data-genreBit="<c:out value="${movie.genreBit}"></c:out>"
 									data-prevRating="<c:out value="${rating}"></c:out>"
 									onclick="rateMovie()"></div>
 							</c:when>
@@ -212,43 +178,10 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 								<h5 id="rateTitle">How much you like this movie?</h5>
 								<div id="rate" class="red-text text-lighten-1"
 									data-id="<c:out value="${movie.id}"></c:out>"
+									data-genreBit="<c:out value="${movie.genreBit}"></c:out>"
 									data-prevRating="0" onclick="rateMovie()"></div>
 							</c:otherwise>
 						</c:choose>
-						<div class="input-field col s12 m8 l6" style="margin-left: -10px">
-							<h5>Have you watched?</h5>
-							<select id="rateWatch">
-								<option value="" disabled
-									<c:if test="${empty rateWatch }"> selected</c:if>>Choose your option</option>
-								<option value="want_to_watch"
-									<c:if test="${ rateWatch == 'want_to_watch'}"> selected</c:if>>Want to watch</option>
-								<option value="watched"
-									<c:if test="${ rateWatch == 'watched'}"> selected</c:if>>Watched</option>
-							</select>
-						</div>
-						<div style="clear: both;"></div>
-					</div>
-
-					<div class="section">
-						<h5>Trailers</h5>
-						<c:if test="${fn:length(movie.youTubeVideoList) eq 0}">
-							<p class="center-align">No trailer available yet.</p>
-						</c:if>
-						<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
-							<c:forEach items="${ movie.youTubeVideoList }" var="video">
-								<h6>
-									<c:out value="${video.name}"></c:out>
-								</h6>
-								<div class="spacer-thin"></div>
-								<div class="video-container">
-									<iframe width="853" height="480"
-										src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
-										?rel=0"
-										frameborder="0" allowfullscreen></iframe>
-								</div>
-								<div class="spacer-thin"></div>
-							</c:forEach>
-						</c:if>
 					</div>
 				</div>
 
@@ -291,21 +224,24 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 					</c:if>
 				</div>
 
-				<div id="review" class="col s12">
-					<c:if test="${fn:length(movie.reviewList) eq 0}">
-						<p class="center-align">Not reviewed yet.</p>
+				<div id="trailer" class="col s12">
+					<c:if test="${fn:length(movie.youTubeVideoList) eq 0}">
+						<p class="center-align">No trailer available yet.</p>
 					</c:if>
-					<c:if test="${fn:length(movie.reviewList) gt 0}">
-						<ul class="collection">
-							<c:forEach items="${ movie.reviewList }" var="review">
-								<li class="collection-item avatar"><i
-									class="material-icons circle green">person</i> <span
-									class="title"><c:out value="${review.author.name }"></c:out></span>
-									<div class="review-text">
-										<c:out value="${review.content }" escapeXml="false"></c:out>
-									</div></li>
-							</c:forEach>
-						</ul>
+					<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
+						<c:forEach items="${ movie.youTubeVideoList }" var="video">
+							<h6>
+								<c:out value="${video.name}"></c:out>
+							</h6>
+							<div class="spacer-thin"></div>
+							<div class="video-container">
+								<iframe width="853" height="480"
+									src="//www.youtube.com/embed/<c:out value="${video.key}"></c:out>
+										?rel=0"
+									frameborder="0" allowfullscreen></iframe>
+							</div>
+							<div class="spacer-thin"></div>
+						</c:forEach>
 					</c:if>
 				</div>
 
@@ -383,25 +319,6 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 			$('ul.tabs').tabs();
 			$('select').material_select();
 
-			$('#toggle-search2').click(function() {
-				$('.button-collapse').sideNav('hide');
-				$('#search').show();
-				$('#search-input').focus();
-				$('#search-input').focusout(function() {
-					$('#search').hide();
-				});
-			});
-			$('#toggle-search1').click(function() {
-				$('#main').hide();
-				$('#search').show();
-
-				$('#search-input').focus();
-				$('#search-input').focusout(function() {
-					$('#search').hide();
-					$('#main').show();
-				});
-			});
-
 			$('#rate').addRating({
 				fieldName : 'rateRating',
 				fieldId : 'rateRating',
@@ -413,12 +330,6 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 				belowOrigin : true,
 			});
 
-			$(".review-text").shorten({
-				showChars : 200,
-				moreText : 'read more',
-				lessText : 'read less'
-			});
-
 			// method to set rating
 			var i = $("#rate").attr("data-prevRating");
 			$('#rate').find('i').each(function() {
@@ -428,43 +339,18 @@ nav .nav-wrapper form, nav .nav-wrapper form .input-field {
 				$(this).text('star');
 				i--;
 			});
-
-			$('#rateWatch').change(function() {
-				var tmdbId = $('#rate').attr("data-id");
-				var action = $('#rateWatch').val();
-				watchMovie(tmdbId, action);
-			})
 		});
-
-		function watchMovie(tmdbId, value) {
-			$
-					.ajax({
-						type : "POST",
-						url : "/movie",
-						data : "tmdbId=" + tmdbId + "&action=" + value,
-						dataType : "json",
-
-						//if received a response from the server
-						success : function(data) {
-							if (!data.success) {
-								Materialize
-										.toast(
-												"An error has occured, please try again later.",
-												3000);
-							}
-						}
-					});
-		}
 
 		function rateMovie() {
 			var tmdbId = $("#rate").attr("data-id");
 			var rating = $("#rateRating").val();
+			var genreBit = $("#rate").attr("data-genreBit");
 			$
 					.ajax({
 						type : "POST",
-						url : "/movie",
-						data : "tmdbId=" + tmdbId + "&action=rate&rating="
-								+ rating,
+						url : "/rate",
+						data : "tmdbId=" + tmdbId + "&rating=" + rating
+								+ "&genreBit=" + genreBit,
 						dataType : "json",
 
 						//if received a response from the server

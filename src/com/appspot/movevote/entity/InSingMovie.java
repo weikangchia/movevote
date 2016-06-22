@@ -2,32 +2,28 @@ package com.appspot.movevote.entity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.jsoup.Jsoup;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.appspot.movevote.db.InSingMovieDB;
+import com.appspot.movevote.db.TMDBMovieDB;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
 
 public class InSingMovie extends Movie {
 	private static final Logger log = Logger.getLogger(InSingMovie.class.getName());
 
 	private String tmdbId;
 	private String title2;
+	private String genreBit;
 
 	public InSingMovie(String id) {
 		super(id);
@@ -39,10 +35,12 @@ public class InSingMovie extends Movie {
 		this.title2 = title2;
 	}
 
-	public InSingMovie(String id, String title, String title2, String imageUrl, String tmdbID) {
+	public InSingMovie(String id, String title, String title2, String imageUrl, String tmdbID,
+			String genreBit) {
 		super(id, title, imageUrl);
 		this.setTmdbId(tmdbID);
 		this.title2 = title2;
+		this.genreBit = genreBit;
 	}
 
 	public String getTmdbId() {
@@ -59,6 +57,14 @@ public class InSingMovie extends Movie {
 
 	public void setTitle2(String title2) {
 		this.title2 = title2;
+	}
+
+	public String getGenreBit() {
+		return genreBit;
+	}
+
+	public void setGenreBit(String genreBit) {
+		this.genreBit = genreBit;
 	}
 
 	public boolean equals(Object obj) {
@@ -105,16 +111,9 @@ public class InSingMovie extends Movie {
 							Element movieImageElement = doc2.select("figure[class^=thumbnail")
 									.select("a").select("img").first();
 
-							String tmdbId = TMDBMovie.findTMDBId(title);
 							String imageUrl = movieImageElement.attr("src");
-
-							if (tmdbId != null) {
-								movieMap.put(inSingId,
-										new InSingMovie(inSingId, title, title2, imageUrl, tmdbId));
-							} else {
-								movieMap.put(inSingId,
-										new InSingMovie(inSingId, title, title2, imageUrl));
-							}
+							movieMap.put(inSingId, new InSingMovie(inSingId,
+									StringEscapeUtils.unescapeHtml4(title), title2, imageUrl));
 						} else {
 							log.info("Unable to connect to " + Constant.INSING_HOSTNAME + "movies/"
 									+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3]
@@ -124,6 +123,7 @@ public class InSingMovie extends Movie {
 						log.info("Error while trying to parse data from " + Constant.INSING_HOSTNAME
 								+ "movies/" + splitInSingIdArr[2] + "/" + splitInSingIdArr[3]
 								+ "/showtimes");
+						System.out.println(ex2);
 					}
 				}
 			} else {
@@ -149,7 +149,7 @@ public class InSingMovie extends Movie {
 		ArrayList<String> removeList = new ArrayList<String>();
 
 		// retrieve the current movie list stored in datastore
-		List<Entity> currMovieEntityList = retrieveMovieListKeysOnly();
+		List<Entity> currMovieEntityList = InSingMovieDB.retrieveMovieListKeysOnly();
 
 		// compare the current movie list with the movie list fetched from
 		// InSing and add any difference into the removeList
@@ -162,27 +162,20 @@ public class InSingMovie extends Movie {
 		}
 
 		// remove non-existing movie
-		removeMovieList(removeList);
+		InSingMovieDB.removeMovieList(removeList);
 
 		// add new movie list into the datastore
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 		for (Map.Entry<String, InSingMovie> entry : movieMap.entrySet()) {
-			InSingMovie newMovie = entry.getValue();
-			Entity movieEntity = new Entity(Constant.DS_TABLE_INSING_MOVIE, newMovie.getId());
-			movieEntity.setProperty("title", StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
-			movieEntity.setProperty("title2", newMovie.getTitle2());
-			movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
-			movieEntity.setProperty("tmdbId", newMovie.getTmdbId());
-			dataStore.put(movieEntity);
+			InSingMovie newInSingMovie = entry.getValue();
 
+			TMDBMovie tmdbMovie = TMDBMovie.searchTMDBByTitle(newInSingMovie.getTitle());
 			// if tmdbId is null, don't store it into the tmdb movie table
-			if (newMovie.getTmdbId() != null) {
-				movieEntity = new Entity(Constant.DS_TABLE_TMDB_MOVIE, newMovie.getTmdbId());
-				movieEntity.setProperty("title",
-						StringEscapeUtils.unescapeHtml4(newMovie.getTitle()));
-				movieEntity.setProperty("imageUrl", newMovie.getImageUrl());
-				movieEntity.setProperty("last_update", new Date());
-				dataStore.put(movieEntity);
+			if (tmdbMovie != null) {
+				TMDBMovieDB.storeMovie(tmdbMovie);
+
+				newInSingMovie.setTmdbId(tmdbMovie.getId());
+				newInSingMovie.setGenreBit(tmdbMovie.getGenreBit());
+				InSingMovieDB.storeInSingMovie(newInSingMovie);
 			}
 		}
 
@@ -190,70 +183,7 @@ public class InSingMovie extends Movie {
 				+ removeList.size() + " old movies are removed from the datastore.");
 	}
 
-	/**
-	 * Retrieve InSing movies keys only from the datastore [InSing_Movie].
-	 * 
-	 * @param nothing
-	 * @return a list of Entity from the datastore [InSing_Movie]
-	 */
-	public static List<Entity> retrieveMovieListKeysOnly() {
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-
-		Query q = new Query(Constant.DS_TABLE_INSING_MOVIE).setKeysOnly();
-		PreparedQuery pq = dataStore.prepare(q);
-
-		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder.withDefaults());
-
-		return movieEntityList;
-	}
-
-	/**
-	 * Retrieve InSing movies from the datastore [InSing_Movie] with title
-	 * sorted in ascending order.
-	 * 
-	 * @param nothing
-	 * @return a arraylist of InSing movies from the datastore [InSing_Movie]
-	 */
-	public static ArrayList<InSingMovie> retrieveMovieList() {
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-
-		Query q = new Query(Constant.DS_TABLE_INSING_MOVIE).addSort("title");
-		PreparedQuery pq = dataStore.prepare(q);
-
-		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder.withDefaults());
-
-		ArrayList<InSingMovie> movieList = new ArrayList<InSingMovie>();
-		for (Entity movieEntity : movieEntityList) {
-			if (movieEntity.getProperty("tmdbId") != null
-					&& movieEntity.getProperty("tmdbId").toString().length() > 0) {
-				movieList.add(new InSingMovie(movieEntity.getKey().getName(),
-						movieEntity.getProperty("title").toString(),
-						movieEntity.getProperty("title2").toString(),
-						movieEntity.getProperty("imageUrl").toString(),
-						movieEntity.getProperty("tmdbId").toString()));
-			}
-		}
-
-		return movieList;
-	}
-
-	/**
-	 * Remove non-existed InSing movies from the datastore. The removeList
-	 * argument must specify the list of keys to be removed.
-	 * 
-	 * @param removeList
-	 *            a list of keys to be removed from the datastore
-	 * @return nothing
-	 */
-	private static void removeMovieList(ArrayList<String> removeList) {
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-
-		for (String key : removeList) {
-			dataStore.delete(KeyFactory.createKey(Constant.DS_TABLE_INSING_MOVIE, key));
-		}
-	}
-
-	public static HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> getShowTime(
+	public static HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> retrieveShowTime(
 			String id, String title2, String date) {
 		HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> showPlaceHashMap = new HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>>();
 

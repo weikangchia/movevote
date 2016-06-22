@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.appspot.movevote.db.InSingMovieDB;
 import com.appspot.movevote.entity.InSingMovie;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
@@ -36,7 +37,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<InSingMovie> movieList = InSingMovie.retrieveMovieList();
+		ArrayList<InSingMovie> movieList = InSingMovieDB.retrieveMovieList();
 		request.setAttribute("movieList", movieList);
 
 		// check if user is login
@@ -50,7 +51,7 @@ public class HomeServlet extends HttpServlet {
 			isLoggedIn = true;
 			isVerified = User.checkIsUserVerified(request.getCookies(),
 					gitkitHelper.getGitkitClient());
-			
+
 			User userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
 					gitkitUser.getPhotoUrl(), gitkitUser.getEmail(),
 					gitkitUser.getCurrentProvider(), isVerified);

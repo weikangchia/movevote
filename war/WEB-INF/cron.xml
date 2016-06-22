@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 	<cron>
-		<url>/cron/insing</url>
+		<url>/cron/update/insing_db</url>
 		<description>Fetch movies details from http://www.insing.com/movies/ every day at 00:30
 		</description>
 		<schedule>every day 00:30</schedule>

@@ -100,6 +100,10 @@ i {
 	column-break-inside: avoid;
 }
 
+.progress {
+	margin: 0 !important;
+}
+
 .cards-container .card-panel {
 	display: inline-block;
 	overflow: visible;

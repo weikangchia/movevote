@@ -18,11 +18,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
-#search {
-	display: none;
-	margin-bottom: 0px;
-	border-top: 1px solid #111;
-	border-bottom: 1px solid #111;
+.progress {
+	margin: 0 !important;
 }
 </style>
 
@@ -30,47 +27,55 @@
 </head>
 
 <body>
-	<ul id="profile-dropdown" class="dropdown-content">
-		<li><a href="#!">Settings</a></li>
-		<li><a href="#!">Logout</a></li>
-	</ul>
-	<nav>
-		<div class="nav-wrapper container">
-			<a href="#" class="brand-logo grey-text text-lighten-5"><span
-				class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
-				data-activates="mobile-navbar" class="button-collapse"><i
-				class="material-icons">menu</i></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a id="toggle-search" href="#"><i
-						class="material-icons">search</i></a></li>
-				<li><a href="#features"><i class="material-icons">movie</i></a></li>
-				<li><a href="#features"><i class="material-icons">event_note</i></a></li>
-				<li><a href="mobile.html" class="dropdown-button" href="#!"
-					data-activates="profile-dropdown"><i class="material-icons">more_vert</i></a></li>
-			</ul>
-			<ul class="side-nav" id="mobile-navbar">
-				<li><a id="toggle-search" href="#search">Search</a></li>
-				<li><a href="#features">Movies</a></li>
-				<li><a href="#features">Event</a></li>
-				<li class="divider"></li>
-				<li><a href="">Settings</a></li>
-				<li><a href="">Logout</a></li>
-			</ul>
-		</div>
-	</nav>
+	<header>
+		<ul id="profile-dropdown" class="dropdown-content">
+			<li><a href="#!">Settings</a></li>
+			<li><a href="#!">Logout</a></li>
+		</ul>
+		<nav id="main">
+			<div class="nav-wrapper container">
+				<a href="#" class="brand-logo grey-text text-lighten-5"><span
+					class="bold">Move</span><span class="thin">Vote</span></a> <a href="#"
+					data-activates="mobile-navbar" class="button-collapse"><i
+					class="material-icons">menu</i></a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a id="toggle-search" href="#"><i
+							class="material-icons">search</i></a></li>
+					<li><a href="#features"><i class="material-icons">movie</i></a></li>
+					<li><a href="#features"><i class="material-icons">event_note</i></a></li>
+					<li><a href="mobile.html" class="dropdown-button" href="#!"
+						data-activates="profile-dropdown"><i class="material-icons">more_vert</i></a></li>
+				</ul>
+				<ul class="side-nav" id="mobile-navbar">
+					<li><a id="toggle-search2" href="#">Search</a></li>
+					<li><a href="#features">Movies</a></li>
+					<li><a href="#features">Event</a></li>
+					<li class="divider"></li>
+					<li><a href="">Settings</a></li>
+					<li><a href="">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
 
-	<div id="search" class="row white-text teal">
-		<div class="container">
-			<form method="get"action "https://www.google.com/search">
-				<input id="search-box" class="form-control" type="text"
-					placeholder="Search..." name="q">
-			</form>
-		</div>
-	</div>
+		<nav id="search" class="white" style="display: none;">
+			<div class="nav-wrapper container">
+				<form>
+					<div class="input-field">
+						<input id="search-input" type="search" placeholder="Search"
+							required> <label for="search"><i
+							class="material-icons">search</i></label>
+					</div>
+				</form>
+			</div>
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</nav>
+
+	</header>
 
 	<div class="container">
-		<div class="spacer"></div>
-		<div class="spacer"></div>
+		<div class="spacer-thick"></div>
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs">
@@ -354,26 +359,32 @@
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
 	<script>
-		$(document).ready(
-				function() {
-					$(".button-collapse").sideNav();
+		$(document).ready(function() {
+			$(".button-collapse").sideNav({
+				closeOnClick : true
+			});
+			$('ul.tabs').tabs();
+			// Init search
 
-					$(document).ready(function() {
-						$('ul.tabs').tabs();
-					});
-
-					$('a#toggle-search').click(
-							function() {
-								var search = $('div#search');
-
-								search.is(":visible") ? search.slideUp()
-										: search.slideDown(function() {
-											search.find('input').focus();
-										});
-
-								return false;
-							});
+			$('#toggle-search2').click(function() {
+				$('#search').show();
+				$('#search-input').focus();
+				$('#search-input').focusout(function() {
+					$('#search').hide();
 				});
+			});
+			$('#toggle-search').click(function() {
+				alert("click");
+				$('#main').hide();
+				$('#search').show();
+
+				$('#search-input').focus();
+				$('#search-input').focusout(function() {
+					$('#search').hide();
+					$('#main').show();
+				});
+			});
+		});
 	</script>
 	<script type="text/javascript" src="assets/js/autocomplete.js"></script>
 </body>

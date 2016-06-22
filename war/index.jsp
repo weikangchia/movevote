@@ -57,13 +57,8 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a id="toggle-search" href="#"><i
-						class="material-icons tooltipped" data-position="bottom"
-						data-delay="50" data-tooltip="search">search</i></a></li>
 				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+						data-position="bottom" data-delay="50" data-tooltip="recommend movie">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -81,9 +76,7 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a id="toggle-search" href="#">Search</a></li>
-				<li><a href="#">Discover</a></li>
-				<li><a href="#">Group</a></li>
+				<li><a href="#">Recommend Movie</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -156,7 +149,6 @@
 									src="<c:out
 									value="${movie.imageUrl}"></c:out>"
 									class="responsive-img"></a>
-
 							</div>
 
 							<div class="col s12">
@@ -202,7 +194,7 @@
 						<i class="material-icons">access_time</i>
 					</h1>
 					<h5 class="center thin">Latest Movie Showing Time</h5>
-					<p class="center">Not sure when and where your latest movie
+					<p class="center">Not sure when and which cinema your latest movie
 						will be showing today and tomorrow? MoveVote can help you get all
 						these information for you.</p>
 				</div>
@@ -227,9 +219,10 @@
 		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Meet the Team</h3>
-			<p class="caption-normal thin">We are a team of students from
-				National University of Singapore.<br/>This is a project for Orbital
-				2016.</p>
+			<p class="caption-normal thin">
+				We are a team of students from National University of Singapore.<br />This
+				is a project for Orbital 2016.
+			</p>
 		</div>
 		<div class="row">
 			<div class="col s12 m6 center">
@@ -337,5 +330,4 @@
 		});
 	</script>
 </body>
-
 </html>

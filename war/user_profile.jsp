@@ -52,13 +52,9 @@
 				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
 				class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a id="toggle-search" href="#"><i
-						class="material-icons tooltipped" data-position="bottom"
-						data-delay="50" data-tooltip="search">search</i></a></li>
 				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+						data-position="bottom" data-delay="50"
+						data-tooltip="recommend movie">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -77,8 +73,7 @@
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
 				<li><a id="toggle-search" href="#">Search</a></li>
-				<li><a href="#">Discover</a></li>
-				<li><a href="#">Group</a></li>
+				<li><a href="#">Recommend Movie</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -113,16 +108,11 @@
 			<div class="row center white-text">
 				<div class="col s10 m6 offset-m3 offset-s1">
 					<div class="row">
-						<div class="col s4">
+						<div class="col s6">
 							<span class="caption-large thin">2</span><br />friends
 						</div>
-						<div class="col s4">
-							<span class="caption-large thin"><c:out
-									value="${ wantToWatchCount }"></c:out></span><br />to watch
-						</div>
-						<div class="col s4">
-							<span class="caption-large thin"><c:out
-									value="${ watchedCount }"></c:out></span><br />watched
+						<div class="col s6">
+							<span class="caption-large thin">0</span><br />groups
 						</div>
 					</div>
 
@@ -135,15 +125,13 @@
 	<div class="container">
 		<div class="spacer-normal"></div>
 
-		<c:if test="${rateCount < 11}">
-			<div class="row">
-				<div class="spacer-thin"></div>
+		<c:if test="${hasSurvey}">
+			<div id="survey" class="row">
 				<div class="col s12">
 					<div class="card-panel teal lighten-2">
-						<span class="white-text">It seems that you have not rated
-							enough movie yet. Please rate more movies so that we can know
-							your individual movie preferences. If you do not know the movie
-							and can skip it.</span>
+						<span class="white-text">It seems that you have not
+							completed the movie survey yet. Please continue to rate the
+							movies below.</span>
 					</div>
 				</div>
 				<div class="col s12">
@@ -178,15 +166,6 @@
 									<div class="spacer-thin"></div>
 									<div id="rateGenre"></div>
 									<div class="spacer-thin"></div>
-									<div class="input-field col s12 m8 l6"
-										style="margin-left: -10px">
-										<select id="rateWatch">
-											<option value="" disabled selected>Choose your option</option>
-											<option value="want_to_watch">Want to watch</option>
-											<option value="watched">Watched</option>
-										</select><label>Have you watched?</label>
-									</div>
-									<div style="clear: both;"></div>
 									<div id="rateDesc"></div>
 									<div class="spacer-thin"></div>
 									<div id="rateWidget"></div>
@@ -209,13 +188,12 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs">
-					<li class="tab col s3"><a class="active" href="#friends">Friends</a></li>
-					<li class="tab col s3"><a href="#to-watch">To Watch</a></li>
-					<li class="tab col s3"><a href="#watched">Watched</a></li>
+					<li class="tab col s3"><a class="active" href="#friend">Friend</a></li>
+					<li class="tab col s3"><a href="#group">Group</a></li>
 				</ul>
 			</div>
 
-			<div id="friends" class="col s12">
+			<div id="friend" class="col s12">
 				<div class="spacer-thin"></div>
 				<ul class="collection">
 					<li class="collection-item avatar"><img
@@ -231,61 +209,9 @@
 				</ul>
 			</div>
 
-			<div id="to-watch" class="col s12">
+			<div id="group" class="col s12">
 				<div class="spacer-thin"></div>
-				<ul>
-					<c:forEach items="${wantToWatchList}" var="wantToWatch">
-						<div class="col s6 m4">
-							<div class="card medium">
-								<div class="card-image">
-									<img
-										src="<c:out
-											value="${wantToWatch.imageUrl}"></c:out>">
-									<span class="card-title truncate black"
-										style="opacity: 0.8; width: 100%;"><c:out
-											value="${wantToWatch.title}"></c:out></span>
-								</div>
-								<div class="card-content">
-									<p>
-										<c:out value="${wantToWatch.overview}"></c:out>
-									</p>
-								</div>
-								<div class="card-action">
-									<a href="${pageContext.request.contextPath}/movie?provider=tmdb&tmdb_id=<c:out
-											value="${wantToWatch.id}"></c:out>">more info</a>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</ul>
-			</div>
-			<div id="watched" class="col s12">
-				<div class="spacer-thin"></div>
-				<ul>
-					<c:forEach items="${watchList}" var="watched">
-						<div class="col s6 m4">
-							<div class="card medium">
-								<div class="card-image">
-									<img
-										src="<c:out
-											value="${watched.imageUrl}"></c:out>">
-									<span class="card-title truncate black"
-										style="opacity: 0.8; width: 100%;"><c:out
-											value="${watched.title}"></c:out></span>
-								</div>
-								<div class="card-content">
-									<p>
-										<c:out value="${watched.overview}"></c:out>
-									</p>
-								</div>
-								<div class="card-action">
-									<a href="${pageContext.request.contextPath}/movie?provider=tmdb&tmdb_id=<c:out
-											value="${watched.id}"></c:out>">more info</a>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</ul>
+				<p class="center-align">You have not created any group yet.</p>
 			</div>
 		</div>
 	</div>
@@ -316,136 +242,202 @@
 				alignment : 'right',
 				belowOrigin : true,
 			});
-
-			$(document).ready(function() {
-				$('select').material_select();
-			});
-
-			$('#rateWatch').change(function() {
-				var tmdbId = $('#rate').attr("data-id");
-				var action = $('#rateWatch').val();
-				watchMovie(tmdbId, action);
-			})
-
-			getRateMovie(0, 1);
 		});
-
-		function watchMovie(tmdbId, value) {
-			$
-					.ajax({
-						type : "POST",
-						url : "/movie",
-						data : "tmdbId=" + tmdbId + "&action=" + value,
-						dataType : "json",
-
-						//if received a response from the server
-						success : function(data) {
-							if (!data.success) {
-								Materialize
-										.toast(
-												"An error has occured, please try again later.",
-												3000);
-							}
-						}
-					});
-		}
-
-		function rateMovie() {
-			var tmdbId = $("#rate").attr("data-id");
-			var next = $("#rateSkip").attr("data-skip");
-			var page = $("#rateSkip").attr("data-page");
-			var rating = $("#rateRating").val();
-			$
-					.ajax({
-						type : "POST",
-						url : "/movie",
-						data : "tmdbId=" + tmdbId + "&action=rate&rating="
-								+ rating,
-						dataType : "json",
-
-						//if received a response from the server
-						success : function(data) {
-							if (!data.success) {
-								Materialize
-										.toast(
-												"An error has occured, please try again later.",
-												3000);
-							} else {
-								getRateMovie(next, page);
-							}
-						}
-					});
-		}
-
-		function getRateMovie(skip, page) {
-			$
-					.ajax({
-						url : "/movie",
-						data : "action=rate&skip=" + skip + "&page=" + page,
-						dataType : "json",
-						beforeSend : function() {
-							$("#rateLoadingPanel").attr("class", "row center");
-							$("#rateLoadedPanel").attr("class", "row hide");
-							$("#rateMsgPanel").attr("class", "row hide");
-							$("#rateCardAction").attr("class", "row hide");
-							initializeRate();
-						},
-						success : function(data) {
-							if (!data.success) {
-								$("#rateLoadingPanel")
-										.attr("class", "row hide");
-								$("#rateLoadedPanel").attr("class", "row hide");
-								$("#rateMsgPanel").attr("class", "row center");
-								$("#rateCardAction").attr("class", "row hide");
-							} else {
-								$("#rateSkip").attr("data-skip", data.skip);
-								$("#rateSkip").attr("data-page", data.page);
-								$("#rateSkip").attr(
-										"onclick",
-										'getRateMovie(' + data.skip + ','
-												+ data.page + ');');
-								$("#rate").attr("data-id", data.tmdbId);
-								$("#rateImg").attr("src", data.imageUrl);
-								$("#rateImgBackdrop").attr("src",
-										data.imageBackdropUrl);
-								$("#rateTitle").html(data.title);
-								$("#rateDesc").html(data.overview);
-								$("#rateSubText").html(
-										data.releaseDate + " | " + data.rating
-												+ "/10");
-
-								$.each(data.genreList, function(index, obj) {
-									$('#rateGenre').append(
-											'<div class="chip">' + obj.name
-													+ '</div>');
-								});
-
-								$("#rateCardAction").attr("class",
-										"card-action");
-								$("#rateLoadingPanel")
-										.attr("class", "row hide");
-								$("#rateLoadedPanel").attr("class", "row");
-								$("#rateWatch").val("");
-								$('select').material_select();
-							}
-						}
-					});
-		}
-
-		function initializeRate() {
-			// empty all children first
-			$('#rateGenre').empty();
-			$("#rateWidget").empty();
-
-			$("#rateWidget")
-					.append(
-							'<div id="rate" class="red-text text-lighten-1" onclick="rateMovie()"></div>');
-			$('#rate').addRating({
-				fieldName : 'rateRating',
-				fieldId : 'rateRating',
-			});
-		}
 	</script>
-</body>
 
+	<c:if test="${hasSurvey}">
+		<script>
+			$(document).ready(function() {
+				startSurveyMovie();
+			});
+
+			function startSurveyMovie() {
+				$
+						.ajax({
+							url : "/survey",
+							dataType : "json",
+							beforeSend : function() {
+								$("#rateLoadingPanel").attr("class",
+										"row center");
+								$("#rateLoadedPanel").attr("class", "row hide");
+								$("#rateMsgPanel").attr("class", "row hide");
+								$("#rateCardAction").attr("class", "row hide");
+								initializeRate();
+							},
+							success : function(data) {
+								if (data.success) {
+									if (data.hasSurvey) {
+										$("#rateSkip")
+												.attr(
+														"onclick",
+														'skipMovie('
+																+ data.skip
+																+ ','
+																+ data.surveyGenresCategory
+																+ ');');
+										$("#rate").attr("data-id", data.tmdbId);
+										$("#rate").attr("data-genreBit",
+												data.genreBit);
+										$("#rateImg")
+												.attr("src", data.imageUrl);
+										$("#rateImgBackdrop").attr("src",
+												data.imageBackdropUrl);
+										$("#rateTitle").html(data.title);
+										$("#rateDesc").html(data.overview);
+										$("#rateSubText").html(
+												data.releaseDate + " | "
+														+ data.rating + "/10");
+
+										$.each(data.genreList, function(index,
+												obj) {
+											$('#rateGenre').append(
+													'<div class="chip">'
+															+ obj.name
+															+ '</div>');
+										});
+
+										$("#rateCardAction").attr("class",
+												"card-action");
+										$("#rateLoadingPanel").attr("class",
+												"row hide");
+										$("#rateLoadedPanel").attr("class",
+												"row");
+									} else {
+										$("#survey").attr("class", "row hide");
+										Materialize
+												.toast(
+														"Wonderful, I think we know what's your movie preference now.",
+														3000);
+									}
+								} else {
+									$("#rateLoadingPanel").attr("class",
+											"row hide");
+									$("#rateLoadedPanel").attr("class",
+											"row hide");
+									$("#rateMsgPanel").attr("class",
+											"row center");
+									$("#rateCardAction").attr("class",
+											"row hide");
+								}
+							}
+						});
+			}
+
+			function rateMovie() {
+				var tmdbId = $("#rate").attr("data-id");
+				var rating = $("#rateRating").val();
+				var genreBit = $("#rate").attr("data-genreBit");
+				$
+						.ajax({
+							type : "POST",
+							url : "/rate",
+							data : "tmdbId=" + tmdbId + "&rating=" + rating
+									+ "&genreBit=" + genreBit,
+							dataType : "json",
+
+							//if received a response from the server
+							success : function(data) {
+								if (data.success) {
+									startSurveyMovie();
+								} else {
+									Materialize
+											.toast(
+													"An error has occured, please try again later.",
+													3000);
+								}
+							}
+						});
+			}
+
+			function skipMovie(skip, surveyGenresCategory) {
+				$
+						.ajax({
+							url : "/survey",
+							data : "action=skip&skip=" + skip
+									+ "&surveyGenresCategory="
+									+ surveyGenresCategory,
+							dataType : "json",
+							beforeSend : function() {
+								$("#rateLoadingPanel").attr("class",
+										"row center");
+								$("#rateLoadedPanel").attr("class", "row hide");
+								$("#rateMsgPanel").attr("class", "row hide");
+								$("#rateCardAction").attr("class", "row hide");
+								initializeRate();
+							},
+							success : function(data) {
+								if (data.success) {
+									if (data.hasSurvey) {
+										$("#rateSkip")
+												.attr(
+														"onclick",
+														'skipMovie('
+																+ data.skip
+																+ ','
+																+ data.surveyGenresCategory
+																+ ');');
+										$("#rate").attr("data-id", data.tmdbId);
+										$("#rate").attr("data-genreBit",
+												data.genreBit);
+										$("#rateImg")
+												.attr("src", data.imageUrl);
+										$("#rateImgBackdrop").attr("src",
+												data.imageBackdropUrl);
+										$("#rateTitle").html(data.title);
+										$("#rateDesc").html(data.overview);
+										$("#rateSubText").html(
+												data.releaseDate + " | "
+														+ data.rating + "/10");
+
+										$.each(data.genreList, function(index,
+												obj) {
+											$('#rateGenre').append(
+													'<div class="chip">'
+															+ obj.name
+															+ '</div>');
+										});
+
+										$("#rateCardAction").attr("class",
+												"card-action");
+										$("#rateLoadingPanel").attr("class",
+												"row hide");
+										$("#rateLoadedPanel").attr("class",
+												"row");
+									} else {
+										$("#survey").attr("class", "row hide");
+										Materialize
+												.toast(
+														"Wonderful, I think we know what's your movie preference now.",
+														3000);
+									}
+								} else {
+									$("#rateLoadingPanel").attr("class",
+											"row hide");
+									$("#rateLoadedPanel").attr("class",
+											"row hide");
+									$("#rateMsgPanel").attr("class",
+											"row center");
+									$("#rateCardAction").attr("class",
+											"row hide");
+								}
+							}
+						});
+			}
+
+			function initializeRate() {
+				// empty all children first
+				$('#rateGenre').empty();
+				$("#rateWidget").empty();
+
+				$("#rateWidget")
+						.append(
+								'<div id="rate" class="red-text text-lighten-1" onclick="rateMovie()"></div>');
+				$('#rate').addRating({
+					fieldName : 'rateRating',
+					fieldId : 'rateRating',
+				});
+			}
+		</script>
+	</c:if>
+</body>
 </html>

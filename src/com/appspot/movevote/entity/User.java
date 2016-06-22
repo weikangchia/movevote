@@ -1,17 +1,8 @@
 package com.appspot.movevote.entity;
 
-import java.util.Date;
-
 import javax.servlet.http.Cookie;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.appspot.movevote.db.UserDB;
 import com.google.gson.JsonObject;
 import com.google.identitytoolkit.GitkitClient;
 import com.google.identitytoolkit.GitkitClientException;
@@ -24,6 +15,14 @@ public class User extends Person {
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public User(String id, String name, String profilePath, String email) {
+		super(id, name, profilePath);
+		if (profilePath == null || profilePath.equals("")) {
+			setProfilePath("/assets/img/profile/no-profile.png");
+		}
+		this.setEmail(email);
 	}
 
 	public User(String id, String name, String profilePath, String email, String provider,
@@ -67,27 +66,7 @@ public class User extends Person {
 	}
 
 	public boolean isNewUser() {
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-		Query query = new Query(Constant.DS_TABLE_USER)
-				.setFilter(new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL,
-						KeyFactory.createKey(Constant.DS_TABLE_USER, getId())));
-
-		PreparedQuery pq = dataStore.prepare(query);
-		Entity result = pq.asSingleEntity();
-
-		if (result != null) {
-			return false;
-		}
-		return true;
-	}
-
-	public void createNewUser() {
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-		Entity newUser = new Entity(Constant.DS_TABLE_USER, getId());
-		newUser.setProperty("name", getName());
-		newUser.setProperty("last_update", new Date());
-
-		dataStore.put(newUser);
+		return UserDB.userExist(getId());
 	}
 
 	public static boolean checkIsUserVerified(Cookie[] cookies, GitkitClient gitkitClient) {
@@ -103,7 +82,6 @@ public class User extends Person {
 				break;
 			}
 		}
-
 		return false;
 	}
 }

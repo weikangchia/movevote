@@ -2,8 +2,10 @@ package com.appspot.movevote.entity;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -18,17 +20,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TMDBMovie extends Movie {
 	private static final Logger log = Logger.getLogger(TMDBMovie.class.getName());
 
-	private String tagLine;
 	private String overview;
 	private String releaseDate;
 	private ArrayList<Genre> genreList;
+	private String genreBit;
 	private double rating;
 	private int duration;
 	private ArrayList<Cast> castList;
 	private HashMap<String, ArrayList<Crew>> crewMapList;
 	private ArrayList<YouTubeVideo> youTubeVideoList;
 	private ArrayList<TMDBMovie> similarList;
-	private ArrayList<Review> reviewList;
 	private String imageBackUrl;
 
 	public TMDBMovie(String id) {
@@ -38,7 +39,6 @@ public class TMDBMovie extends Movie {
 		setCrewMapList(new HashMap<String, ArrayList<Crew>>());
 		youTubeVideoList = new ArrayList<YouTubeVideo>();
 		similarList = new ArrayList<TMDBMovie>();
-		setReviewList(new ArrayList<Review>());
 	}
 
 	public TMDBMovie(String id, String title, String imageUrl) {
@@ -59,14 +59,6 @@ public class TMDBMovie extends Movie {
 
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
-	}
-
-	public String getTagLine() {
-		return tagLine;
-	}
-
-	public void setTagLine(String tagLine) {
-		this.tagLine = tagLine;
 	}
 
 	public ArrayList<Genre> getGenreList() {
@@ -125,14 +117,6 @@ public class TMDBMovie extends Movie {
 		this.similarList = similarList;
 	}
 
-	public ArrayList<Review> getReviewList() {
-		return reviewList;
-	}
-
-	public void setReviewList(ArrayList<Review> reviewList) {
-		this.reviewList = reviewList;
-	}
-
 	public String getImageBackUrl() {
 		return imageBackUrl;
 	}
@@ -141,16 +125,22 @@ public class TMDBMovie extends Movie {
 		this.imageBackUrl = imageBackUrl;
 	}
 
+	public String getGenreBit() {
+		return genreBit;
+	}
+
+	public void setGenreBit(String genreBit) {
+		this.genreBit = genreBit;
+	}
+
 	/**
-	 * Find TMDB movie id based on movie title
+	 * Search for TMDB movie based on movie title
 	 * 
 	 * @param title
 	 *            movie title
-	 * @return id: tmdbId
+	 * @return tmdbmovie object
 	 */
-	public static String findTMDBId(String title) {
-		String id = null;
-
+	public static TMDBMovie searchTMDBByTitle(String title) {
 		try {
 			String url = Constant.TMDB_HOSTNAME + "search/movie?api_key=" + Constant.TMDB_API_KEY
 					+ "&query=" + URLEncoder.encode(title, "UTF-8") + "&year="
@@ -165,16 +155,54 @@ public class TMDBMovie extends Movie {
 				JsonNode resultNode = parentNode.findPath("results");
 
 				if (resultNode.size() > 0) {
-					id = resultNode.get(0).get("id").asText();
+					JsonNode movieNode = resultNode.get(0);
+
+					TMDBMovie movie = new TMDBMovie(movieNode.get("id").asText());
+
+					if (movieNode.get("poster_path") == null
+							|| movieNode.get("poster_path").toString().length() == 0
+							|| movieNode.get("poster_path").toString().equals("null")) {
+						movie.setImageUrl("/assets/img/no-poster.png");
+					} else {
+						movie.setImageUrl(
+								TMDBHelper.getAbsImageUrl(movieNode.get("poster_path").asText(),
+										Constant.TMDB_IMAGE_POSTER_SIZE));
+					}
+
+					if (movieNode.get("backdrop_path") == null
+							|| movieNode.get("backdrop_path").toString().length() == 0
+							|| movieNode.get("backdrop_path").toString().equals("null")) {
+						movie.setImageBackUrl("/assets/img/no-poster.png");
+					} else {
+						movie.setImageBackUrl(
+								TMDBHelper.getAbsImageUrl(movieNode.get("backdrop_path").asText(),
+										Constant.TMDB_IMAGE_POSTER_SIZE));
+					}
+
+					movie.setTitle(StringEscapeUtils
+							.unescapeHtml4(movieNode.get("original_title").asText()));
+					movie.setOverview(
+							StringEscapeUtils.unescapeHtml4(movieNode.get("overview").asText()));
+					movie.setReleaseDate(movieNode.get("release_date").asText());
+					movie.setRating(movieNode.get("vote_average").asDouble());
+
+					// get the genres
+					ArrayList<Integer> genreIdList = new ArrayList<Integer>();
+					for (int g = 0; g < movieNode.get("genre_ids").size(); g++) {
+						int genreId = movieNode.get("genre_ids").get(g).asInt();
+						movie.getGenreList()
+								.add(new Genre(genreId, GenreEnum.getById(genreId).getName()));
+						genreIdList.add(genreId);
+					}
+
+					movie.setGenreBit(genresBitBuilder(genreIdList));
+					return movie;
 				}
-			} else {
-				return id;
 			}
 		} catch (Exception ex) {
 			log.warning("Unable to retrieve tmdb id for " + title);
 		}
-
-		return id;
+		return null;
 	}
 
 	/**
@@ -192,7 +220,8 @@ public class TMDBMovie extends Movie {
 				ObjectMapper mapper = new ObjectMapper();
 				JsonNode parentNode = mapper.readTree(json);
 
-				setTitle(parentNode.get("original_title").asText());
+				setTitle(
+						StringEscapeUtils.unescapeHtml4(parentNode.get("original_title").asText()));
 				setOverview(StringEscapeUtils.unescapeHtml4(parentNode.get("overview").asText()));
 
 				// if poster_path is empty we will set no-poster image
@@ -205,17 +234,29 @@ public class TMDBMovie extends Movie {
 							Constant.TMDB_IMAGE_POSTER_SIZE));
 				}
 
+				if (parentNode.get("backdrop_path") == null
+						|| parentNode.get("backdrop_path").toString().length() == 0
+						|| parentNode.get("backdrop_path").toString().equals("null")) {
+					setImageBackUrl("/assets/img/no-poster.png");
+				} else {
+					setImageBackUrl(
+							TMDBHelper.getAbsImageUrl(parentNode.get("backdrop_path").asText(),
+									Constant.TMDB_IMAGE_POSTER_SIZE));
+				}
+
 				setReleaseDate(parentNode.get("release_date").asText());
-				setTagLine(parentNode.get("tagline").asText());
 				setDuration(parentNode.get("runtime").asInt());
 				setRating(parentNode.get("vote_average").asDouble());
 
 				// retrieve genre list
+				ArrayList<Integer> genreIdList = new ArrayList<Integer>();
 				JsonNode genreNodes = parentNode.path("genres");
 				for (int i = 0; i < genreNodes.size(); i++) {
-					genreList.add(new Genre(genreNodes.get(i).get("id").asInt(),
-							genreNodes.get(i).get("name").asText()));
+					int genreId = genreNodes.get(i).get("id").asInt();
+					genreList.add(new Genre(genreId, genreNodes.get(i).get("name").asText()));
+					genreIdList.add(genreId);
 				}
+				setGenreBit(genresBitBuilder(genreIdList));
 			}
 		} catch (Exception ex) {
 			log.warning("Unable to retrieve tmdb movie main details for " + getId());
@@ -328,37 +369,9 @@ public class TMDBMovie extends Movie {
 		}
 	}
 
-	/**
-	 * Retrieve TMDB movie reviews
-	 */
-	public void retrieveReviews() {
-		try {
-			String url = Constant.TMDB_HOSTNAME + "movie/" + getId() + "/reviews?api_key="
-					+ Constant.TMDB_API_KEY;
-
-			InternetHelper internetHelper = new InternetHelper(url);
-			String json = internetHelper.getHtmlData();
-
-			if (json != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				JsonNode parentNode = mapper.readTree(json);
-
-				// retrieve review details
-				JsonNode resultNodes = parentNode.path("results");
-				for (int i = 0; i < resultNodes.size(); i++) {
-					reviewList.add(new Review(resultNodes.get(i).get("author").asText(), resultNodes
-							.get(i).get("content").asText().replaceAll("\r\n\r\n", "<br/><br/>")));
-				}
-			}
-		} catch (Exception ex) {
-			log.warning("Unable to retrieve tmdb movie review details for " + getId());
-		}
-	}
-
 	public void retrieveAll() {
 		retrieveBasicDetails();
 		retrieveSimilar();
-		retrieveReviews();
 		retrieveVideo();
 		retrieveCredits();
 	}
@@ -366,21 +379,25 @@ public class TMDBMovie extends Movie {
 	/**
 	 * Retrieve discover list
 	 * 
-	 * @param year
-	 *            primary release data greater than or equal
 	 * @param page
 	 *            page number
 	 * @param voteAvg
 	 *            vote average greater than or equal
-	 * @return id: tmdbId
+	 * @param genres
+	 *            id of the genres
+	 * @return ArrayList of TMDBMovie
 	 */
-	public static ArrayList<TMDBMovie> retrieveNewDiscoverList(int year, int page, double voteAvg) {
+	public static ArrayList<TMDBMovie> retrieveDiscoverList(int page, double voteAvg,
+			String genres) {
 		ArrayList<TMDBMovie> movieList = new ArrayList<TMDBMovie>();
 
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+
 		String url = Constant.TMDB_HOSTNAME + "discover/movie?api_key=" + Constant.TMDB_API_KEY
-				+ "&primary_release_date.gte=" + year + "&page=" + page + "&vote_average.gte="
-				+ voteAvg + "&vote_count.gte=" + 2;
-		System.out.println(url);
+				+ "&primary_release_date.lte=" + sdf.format(now) + "&page=" + page
+				+ "&vote_average.gte=" + voteAvg + "&vote_count.gte=" + 2 + "&with_genres="
+				+ genres;
 
 		try {
 			InternetHelper internetHelper = new InternetHelper(url);
@@ -426,11 +443,14 @@ public class TMDBMovie extends Movie {
 						movie.setRating(movieNode.get("vote_average").asDouble());
 
 						// get the genres
+						ArrayList<Integer> genreIdList = new ArrayList<Integer>();
 						for (int g = 0; g < resultNodes.get(i).get("genre_ids").size(); g++) {
 							int genreId = resultNodes.get(i).get("genre_ids").get(g).asInt();
 							movie.getGenreList()
 									.add(new Genre(genreId, GenreEnum.getById(genreId).getName()));
+							genreIdList.add(genreId);
 						}
+						movie.setGenreBit(genresBitBuilder(genreIdList));
 
 						movieList.add(movie);
 					}
@@ -445,5 +465,52 @@ public class TMDBMovie extends Movie {
 		}
 
 		return movieList;
+	}
+
+	public static String translateGenreCategory(int genresCategory) {
+		switch (genresCategory) {
+		case 0:
+			return "28%7C12";
+		case 1:
+			return "16";
+		case 2:
+			return "35";
+		case 3:
+			return "80%7C9648";
+		case 4:
+			return "27%7C53";
+		case 5:
+			return "10749";
+		case 6:
+			return "878";
+		default:
+			return "28%7C12%7C16%7C35%7C80%7C9648%7C27%7C53%7C10749%7C878";
+		}
+	}
+
+	private static String genresBitBuilder(ArrayList<Integer> genresIdList) {
+		StringBuilder genreBuilder = new StringBuilder("0000000");
+
+		for (int i = 0; i < genresIdList.size(); i++) {
+			int genresId = genresIdList.get(i);
+
+			if (genresId == 28 || genresId == 12) {
+				genreBuilder.setCharAt(0, '1');
+			} else if (genresId == 16) {
+				genreBuilder.setCharAt(1, '1');
+			} else if (genresId == 35) {
+				genreBuilder.setCharAt(2, '1');
+			} else if (genresId == 80 || genresId == 9648) {
+				genreBuilder.setCharAt(3, '1');
+			} else if (genresId == 27 || genresId == 53) {
+				genreBuilder.setCharAt(4, '1');
+			} else if (genresId == 10749) {
+				genreBuilder.setCharAt(5, '1');
+			} else if (genresId == 878) {
+				genreBuilder.setCharAt(6, '1');
+			}
+		}
+
+		return genreBuilder.toString();
 	}
 }

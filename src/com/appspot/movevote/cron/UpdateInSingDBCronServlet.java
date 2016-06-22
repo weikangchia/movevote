@@ -14,15 +14,15 @@ import com.appspot.movevote.entity.InSingMovie;
 /**
  * Servlet implementation class InSingCronController
  */
-public class InSingCronServlet extends HttpServlet {
+public class UpdateInSingDBCronServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(InSingCronServlet.class
-			.getName());
+	private static final Logger log = Logger
+			.getLogger(UpdateInSingDBCronServlet.class.getName());
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public InSingCronServlet() {
+	public UpdateInSingDBCronServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -31,17 +31,16 @@ public class InSingCronServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		log.info("Starting InSing cron job...");
+		log.info("Starting updating InSing now showing database...");
+
 		HashMap<String, InSingMovie> newMovieMap = new HashMap<String, InSingMovie>();
-
 		newMovieMap = InSingMovie.fetchFromInSing();
-
 		InSingMovie.storeMovie(newMovieMap);
 
-		log.info("InSing cron job completed.");
+		log.info("Completed.");
 
 		response.setContentType("text/plain");
 		response.getWriter().println("Completed.");
