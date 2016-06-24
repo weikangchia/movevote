@@ -26,12 +26,13 @@ MoveVote will be built and hosted on Google App Engine, a platform for building 
 1. As a user, I want to have all the information about the latest movies that are currently showing in our local cinema so that I do not have to check their websites individually.
 2. As a user, I want to know what other similar movies to the movie that I am currently watching.
 3. As a user, I want to know what are the movies that my friend and I would like to watch so that we can catch the movie together.
-4. As a user, I want to know how to go to the Cinema, so that I do not need to open another app just to find the location.
-5. As an administrator, I want to be able to update our movie database every day in order to ensure that the users get reliable and up-to-date information.
+4. As an administrator, I want to be able to update our movie database every day in order to ensure that the users get reliable and up-to-date information.
 
 For milestone 1, we have finished designing most of the user interface and have deployed a alpha version to Google App Engine. At this stage, users are able to register and login via using their email, Google and Facebook account. In addition, users are also able to see what are the current movies that are showing in our local cinema.
 
-For the next milestone, users will be able to see more information about the movies that are currently showing in the cinema (time and location). We will also be completing the registration process so that a confirmation email will be sent to users when they register with us as well as sending them links to reset their password. We planned to finish the movie recommendation engine by milestone 2. We will leave user testing and other fixes that the peer teams suggest in the last stage.
+For milestone 2, we have completed the registration and login process. In this update, user get to see more information (overview, now showing, similar movies and trailer) about the movies that are currently showing in the cinema. We have also implemented the movie survey to get to know the user movie preferences.
+
+For milestone 3, we will complete the recommendation system and do a few user testing before we officially launch our application to the public. :D
 
 ## Project Log
 Wei Kang has experienced with developing and deploying application to Google App Engine, as such he is able to provide the team guidance on how to kickstart the project and this allows the team to have more time to integrate more features into the project.
@@ -47,16 +48,20 @@ Wei Kang has experienced with developing and deploying application to Google App
 | Implement Google Identity Toolkit | - | 24 |
 | Explore TMDB movie database api | - | 2 |
 | Preparation for milestone 1 | - | 1.5 |
+| Preparation for milestone 2 | - | 1.5 |
 | Implement movie rating function | - | 12 |
 | Implement movie showtimes function | - | 16 |
-| **Total:** | 19 | 101.5 |
+| Create a cron job to grab information about the movies that are currently showing in Singapore's cinema | - | 8 |
+| Implement movie survey | - | 8 |
+| Bug fix | - | 5 |
+| **Total:** | 19 | 124 |
 
-We have finished 19 and 101.5 hours respectively towards the requirement.
+We have finished 19 and 124 hours respectively towards the requirement.
 
 ## Mission
 - [ ] Attend at least 12 hours of workshops
 - [X] Use a web application with CRUD capabilities
-- [ ] 4 additional extension milestones. (Still thinking...)
+- [ ] 4 additional extension milestones.
 - [ ] Score a minimum of 2 stars on feedback given to other teams
 - [ ] Must score a minimum of 3 stars on own peer-graded project
 
@@ -70,10 +75,10 @@ We have finished 19 and 101.5 hours respectively towards the requirement.
 - [X] Implement Google Identity Toolkit (send email for verification and change password)
 - [X] Implement movie showtimes
 - [X] Implement movie rating
-- [ ] Design recommendation engine
-- [ ] Implement recommendation engine
+- [X] Design recommendation engine
 
 ### Milestone 3
+- [ ] Implement recommendation engine
 - [ ] Conduct user testing
 - [ ] Gather feedback on how to improve the user experience
 - [ ] Improve performance
