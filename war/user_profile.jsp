@@ -94,32 +94,32 @@
 	</nav>
 
 	<main>
-	<div class="red lighten-2">
-		<div class="container">
-			<div class="spacer-thick"></div>
-			<div class="row">
-				<div class="col s10 offset-s1 center">
-					<h4 class="white-text">
-						<c:out value="${userInfo.name}"></c:out>
-					</h4>
-				</div>
-			</div>
-
-			<div class="row center white-text">
-				<div class="col s10 m6 offset-m3 offset-s1">
-					<div class="row">
-						<div class="col s6">
-							<span class="caption-large thin">2</span><br />friends
-						</div>
-						<div class="col s6">
-							<span class="caption-large thin">0</span><br />groups
-						</div>
-					</div>
-
-				</div>
-				<div class="spacer-thin"></div>
+	<div class="container">
+		<div class="spacer-thick"></div>
+		<div class="row">
+			<div class="col s10 offset-s1 center">
+				<h4 class="grey-text text-darken-2 thin">
+					<c:out value="${userInfo.name}"></c:out>
+				</h4>
 			</div>
 		</div>
+
+		<div class="row center grey-text text-darken-2">
+			<div class="col s10 m6 offset-m3 offset-s1">
+				<div class="row">
+					<div class="col s6">
+						<span class="caption-large thin">2</span><br />friends
+					</div>
+					<div class="col s6">
+						<span class="caption-large thin">0</span><br />groups
+					</div>
+				</div>
+
+			</div>
+			<div class="spacer-thin"></div>
+		</div>
+		
+		<div class="divider"></div>
 	</div>
 
 	<div class="container">

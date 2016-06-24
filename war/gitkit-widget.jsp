@@ -73,17 +73,14 @@
 	<nav>
 		<div class="nav-wrapper container">
 			<a href="${pageContext.request.contextPath}/home"
-				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
-				class="button-collapse"><i class="material-icons">menu</i></a>
+				class="brand-logo grey-text text-lighten-5 thin"><span
+				class="bold">M</span>ove<span class="bold">V</span>ote</a> <a href="#"
+				data-activates="mobile-navbar" class="button-collapse"><i
+				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a id="toggle-search" href="#"><i
-						class="material-icons tooltipped" data-position="bottom"
-						data-delay="50" data-tooltip="search">search</i></a></li>
 				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="group">group_work</i></a></li>
+						data-position="bottom" data-delay="50"
+						data-tooltip="recommend movie">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -101,9 +98,7 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a id="toggle-search" href="#">Search</a></li>
-				<li><a href="#">Discover</a></li>
-				<li><a href="#">Group</a></li>
+				<li><a href="#">Recommend Movie</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a

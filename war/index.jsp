@@ -58,7 +58,8 @@
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="recommend movie">movie</i></a></li>
+						data-position="bottom" data-delay="50"
+						data-tooltip="recommend movie">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -182,9 +183,9 @@
 						<i class="material-icons">local_movies</i>
 					</h1>
 					<h5 class="center thin">Personalized Movie Recommendations</h5>
-					<p class="center">Sign up for MoveVote and rate about 10
-						movies, after which we can help you get more movies that you
-						and/or your group of friends will like.</p>
+					<p class="center">Sign up for MoveVote and do a quick movie
+						survey, after which we can recommend movies that you and/or your
+						group of friends will like.</p>
 				</div>
 			</div>
 
@@ -194,9 +195,9 @@
 						<i class="material-icons">access_time</i>
 					</h1>
 					<h5 class="center thin">Latest Movie Showing Time</h5>
-					<p class="center">Not sure when and which cinema your latest movie
-						will be showing today and tomorrow? MoveVote can help you get all
-						these information for you.</p>
+					<p class="center">Not sure when and which cinema your latest
+						movie will be showing today and tomorrow? MoveVote can help you
+						get all these information for you.</p>
 				</div>
 			</div>
 
@@ -292,9 +293,9 @@
 					<h5>About</h5>
 					<p>MoveVote is a web app designed for optimal viewing and
 						interaction experience that recommends you and your friends movies
-						that all of you will like. You will rate about 10 movies so that
-						we can know your individual movie preferences. If you do not know
-						the movie, you can skip it.</p>
+						that all of you will like. You will do a quick movie survey so
+						that we can know your individual movie preferences. If you do not
+						know the movie, you can skip it.</p>
 				</div>
 			</div>
 		</div>
