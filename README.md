@@ -20,7 +20,7 @@ MoveVote will be built and hosted on Google App Engine, a platform for building 
 * Latest Movie Showing Time - Not sure when and where your latest movie will be showing today and tomorrow? MoveVote can help you get all these information for you.
 * Modern Responsive Design - To provide our users an optimal viewing and interaction experience, we have adopted a modern responsive framework based on Material Design by Google.
 * Support multiple login options - Email, Google and Facebook (will implement more if we have more time)
-* Cinema location - By leveraging on Google Maps, we can display a map to show them the direction to the Cinema that they want to go.
+* Cinema location - By leveraging on Google Maps, we can display a map to show them the direction to the Cinema that they want to go. (Future enhancement)
 
 ## User Stories
 1. As a user, I want to have all the information about the latest movies that are currently showing in our local cinema so that I do not have to check their websites individually.
@@ -35,33 +35,35 @@ For milestone 2, we have completed the registration and login process. In this u
 For milestone 3, we will complete the recommendation system and do a few user testing before we officially launch our application to the public. :D
 
 ## Project Log
-Wei Kang has experienced with developing and deploying application to Google App Engine, as such he is able to provide the team guidance on how to kickstart the project and this allows the team to have more time to integrate more features into the project.
 
 | Description | David | Wei Kang |
 | --- | :---: | :---: |
 | Liftoff Day 1 | 8 | 8 |
 | Liftoff Day 2 | 8 | 8 |
 | Project brainstorm and planning | 3 | 3 |
-| Install IDE and tools | - | 2 |
+| Install IDE and tools | 2 | 2 |
 | Design user interface | - | 23 |
-| Explore Single Sign-On (SSO) platform | - | 2 |
+| Explore Single Sign-On (SSO) platform | 4 | 2 |
 | Implement Google Identity Toolkit | - | 24 |
 | Explore TMDB movie database api | - | 2 |
-| Preparation for milestone 1 | - | 1.5 |
-| Preparation for milestone 2 | - | 1.5 |
+| Preparation for milestone 1 | 0.5 | 1.5 |
+| Preparation for milestone 2 | 1 | 1.5 |
 | Implement movie rating function | - | 12 |
 | Implement movie showtimes function | - | 16 |
 | Create a cron job to grab information about the movies that are currently showing in Singapore's cinema | - | 8 |
 | Implement movie survey | - | 8 |
-| Bug fix | - | 5 |
-| **Total:** | 19 | 124 |
+| Design Recommendation system | 10 | - |
+| Implement add and remove friend | - | 4 |
+| Others | - | 4 |
+| Bug fix | - | 6 |
+| **Total:** | 36.5 | 133 |
 
-We have finished 19 and 124 hours respectively towards the requirement.
+We have finished 36.5 and 133 hours respectively towards the requirement.
 
 ## Mission
 - [ ] Attend at least 12 hours of workshops
 - [X] Use a web application with CRUD capabilities
-- [ ] 4 additional extension milestones.
+- [X] 4 additional extension milestones.
 - [ ] Score a minimum of 2 stars on feedback given to other teams
 - [ ] Must score a minimum of 3 stars on own peer-graded project
 
@@ -78,6 +80,7 @@ We have finished 19 and 124 hours respectively towards the requirement.
 - [X] Design recommendation engine
 
 ### Milestone 3
+- [X] Add and remove friends
 - [ ] Implement recommendation engine
 - [ ] Conduct user testing
 - [ ] Gather feedback on how to improve the user experience
@@ -110,3 +113,4 @@ Link: [https://movevote.appspot.com](https://movevote.appspot.com)
 ## Video
 * Ignition @Hanger: [YouTube Link](https://youtu.be/hK8Z0QLRlbU?t=30m45s)
 * Intro Video: [YouTube Link](https://youtu.be/BHlYEgWAAVw)
+* Milestone 2 Video: [YouTube Link](https://www.youtube.com/watch?v=CrXkAi_YqXI)
