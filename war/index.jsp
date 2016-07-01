@@ -57,9 +57,9 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#"><i class="material-icons tooltipped"
+				<li><a href="/discover"><i class="material-icons tooltipped"
 						data-position="bottom" data-delay="50"
-						data-tooltip="recommend movie">movie</i></a></li>
+						data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -77,7 +77,7 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a href="#">Recommend Movie</a></li>
+				<li><a href="/discover">Discover</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a

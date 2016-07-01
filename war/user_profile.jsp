@@ -52,9 +52,9 @@
 				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
 				class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#"><i class="material-icons tooltipped"
+				<li><a href="/discover"><i class="material-icons tooltipped"
 						data-position="bottom" data-delay="50"
-						data-tooltip="recommend movie">movie</i></a></li>
+						data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -72,8 +72,7 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a id="toggle-search" href="#">Search</a></li>
-				<li><a href="#">Recommend Movie</a></li>
+				<li><a href="/discover">Discover</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -108,7 +107,8 @@
 			<div class="col s10 m6 offset-m3 offset-s1">
 				<div class="row">
 					<div class="col s6">
-						<span class="caption-large thin">2</span><br />friends
+						<span class="caption-large thin"><c:out
+								value="${fn:length(friendList)}"></c:out></span><br />friends
 					</div>
 					<div class="col s6">
 						<span class="caption-large thin">0</span><br />groups
@@ -118,7 +118,7 @@
 			</div>
 			<div class="spacer-thin"></div>
 		</div>
-		
+
 		<div class="divider"></div>
 	</div>
 
@@ -195,17 +195,26 @@
 
 			<div id="friend" class="col s12">
 				<div class="spacer-thin"></div>
-				<ul class="collection">
-					<li class="collection-item avatar"><img
-						src="assets/img/profile/david_ten.jpg" alt="" class="circle">
-						<span class="title">David</span>
-						<p>1 movie watched</p> <a href="#!" class="secondary-content"><i
-							class="material-icons">clear</i></a></li>
-					<li class="collection-item avatar"><i
-						class="material-icons circle green">person</i> <span class="title">Wei
-							Han</span>
-						<p>6 movie watched</p> <a href="#!" class="secondary-content"><i
-							class="material-icons">clear</i></a></li>
+				<div class="row">
+					<div class="input-field col s12">
+						<label id="userSearchLbl" class="active">Search</label> <input
+							type="text" id="autocompleteUser"
+							class="autocomplete inputFields">
+					</div>
+					<div class="col s12">
+						<a id="addBtn" class="waves-effect waves-light btn hide"
+							href="javascript:void(0)">Add</a>
+					</div>
+				</div>
+				<ul id="friendCollection" class="collection">
+					<c:forEach items="${ friendList }" var="friend">
+						<li class="collection-item avatar"><i
+							class="material-icons circle green">person</i> <span
+							class="title"><c:out value="${friend.name}"></c:out></span> <a
+							href="#!" class="secondary-content"><i class="material-icons"
+								data-id="<c:out value="${friend.id}"></c:out>"
+								onclick="removeFriend(this)">clear</i></a></li>
+					</c:forEach>
 				</ul>
 			</div>
 
@@ -242,7 +251,260 @@
 				alignment : 'right',
 				belowOrigin : true,
 			});
+			getUserData();
 		});
+
+		function getUserData() {
+			$.ajax({
+				url : "/user",
+				dataType : "json",
+				success : function(data) {
+					$('#autocompleteUser').data('array', data.users);
+					initUserAutoComplete();
+				}
+			});
+		}
+
+		function initUserAutoComplete() {
+			var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], textarea';
+
+			$(input_selector)
+					.each(
+							function() {
+								var $input = $(this);
+
+								if ($input.hasClass('autocomplete')) {
+									var $array = $input.data('array'), $inputDiv = $input
+											.closest('.input-field'); // Div to append on
+									// Check if "data-array" isn't empty
+
+									if ($array !== '') {
+										// Create html element
+										var $html = '<ul class="autocomplete-content hide" style="z-index: 100;">';
+
+										for (var i = 0; i < $array.length; i++) {
+											// If path and class aren't empty add image to auto complete else create normal element
+											if ($array[i]['path'] !== ''
+													&& $array[i]['path'] !== undefined
+													&& $array[i]['path'] !== null
+													&& $array[i]['class'] !== undefined
+													&& $array[i]['class'] !== '') {
+												$html += '<li class="autocomplete-option"><img src="' + $array[i]['path'] + '" class="' + $array[i]['class'] + '"><span>'
+														+ $array[i]['name']
+														+ '</span></li>';
+											} else {
+												$html += '<li class="autocomplete-option" data-id="' + $array[i]['id'] +'" data-name="'+ $array[i]['name']+'"><span>'
+														+ $array[i]['name']
+														+ '</span></li>';
+											}
+										}
+
+										$html += '</ul>';
+										$inputDiv.append($html); // Set ul in body
+										// End create html element
+
+										function highlight(string) {
+											$('.autocomplete-content li')
+													.each(
+															function() {
+																var matchStart = $(
+																		this)
+																		.text()
+																		.toLowerCase()
+																		.indexOf(
+																				""
+																						+ string
+																								.toLowerCase()
+																						+ ""), matchEnd = matchStart
+																		+ string.length
+																		- 1, beforeMatch = $(
+																		this)
+																		.text()
+																		.slice(
+																				0,
+																				matchStart), matchText = $(
+																		this)
+																		.text()
+																		.slice(
+																				matchStart,
+																				matchEnd + 1), afterMatch = $(
+																		this)
+																		.text()
+																		.slice(
+																				matchEnd + 1);
+																$(this)
+																		.html(
+																				"<span>"
+																						+ beforeMatch
+																						+ "<span class='highlight'>"
+																						+ matchText
+																						+ "</span>"
+																						+ afterMatch
+																						+ "</span>");
+															});
+										}
+
+										// Perform search
+										$(document)
+												.on(
+														'keyup',
+														$input,
+														function() {
+															var $val = $input
+																	.val()
+																	.trim(), $select = $('.autocomplete-content');
+															// Check if the input isn't empty
+															$select
+																	.css(
+																			'width',
+																			$input
+																					.width());
+
+															if ($val != '') {
+																$select
+																		.children(
+																				'li')
+																		.addClass(
+																				'hide');
+																$select
+																		.children(
+																				'li')
+																		.filter(
+																				function() {
+																					$select
+																							.removeClass('hide'); // Show results
+
+																					// If text needs to highlighted
+																					if ($input
+																							.hasClass('highlight-matching')) {
+																						highlight($val);
+																					}
+																					var check = true;
+																					for ( var i in $val) {
+																						if ($val[i]
+																								.toLowerCase() !== $(
+																								this)
+																								.text()
+																								.toLowerCase()[i])
+																							check = false;
+																					}
+																					;
+																					return check ? $(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									$val
+																											.toLowerCase()) !== -1
+																							: false;
+																				})
+																		.removeClass(
+																				'hide');
+															} else {
+																$select
+																		.children(
+																				'li')
+																		.addClass(
+																				'hide');
+															}
+														});
+
+										// Set input value
+										$('.autocomplete-option')
+												.click(
+														function() {
+															$input.val($(this)
+																	.text()
+																	.trim());
+															$(
+																	'.autocomplete-option')
+																	.addClass(
+																			'hide');
+															$('#addBtn')
+																	.removeClass(
+																			'hide');
+															$('#addBtn')
+																	.attr(
+																			'data-id',
+																			$(
+																					this)
+																					.data(
+																							"id"));
+															$('#addBtn')
+																	.attr(
+																			'data-name',
+																			$(
+																					this)
+																					.data(
+																							"name"));
+															$('#addBtn')
+																	.attr(
+																			"onclick",
+																			"addFriend()");
+														});
+									} else {
+										return false;
+									}
+								}
+							});
+		}
+
+		function addFriend() {
+			var friendId = $("#addBtn").attr("data-id");
+			var friendName = $("#addBtn").attr("data-name");
+			$
+					.ajax({
+						type : "POST",
+						url : "/user",
+						data : "action=add&friendId=" + friendId
+								+ "&friendName=" + friendName,
+						dataType : "json",
+						beforeSend : function() {
+							$("#userSearchLbl").attr("class", "");
+							$("#autocompleteUser").val('');
+						},
+						success : function(data) {
+							if (data.success) {
+								$("#friendCollection")
+										.append(
+												'<li class="collection-item avatar"><i class="material-icons circle green">person</i> <span class="title">'
+														+ friendName
+														+ '</span> <a href="#!" class="secondary-content"><i class="material-icons" data-id="'
+														+ friendId
+														+ '" onclick="removeFriend(this)">clear</i></a></li>');
+							} else {
+								Materialize
+										.toast(
+												"An error has occured, please try again later.",
+												3000);
+							}
+						}
+					});
+		}
+
+		function removeFriend(e) {
+			var friendId = $(e).attr("data-id");
+			console.log(friendId);
+			$
+					.ajax({
+						type : "POST",
+						url : "/user",
+						data : "action=remove&friendId=" + friendId,
+						dataType : "json",
+						success : function(data) {
+							if (data.success) {
+								$(e).parent().parent().remove();
+								getUserData();
+							} else {
+								Materialize
+										.toast(
+												"An error has occured, please try again later.",
+												3000);
+							}
+						}
+					});
+
+		}
 	</script>
 
 	<c:if test="${hasSurvey}">

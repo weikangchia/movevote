@@ -40,6 +40,7 @@ public class Constant {
 	// DataStore
 	// tables
 	public static final String DS_TABLE_USER = "user";
+	public static final String DS_TABLE_FRIEND = "friend";
 	public static final String DS_TABLE_RATING = "rating";
 	public static final String DS_TABLE_MOVIE_EVENT = "movie_event";
 	public static final String DS_TABLE_INSING_MOVIE_NOW_SHOWING = "insing_movie_now_showing";

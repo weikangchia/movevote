@@ -15,32 +15,6 @@
 	href="assets/css/font-awesome.css" />
 <link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
 
-<script type="text/javascript"
-	src="//www.gstatic.com/authtoolkit/js/gitkit.js"></script>
-<link type="text/css" rel="stylesheet"
-	href="//www.gstatic.com/authtoolkit/css/gitkit.css" />
-<script type="text/javascript">
-	function load() {
-		var config = {
-			widgetUrl : '/gitkit',
-			apiKey : 'AIzaSyDtqW6zARF6LhKFHci_mST7x5yCNgfqRSQ',
-			signInSuccessUrl : '/user_profile',
-			idps : [ "password", "google", "facebook" ],
-			idpButtons : 1,
-			oobActionUrl : '/gitkit',
-			siteName : 'MoveVote',
-			acUiConfig : {
-				title : 'MoveVote - Movie recommendation'
-			},
-		};
-		// The HTTP POST body should be escaped by the server to prevent XSS
-		window.google.identitytoolkit.start('#gitkitWidgetDiv', // accepts any CSS selector
-		config);
-	}
-</script>
-<script type="text/javascript"
-	src="//apis.google.com/js/client.js?onload=load"></script>
-
 <!-- theme color for android chrome -->
 <meta name="theme-color" content="#ee6e73" />
 
@@ -73,14 +47,12 @@
 	<nav>
 		<div class="nav-wrapper container">
 			<a href="${pageContext.request.contextPath}/home"
-				class="brand-logo grey-text text-lighten-5 thin"><span
-				class="bold">M</span>ove<span class="bold">V</span>ote</a> <a href="#"
-				data-activates="mobile-navbar" class="button-collapse"><i
-				class="material-icons">menu</i></a>
+				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
+				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+				class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/discover"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50"
-						data-tooltip="discover">movie</i></a></li>
+				<li><a href="#"><i class="material-icons tooltipped"
+						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -98,7 +70,7 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a href="/discover">Discover</a></li>
+				<li><a href="#">Discover</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -119,30 +91,57 @@
 	</nav>
 
 	<main>
-	<div id="progress" class="progress">
-		<div class="indeterminate"></div>
-	</div>
 	<div class="container">
 		<div class="spacer-thick"></div>
-		<c:if test="${(mode == 'manageAccount') and (not isVerified)}">
-			<div class="row">
-				<div class="col s12 center orange lighten-2">
-					<p class="white-text">
-						<i class="material-icons">announcement</i> An email has been sent
-						to the email address below with a link to verify your account.
-						Please check your email and follow the link to complete your
-						account sign up.<br /> <br /> <a id="resend_verification"
-							href="#" class="teal-text">Resend this email.</a>
-					</p>
-				</div>
-			</div>
-		</c:if>
 		<div class="row">
-			<!-- Placeholder for the GAT widget panels -->
-			<div id="gitkitWidgetDiv"></div>
+			<div class="col s10 offset-s1 center">
+				<h4 class="grey-text text-darken-2 thin">Discover</h4>
+			</div>
 		</div>
-		<div class="spacer-thick"></div>
+
+		<div class="divider"></div>
 	</div>
+
+	<div class="container">
+		<div class="spacer-normal"></div>
+		<div class="row">
+			<div class="col s12">
+				<h5>Movies to Watch</h5>
+				<p>Coming soon.</p>
+			</div>
+			<div class="col s12">
+				<h5>Now Showing</h5>
+				<c:forEach items="${nowMovieList}" var="movie">
+					<div class="col s10 m6 l4 offset-s1">
+						<div class="card medium">
+							<div class="card-image">
+								<img src="<c:out
+											value="${movie.imageUrl}"></c:out>">
+								<span class="card-title truncate black"
+									style="opacity: 0.8; width: 100%;"><c:out
+										value="${movie.title}"></c:out></span>
+							</div>
+							<div class="card-content">
+								<p>
+									<c:out value="${movie.overview}"></c:out>
+								</p>
+							</div>
+							<div class="card-action">
+								<a
+									href="${pageContext.request.contextPath}/movie?is_id=<c:out
+									value="${movie.id}"></c:out>&title2=<c:out
+									value="${movie.title2}"></c:out>&tmdb_id=<c:out
+									value="${movie.tmdbId}"></c:out>&provider=is">more
+									info</a>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+
+	<div class="spacer-thick"></div>
 	</main>
 
 	<footer class="page-footer">
@@ -158,56 +157,18 @@
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
-
+	<script type="text/javascript"
+		src="assets/js/jquery.star.rating.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.shorten.min.js"></script>
 	<script>
-		$(document)
-				.ready(
-						function() {
-							$("#progress").hide();
-							$(".button-collapse").sideNav({});
-							$(".dropdown-button").dropdown({
-								constrain_width : false,
-								alignment : 'right',
-								belowOrigin : true,
-							});
-							$("#resend_verification")
-									.click(
-											function() {
-												$("#progress").show();
-												$
-														.ajax({
-															type : "POST",
-															url : "/gitkit",
-															data : "action=resendVerficationLink",
-															dataType : "json",
-
-															//if received a response from the server
-															success : function(
-																	data) {
-																if (data.success) {
-																	$(
-																			"#progress")
-																			.hide();
-																	Materialize
-																			.toast(
-																					'A verification email has been sent.',
-																					3000);
-																	$(
-																			"#resend_verification")
-																			.hide();
-																} else {
-																	$(
-																			"#progress")
-																			.hide();
-																	Materialize
-																			.toast(
-																					"Request failed. Please try again.",
-																					3000);
-																}
-															}
-														});
-											})
-						});
+		$(document).ready(function() {
+			$(".button-collapse").sideNav({});
+			$(".dropdown-button").dropdown({
+				constrain_width : false,
+				alignment : 'right',
+				belowOrigin : true,
+			});
+		});
 	</script>
 </body>
 

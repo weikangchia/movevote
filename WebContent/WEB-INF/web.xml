@@ -119,4 +119,24 @@
     <servlet-name>SurveyServlet</servlet-name>
     <url-pattern>/survey</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserController</display-name>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserController</servlet-name>
+    <url-pattern>/UserController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DiscoverServlet</display-name>
+    <servlet-name>DiscoverServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.DiscoverServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DiscoverServlet</servlet-name>
+    <url-pattern>/discover</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -17,6 +17,10 @@ public class User extends Person {
 		// TODO Auto-generated constructor stub
 	}
 
+	public User(String id, String name) {
+		super(id, name, null);
+	}
+
 	public User(String id, String name, String profilePath, String email) {
 		super(id, name, profilePath);
 		if (profilePath == null || profilePath.equals("")) {
@@ -25,8 +29,7 @@ public class User extends Person {
 		this.setEmail(email);
 	}
 
-	public User(String id, String name, String profilePath, String email, String provider,
-			boolean isVerified) {
+	public User(String id, String name, String profilePath, String email, String provider, boolean isVerified) {
 		super(id, name, profilePath);
 		if (profilePath == null || profilePath.equals("")) {
 			setProfilePath("/assets/img/profile/no-profile.png");
@@ -81,6 +84,18 @@ public class User extends Person {
 				}
 				break;
 			}
+		}
+		return false;
+	}
+
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		if (obj instanceof User) {
+			User o = (User) obj;
+			return o.getId().equals(getId());
 		}
 		return false;
 	}

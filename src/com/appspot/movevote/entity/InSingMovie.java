@@ -24,6 +24,7 @@ public class InSingMovie extends Movie {
 	private String tmdbId;
 	private String title2;
 	private String genreBit;
+	private String overview;
 
 	public InSingMovie(String id) {
 		super(id);
@@ -36,11 +37,12 @@ public class InSingMovie extends Movie {
 	}
 
 	public InSingMovie(String id, String title, String title2, String imageUrl, String tmdbID,
-			String genreBit) {
+			String genreBit, String overview) {
 		super(id, title, imageUrl);
 		this.setTmdbId(tmdbID);
 		this.title2 = title2;
 		this.genreBit = genreBit;
+		this.overview = overview;
 	}
 
 	public String getTmdbId() {
@@ -65,6 +67,14 @@ public class InSingMovie extends Movie {
 
 	public void setGenreBit(String genreBit) {
 		this.genreBit = genreBit;
+	}
+
+	public String getOverview() {
+		return overview;
+	}
+
+	public void setOverview(String overview) {
+		this.overview = overview;
 	}
 
 	public boolean equals(Object obj) {
@@ -175,6 +185,8 @@ public class InSingMovie extends Movie {
 
 				newInSingMovie.setTmdbId(tmdbMovie.getId());
 				newInSingMovie.setGenreBit(tmdbMovie.getGenreBit());
+				newInSingMovie.setOverview(tmdbMovie.getOverview());
+				
 				InSingMovieDB.storeInSingMovie(newInSingMovie);
 			}
 		}

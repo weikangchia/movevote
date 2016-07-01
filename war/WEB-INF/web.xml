@@ -69,12 +69,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 	<servlet>
 		<description></description>
-		<display-name>UserServlet</display-name>
-		<servlet-name>UserServlet</servlet-name>
+		<display-name>UserProfileServlet</display-name>
+		<servlet-name>UserProfileServlet</servlet-name>
 		<servlet-class>com.appspot.movevote.controller.UserProfileServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserProfileServlet</servlet-name>
 		<url-pattern>/user_profile</url-pattern>
 	</servlet-mapping>
 	<servlet>
@@ -96,6 +96,26 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>SurveyServlet</servlet-name>
 		<url-pattern>/survey</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>UserServlet</display-name>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.appspot.movevote.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>DiscoverServlet</display-name>
+		<servlet-name>DiscoverServlet</servlet-name>
+		<servlet-class>com.appspot.movevote.controller.DiscoverServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DiscoverServlet</servlet-name>
+		<url-pattern>/discover</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>home</welcome-file>

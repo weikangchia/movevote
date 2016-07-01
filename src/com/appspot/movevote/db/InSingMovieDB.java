@@ -25,6 +25,7 @@ public class InSingMovieDB {
 		movieEntity.setProperty("tmdb_id", movie.getTmdbId());
 		movieEntity.setProperty("last_update", new Date());
 		movieEntity.setProperty("genre_bit", movie.getGenreBit());
+		movieEntity.setProperty("overview", movie.getOverview());
 		dataStore.put(movieEntity);
 	}
 
@@ -48,11 +49,10 @@ public class InSingMovieDB {
 			if (movieEntity.getProperty("tmdb_id") != null
 					&& movieEntity.getProperty("tmdb_id").toString().length() > 0) {
 				movieList.add(new InSingMovie(movieEntity.getKey().getName(),
-						movieEntity.getProperty("title").toString(),
-						movieEntity.getProperty("title2").toString(),
-						movieEntity.getProperty("image_url").toString(),
-						movieEntity.getProperty("tmdb_id").toString(),
-						movieEntity.getProperty("genre_bit").toString()));
+						movieEntity.getProperty("title").toString(), movieEntity.getProperty("title2").toString(),
+						movieEntity.getProperty("image_url").toString(), movieEntity.getProperty("tmdb_id").toString(),
+						movieEntity.getProperty("genre_bit").toString(),
+						movieEntity.getProperty("overview").toString()));
 			}
 		}
 

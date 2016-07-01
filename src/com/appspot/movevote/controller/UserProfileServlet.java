@@ -1,6 +1,7 @@
 package com.appspot.movevote.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.appspot.movevote.db.FriendDB;
 import com.appspot.movevote.db.SurveyDB;
 import com.appspot.movevote.db.UserDB;
 import com.appspot.movevote.entity.Constant;
@@ -137,6 +139,9 @@ public class UserProfileServlet extends HttpServlet {
 			} else {
 				request.setAttribute("hasSurvey", true);
 			}
+			
+			ArrayList<User> friendList = FriendDB.getFriendList(gitkitUser.getLocalId());
+			request.setAttribute("friendList", friendList);
 		}
 
 		request.setAttribute("isLoggedIn", isLoggedIn);

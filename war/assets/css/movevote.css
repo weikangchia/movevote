@@ -109,6 +109,50 @@ i {
 	overflow: visible;
 }
 
+.autocomplete-content {
+	position: absolute;
+	background: #383838;
+	margin-top: -.9rem;
+}
+
+.autocomplete-content li {
+	clear: both;
+	color: rgba(0, 0, 0, 0.87);
+	cursor: pointer;
+	line-height: 0;
+	width: 100%;
+	text-align: left;
+	text-transform: none;
+	padding: 10px;
+}
+
+.autocomplete-content li>span {
+	color: #ffa726;
+	font-size: .9rem;
+	padding: 1.2rem;
+	display: block;
+}
+
+.autocomplete-content li>span .highlight {
+	color: #000000;
+}
+
+.autocomplete-content li img {
+	height: 52px;
+	width: 52px;
+	padding: 5px;
+	margin: 0 15px;
+}
+
+.autocomplete-content li:hover {
+	background: #eee;
+	cursor: pointer;
+}
+
+.autocomplete-content>li:hover {
+	background: #292929;
+}
+
 @media only screen and (max-width: 600px) {
 	.cards-container {
 		-webkit-column-count: 1;
