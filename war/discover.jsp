@@ -106,7 +106,7 @@
 		<div class="spacer-normal"></div>
 		<div class="row">
 			<div class="col s12">
-				<h5>Movies to Watch</h5>
+				<h5>Movies to Watch test</h5>
 				<c:forEach items="${recommendMovieList}" var="rMovie">
 					<div class="col s10 m6 l4 offset-s1">
 						<div class="card medium">
