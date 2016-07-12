@@ -229,7 +229,7 @@
 					</c:if>
 					<c:if test="${fn:length(movie.youTubeVideoList) gt 0}">
 						<c:forEach items="${ movie.youTubeVideoList }" var="video">
-							<h6>
+							<h6 class="bold">
 								<c:out value="${video.name}"></c:out>
 							</h6>
 							<div class="spacer-thin"></div>

@@ -54,4 +54,14 @@ public class Rating {
 	public void setRatingId(long ratingId) {
 		this.ratingId = ratingId;
 	}
+
+	public static void calculateUserPreference(double[] ratingScore, String genreBit, int rating) {
+		for (int i = 0; i < genreBit.length(); i++) {
+			if (genreBit.charAt(i) == '1') {
+				ratingScore[i] = ratingScore[i] + rating;
+			} else {
+				ratingScore[i] = ratingScore[i] - (0.1 * ratingScore[i]);
+			}
+		}
+	}
 }

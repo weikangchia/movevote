@@ -47,8 +47,8 @@
 	<nav>
 		<div class="nav-wrapper container">
 			<a href="${pageContext.request.contextPath}/home"
-				class="brand-logo grey-text text-lighten-5"><span class="bold">Move</span><span
-				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
+				class="brand-logo grey-text text-lighten-5 thin"><span
+				class="bold">M</span>ove<span class="bold">V</span>ote</a> <a href="#" data-activates="mobile-navbar"
 				class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="#"><i class="material-icons tooltipped"
@@ -107,9 +107,36 @@
 		<div class="row">
 			<div class="col s12">
 				<h5>Movies to Watch</h5>
-				<p>Coming soon.</p>
+				<c:forEach items="${recommendMovieList}" var="rMovie">
+					<div class="col s10 m6 l4 offset-s1">
+						<div class="card medium">
+							<div class="card-image">
+								<img src="<c:out
+											value="${rMovie.imageUrl}"></c:out>">
+								<span class="card-title truncate black"
+									style="opacity: 0.8; width: 100%;"><c:out
+										value="${rMovie.title}"></c:out></span>
+							</div>
+							<div class="card-content">
+								<p>
+									<c:out value="${rMovie.overview}"></c:out>
+								</p>
+							</div>
+							<div class="card-action">
+								<a
+									href="${pageContext.request.contextPath}/movie?is_id=<c:out
+									value="${rMovie.id}"></c:out>&title2=<c:out
+									value="${rMovie.title2}"></c:out>&tmdb_id=<c:out
+									value="${rMovie.tmdbId}"></c:out>&provider=is">more
+									info</a>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
+			
 			<div class="col s12">
+				<div class="spacer-normal"></div>
 				<h5>Now Showing</h5>
 				<c:forEach items="${nowMovieList}" var="movie">
 					<div class="col s10 m6 l4 offset-s1">
