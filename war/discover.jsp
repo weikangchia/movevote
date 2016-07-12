@@ -137,7 +137,7 @@
 			
 			<div class="col s12">
 				<div class="spacer-normal"></div>
-				<h5>Now Showing test</h5>
+				<h5>Now Showing</h5>
 				<c:forEach items="${nowMovieList}" var="movie">
 					<div class="col s10 m6 l4 offset-s1">
 						<div class="card medium">
