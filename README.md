@@ -81,7 +81,7 @@ We have finished 36.5 and 133 hours respectively towards the requirement.
 
 ### Milestone 3
 - [X] Add and remove friends
-- [ ] Implement recommendation engine
+- [X] Implement recommendation engine
 - [ ] Conduct user testing
 - [ ] Gather feedback on how to improve the user experience
 - [ ] Improve performance
