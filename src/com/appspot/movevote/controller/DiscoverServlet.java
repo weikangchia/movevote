@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.movevote.db.InSingMovieDB;
 import com.appspot.movevote.db.RatingDB;
+import com.appspot.movevote.db.SurveyDB;
 import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.InSingMovie;
 import com.appspot.movevote.entity.Rating;
+import com.appspot.movevote.entity.Survey;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
 import com.google.identitytoolkit.GitkitUser;
@@ -59,41 +61,59 @@ public class DiscoverServlet extends HttpServlet {
 
 			request.setAttribute("isLoggedIn", true);
 
-			// get user movie preferences
-			HashMap<String, Rating> userRatingMap = RatingDB.getRating(userInfo.getId());
-
-			double[] ratingScore = { 0, 0, 0, 0, 0, 0, 0 };
-			int highestGenreBit = 0;
-			double highestRating = -1;
-
-			for (Map.Entry<String, Rating> entry : userRatingMap.entrySet()) {
-				Rating userRating = entry.getValue();
-				Rating.calculateUserPreference(ratingScore, userRating.getGenreBit(), userRating.getRating());
+			// check if user has finish the movie survey
+			boolean completedSurvey = false;
+			Survey survey = SurveyDB.getSurvey(gitkitUser.getLocalId());
+			int surveyGenresCategory = 0;
+			if (survey == null) {
+				SurveyDB.storeSurvey(new Survey(gitkitUser.getLocalId(), surveyGenresCategory));
+			} else {
+				surveyGenresCategory = survey.getGenresCategory();
 			}
 
-			for (int i = 0; i < ratingScore.length; i++) {
-				double tempScore = (double) ratingScore[i] / userRatingMap.size();
-				if (tempScore > highestRating) {
-					highestGenreBit = i;
-					highestRating = tempScore;
-				}
-				System.out.println(i + " " + tempScore);
+			if (surveyGenresCategory == 7) {
+				completedSurvey = true;
 			}
 
-			System.out.println("highest: " + highestGenreBit);
+			// get user movie preferences only if user has completed the survey
+			if (completedSurvey) {
+				HashMap<String, Rating> userRatingMap = RatingDB.getRating(userInfo.getId());
 
-			ArrayList<InSingMovie> recommendMovieList = new ArrayList<InSingMovie>();
-			for (int m = 0; m < movieList.size(); m++) {
-				Rating tempRating = userRatingMap.get(movieList.get(m).getTmdbId());
-				if (tempRating != null && tempRating.getRating() < 3) {
-					continue;
+				double[] ratingScore = { 0, 0, 0, 0, 0, 0, 0 };
+				int highestGenreBit = 0;
+				double highestRating = -1;
+
+				for (Map.Entry<String, Rating> entry : userRatingMap.entrySet()) {
+					Rating userRating = entry.getValue();
+					Rating.calculateUserPreference(ratingScore, userRating.getGenreBit(), userRating.getRating());
 				}
 
-				if (movieList.get(m).getGenreBit().charAt(highestGenreBit) == '1') {
-					recommendMovieList.add(movieList.get(m));
+				for (int i = 0; i < ratingScore.length; i++) {
+					double tempScore = (double) ratingScore[i] / userRatingMap.size();
+					if (tempScore > highestRating) {
+						highestGenreBit = i;
+						highestRating = tempScore;
+					}
+					System.out.println(i + " " + tempScore);
 				}
+
+				System.out.println("highest: " + highestGenreBit);
+
+				ArrayList<InSingMovie> recommendMovieList = new ArrayList<InSingMovie>();
+				for (int m = 0; m < movieList.size(); m++) {
+					Rating tempRating = userRatingMap.get(movieList.get(m).getTmdbId());
+
+					// skip this movie if users has rated low below average: 3
+					if (tempRating != null && tempRating.getRating() < 3) {
+						continue;
+					}
+
+					if (movieList.get(m).getGenreBit().charAt(highestGenreBit) == '1') {
+						recommendMovieList.add(movieList.get(m));
+					}
+				}
+				request.setAttribute("recommendMovieList", recommendMovieList);
 			}
-			request.setAttribute("recommendMovieList", recommendMovieList);
 
 			getServletContext().getRequestDispatcher("/discover.jsp").forward(request, response);
 		}

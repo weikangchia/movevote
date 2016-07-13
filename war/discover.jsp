@@ -48,8 +48,9 @@
 		<div class="nav-wrapper container">
 			<a href="${pageContext.request.contextPath}/home"
 				class="brand-logo grey-text text-lighten-5 thin"><span
-				class="bold">M</span>ove<span class="bold">V</span>ote</a> <a href="#" data-activates="mobile-navbar"
-				class="button-collapse"><i class="material-icons">menu</i></a>
+				class="bold">M</span>ove<span class="bold">V</span>ote</a> <a href="#"
+				data-activates="mobile-navbar" class="button-collapse"><i
+				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="#"><i class="material-icons tooltipped"
 						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
@@ -106,35 +107,46 @@
 		<div class="spacer-normal"></div>
 		<div class="row">
 			<div class="col s12">
-				<h5>Movies to Watch</h5>
-				<c:forEach items="${recommendMovieList}" var="rMovie">
-					<div class="col s10 m6 l4 offset-s1">
-						<div class="card medium">
-							<div class="card-image">
-								<img src="<c:out
+				<h5>Movies recommended for you</h5>
+
+				<c:choose>
+					<c:when test="${empty recommendMovieList}">
+						<p>It seems that you have not completed the movie survey yet.
+							Please go back to your profile and finish the movie survey.</p>
+						<a class="waves-effect waves-light btn" href="/user_profile">My Profile</a>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${recommendMovieList}" var="rMovie">
+							<div class="col s10 m6 l4 offset-s1">
+								<div class="card medium">
+									<div class="card-image">
+										<img
+											src="<c:out
 											value="${rMovie.imageUrl}"></c:out>">
-								<span class="card-title truncate black"
-									style="opacity: 0.8; width: 100%;"><c:out
-										value="${rMovie.title}"></c:out></span>
-							</div>
-							<div class="card-content">
-								<p>
-									<c:out value="${rMovie.overview}"></c:out>
-								</p>
-							</div>
-							<div class="card-action">
-								<a
-									href="${pageContext.request.contextPath}/movie?is_id=<c:out
+										<span class="card-title truncate black"
+											style="opacity: 0.8; width: 100%;"><c:out
+												value="${rMovie.title}"></c:out></span>
+									</div>
+									<div class="card-content">
+										<p>
+											<c:out value="${rMovie.overview}"></c:out>
+										</p>
+									</div>
+									<div class="card-action">
+										<a
+											href="${pageContext.request.contextPath}/movie?is_id=<c:out
 									value="${rMovie.id}"></c:out>&title2=<c:out
 									value="${rMovie.title2}"></c:out>&tmdb_id=<c:out
 									value="${rMovie.tmdbId}"></c:out>&provider=is">more
-									info</a>
+											info</a>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</c:forEach>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
-			
+
 			<div class="col s12">
 				<div class="spacer-normal"></div>
 				<h5>Now Showing</h5>
