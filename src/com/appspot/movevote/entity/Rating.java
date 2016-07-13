@@ -60,7 +60,7 @@ public class Rating {
 			if (genreBit.charAt(i) == '1') {
 				ratingScore[i] = ratingScore[i] + rating;
 			} else {
-				ratingScore[i] = ratingScore[i] - (0.1 * ratingScore[i]);
+				ratingScore[i] = ratingScore[i] - (0.1);
 			}
 		}
 	}
