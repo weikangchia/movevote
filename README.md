@@ -16,11 +16,11 @@ Our team will employ a hybrid approach (both content-based filtering and collabo
 MoveVote will be built and hosted on Google App Engine, a platform for building scalable web applications and mobile backends. We have chosen picked this platform as it provides many built-in services and APIs such as DataStore, Google Identity Toolkit and Task Scheduling. In addition, Google App Engine allows us to remove the time spent on maintaining our own server and spend more time to innovate on our project solution. In terms of security aspect, Google App Engine provides an automated security scanner to scan and detect common web application vulnerabilities.
 
 ## Features
-* Personalized Movie Recommendation - Sign up for MoveVote and by rating some movies, we can help you get more movies that you and/or your group of friends will like.
+* Personalized Movie Recommendation - Sign up for MoveVote and by rating some movies, we can help you get more movies that you and/or your group of friends will like. (group recommendation - future enhancement)
 * Latest Movie Showing Time - Not sure when and where your latest movie will be showing today and tomorrow? MoveVote can help you get all these information for you.
 * Modern Responsive Design - To provide our users an optimal viewing and interaction experience, we have adopted a modern responsive framework based on Material Design by Google.
-* Support multiple login options - Email, Google and Facebook (will implement more if we have more time)
-* Cinema location - By leveraging on Google Maps, we can display a map to show them the direction to the Cinema that they want to go. (Future enhancement)
+* Support multiple login options - Email, Google and Facebook
+* Cinema location - By leveraging on Google Maps, we can display a map to show them the direction to the Cinema that they want to go. (future enhancement)
 
 ## User Stories
 1. As a user, I want to have all the information about the latest movies that are currently showing in our local cinema so that I do not have to check their websites individually.
@@ -103,9 +103,11 @@ We have finished 36.5 and 138 hours respectively towards the requirement.
 * [Material Palette](http://www.materialpalette.com/) - to get some reference to generate some colors
 * [jQuery Star Rating plugin](https://github.com/jvv/jquery-star-rating-plugin) - a simple star rating plugin which uses Googles Materialize Icons.
 
+### Testing
+* [Google PageSpeed Tools](https://developers.google.com/speed/pagespeed/insights/) - Tool analyzes the content of a web page, then generates suggestions to make that page faster.
+
 ### Software used
 * PowerPoint - to prepare slides
-* Adobe After Effects CS5 - to render videos
 * Adobe Photoshop CS5 - to create some wonderful images
 * Eclipse - IDE
 
@@ -116,3 +118,4 @@ Link: [https://movevote.appspot.com](https://movevote.appspot.com)
 * Ignition @Hanger: [YouTube Link](https://youtu.be/hK8Z0QLRlbU?t=30m45s)
 * Intro Video: [YouTube Link](https://youtu.be/BHlYEgWAAVw)
 * Milestone 2 Video: [YouTube Link](https://www.youtube.com/watch?v=CrXkAi_YqXI)
+* Milestone 3 Video: [YouTube Link]()
