@@ -32,7 +32,7 @@ For milestone 1, we have finished designing most of the user interface and have 
 
 For milestone 2, we have completed the registration and login process. In this update, user get to see more information (overview, now showing, similar movies and trailer) about the movies that are currently showing in the cinema. We have also implemented the movie survey to get to know the user movie preferences.
 
-For milestone 3, we will complete the recommendation system and do a few user testing before we officially launch our application to the public. :D
+For milestone 3, we have completed the recommendation system for individual. Due to time constraint, we are unable to implement the recommendation system for group and we will be leaving it for future enhancement. We have used Google PageSpeed tools to analyze and optimize our web app. Before optimizing, we have scored 52/100 (mobile), 86/100 (user experience) and 47/100 (desktop). After fixing the problems highlighted by Google PageSpeed tools, we have managed to impoved the score, 77/100 (mobile), 96/100 (user experience) and 92/100 (desktop).
 
 ## Project Log
 
@@ -54,11 +54,13 @@ For milestone 3, we will complete the recommendation system and do a few user te
 | Implement movie survey | - | 8 |
 | Design Recommendation system | 10 | - |
 | Implement add and remove friend | - | 4 |
+| Improve page loading time | - | 2 |
+| Conduct user testing | - | 1 |
 | Others | - | 4 |
-| Bug fix | - | 6 |
-| **Total:** | 36.5 | 133 |
+| Bug fix | - | 8 |
+| **Total:** | 36.5 | 138 |
 
-We have finished 36.5 and 133 hours respectively towards the requirement.
+We have finished 36.5 and 138 hours respectively towards the requirement.
 
 ## Mission
 - [ ] Attend at least 12 hours of workshops
@@ -81,10 +83,10 @@ We have finished 36.5 and 133 hours respectively towards the requirement.
 
 ### Milestone 3
 - [X] Add and remove friends
-- [X] Implement recommendation engine
-- [ ] Conduct user testing
-- [ ] Gather feedback on how to improve the user experience
-- [ ] Improve performance
+- [X] Implement recommendation engine (individual)
+- [X] Conduct user testing
+- [X] Gather feedback on how to improve the user experience
+- [X] Improve performance
 
 ## References
 ### Learning Resources
