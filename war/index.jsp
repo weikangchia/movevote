@@ -1,24 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
-
 <head>
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
 	href="assets/css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/font-awesome.css" />
-<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/owl.carousel.css" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/owl.theme.default.min.css" />
+
+<link rel="preload" href="assets/css/materialize.min.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/owl.carousel.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/owl.theme.default.min.css"
+	as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/movevote.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/font-awesome.css" as="style"
+	onload="this.rel='stylesheet'">
+<noscript>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+	<link type="text/css" rel="stylesheet"
+		href="assets/css/owl.carousel.css" />
+	<link type="text/css" rel="stylesheet"
+		href="assets/css/owl.theme.default.min.css" />
+	<link type="text/css" rel="stylesheet"
+		href="assets/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+</noscript>
 
 <!-- theme color for android chrome -->
 <meta name="theme-color" content="#ee6e73" />
@@ -57,9 +71,9 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/discover"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50"
-						data-tooltip="discover">movie</i></a></li>
+				<li><a href="/discover"><i
+						class="material-icons tooltipped" data-position="bottom"
+						data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -257,35 +271,29 @@
 			</div>
 		</div>
 
-		<c:choose>
-			<c:when test="${not isLoggedIn}">
-				<div class="spacer-thick"></div>
-				<div class="divider"></div>
+		<c:if test="${not isLoggedIn}">
+			<div class="spacer-thick"></div>
+			<div class="divider"></div>
 
-				<div class="spacer-thick"></div>
-				<div class="row center">
-					<h3 class="thin">Interested?</h3>
-					<p class="caption-normal thin">Sign up for free now.</p>
-					<div class="spacer-normal"></div>
-					<a href="${pageContext.request.contextPath}/gitkit?mode=select"
-						class="btn btn-large red lighten-1">Sign up</a>
-					<p>
-						Already have an account? <a
-							href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
-							In</a>
-					</p>
-					<div class="spacer-normal"></div>
-				</div>
-			</c:when>
-			<c:otherwise>
+			<div class="spacer-thick"></div>
+			<div class="row center">
+				<h3 class="thin">Interested?</h3>
+				<p class="caption-normal thin">Sign up for free now.</p>
+				<div class="spacer-normal"></div>
+				<a href="${pageContext.request.contextPath}/gitkit?mode=select"
+					class="btn btn-large red lighten-1">Sign up</a>
+				<p>
+					Already have an account? <a
+						href="${pageContext.request.contextPath}/gitkit?mode=select">Sign
+						In</a>
+				</p>
+				<div class="spacer-normal"></div>
+			</div>
+		</c:if>
 
-			</c:otherwise>
-		</c:choose>
 	</div>
-
 	<div class="spacer-thick"></div>
 	</main>
-
 	<footer class="page-footer">
 		<div class="container white-text">
 			<div class="row">
@@ -306,29 +314,12 @@
 			</div>
 		</div>
 	</footer>
-
 	<!--Import jQuery before materialize.js-->
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
-	<script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".button-collapse").sideNav({});
-			$(".dropdown-button").dropdown({
-				constrain_width : false,
-				alignment : 'right',
-				belowOrigin : true,
-			});
-			$('.owl-carousel').owlCarousel({
-				margin : 30,
-				loop : true,
-				autoWidth : true,
-				lazyLoad : true,
-				nav : true,
-				dots : false,
-			})
-		});
-	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" defer></script>
+	<script type="text/javascript" src="assets/js/materialize.min.js" defer></script>
+	<script type="text/javascript" src="assets/js/owl.carousel.min.js"
+		defer></script>
+	<script type="text/javascript" src="assets/js/movevote.js" defer></script>
 </body>
 </html>

@@ -18,14 +18,12 @@ import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.InSingMovie;
 import com.appspot.movevote.entity.InSingMovieShowPlace;
 import com.appspot.movevote.entity.InSingMovieShowTime;
-import com.appspot.movevote.entity.MovieEvent;
 import com.appspot.movevote.entity.Rating;
 import com.appspot.movevote.entity.TMDBMovie;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.identitytoolkit.GitkitUser;
 
@@ -61,12 +59,10 @@ public class MovieServlet extends HttpServlet {
 			return;
 		} else {
 			isLoggedIn = true;
-			isVerified = User.checkIsUserVerified(request.getCookies(),
-					gitkitHelper.getGitkitClient());
+			isVerified = User.checkIsUserVerified(request.getCookies(), gitkitHelper.getGitkitClient());
 
-			userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
-					gitkitUser.getPhotoUrl(), gitkitUser.getEmail(),
-					gitkitUser.getCurrentProvider(), isVerified);
+			userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(), gitkitUser.getPhotoUrl(),
+					gitkitUser.getEmail(), gitkitUser.getCurrentProvider(), isVerified);
 
 			request.setAttribute("userInfo", userInfo);
 		}
@@ -91,8 +87,7 @@ public class MovieServlet extends HttpServlet {
 
 			switch (provider) {
 			case Constant.PROVIDER_INSING:
-				if (request.getParameter("title2") != null
-						&& request.getParameter("is_id") != null) {
+				if (request.getParameter("title2") != null && request.getParameter("is_id") != null) {
 					String inSingId = request.getParameter("is_id");
 					String title2 = request.getParameter("title2");
 
@@ -130,13 +125,11 @@ public class MovieServlet extends HttpServlet {
 			JsonObject respObj = new JsonObject();
 			switch (action) {
 			case Constant.MOVIE_EVENT_ACTION_SHOWTIME:
-				if (request.getParameter("title2") != null
-						&& request.getParameter("title2").length() > 0
-						&& request.getParameter("id") != null
-						&& request.getParameter("id").length() > 0) {
+				if (request.getParameter("title2") != null && request.getParameter("title2").length() > 0
+						&& request.getParameter("id") != null && request.getParameter("id").length() > 0) {
 					HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> showPlaceHashMap = InSingMovie
-							.retrieveShowTime(request.getParameter("id"),
-									request.getParameter("title2"), request.getParameter("date"));
+							.retrieveShowTime(request.getParameter("id"), request.getParameter("title2"),
+									request.getParameter("date"));
 
 					if (showPlaceHashMap.isEmpty()) {
 						respObj.addProperty("success", false);
@@ -150,15 +143,13 @@ public class MovieServlet extends HttpServlet {
 						for (Map.Entry<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> entry : sortedShowPlaceHashMap
 								.entrySet()) {
 							InSingMovieShowPlace key = entry.getKey();
-							HashMap<String, ArrayList<InSingMovieShowTime>> value = entry
-									.getValue();
+							HashMap<String, ArrayList<InSingMovieShowTime>> value = entry.getValue();
 
 							JsonObject movieObj = new JsonObject();
 							movieObj.addProperty("name", key.getCinemaName());
 							movieObj.addProperty("address", key.getAddress());
 
-							for (Map.Entry<String, ArrayList<InSingMovieShowTime>> showTime : value
-									.entrySet()) {
+							for (Map.Entry<String, ArrayList<InSingMovieShowTime>> showTime : value.entrySet()) {
 								String formatKey = showTime.getKey();
 								movieObj.add(formatKey, new Gson().toJsonTree(showTime.getValue()));
 							}
@@ -183,7 +174,6 @@ public class MovieServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
 }

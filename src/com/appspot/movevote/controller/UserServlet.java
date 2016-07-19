@@ -52,7 +52,7 @@ public class UserServlet extends HttpServlet {
 
 			userList.remove(new User(gitkitUser.getLocalId(), gitkitUser.getName()));
 			userList.removeAll(friendList);
-
+			
 			JsonElement userElement = new Gson().toJsonTree(userList);
 			respObj.add("users", userElement);
 			response.getWriter().println(respObj.toString());

@@ -52,25 +52,10 @@ public class SurveyServlet extends HttpServlet {
 			respObj.addProperty("message", "Not Authorized to access this resource.");
 			response.getWriter().println(respObj.toString());
 			return;
-		} else if (request.getParameter("action") != null
-				&& request.getParameter("surveyGenresCategory") != null
-				&& request.getParameter("skip") != null) {
-			// user skip the survey
-			String action = request.getParameter("action");
-			if (action.equals("skip")) {
-				surveyGenresCategory = Integer
-						.parseInt(request.getParameter("surveyGenresCategory"));
-				skip = Integer.parseInt(request.getParameter("skip"));
-
-				if (skip >= 3) {
-					skip = 0;
-					surveyGenresCategory += 1;
-					SurveyDB.storeSurvey(new Survey(gitkitUser.getLocalId(), surveyGenresCategory));
-				}
-			}
 		} else {
 			Survey survey = SurveyDB.getSurvey(gitkitUser.getLocalId());
 
+			// if the user does not have a survey record, create a new one
 			if (survey == null) {
 				SurveyDB.storeSurvey(new Survey(gitkitUser.getLocalId(), surveyGenresCategory));
 			} else {

@@ -7,15 +7,27 @@
 <html>
 
 <head>
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
 	href="assets/css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/font-awesome.css" />
-<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+
+<link rel="preload" href="assets/css/materialize.min.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/movevote.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/font-awesome.css" as="style"
+	onload="this.rel='stylesheet'">
+<noscript>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+	<link type="text/css" rel="stylesheet"
+		href="assets/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+</noscript>
 
 <!-- theme color for android chrome -->
 <meta name="theme-color" content="#ee6e73" />
@@ -53,9 +65,9 @@
 				class="thin">Vote</span></a> <a href="#" data-activates="mobile-navbar"
 				class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/discover"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50"
-						data-tooltip="discover">movie</i></a></li>
+				<li><a href="/discover"><i
+						class="material-icons tooltipped" data-position="bottom"
+						data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -181,6 +193,12 @@
 									data-prevRating="0" onclick="rateMovie()"></div>
 							</c:otherwise>
 						</c:choose>
+
+						<div class="spacer-thin"></div>
+						<a class="red btn tooltipped" data-position="bottom"
+							data-delay="50" data-tooltip="discard" href="javascript:void(0)"
+							onclick="updateRating(<c:out value="${movie.id}"></c:out>,-1, <c:out value="${movie.genreBit}"></c:out>)"><i
+							class="material-icons">delete</i></a>
 					</div>
 				</div>
 
@@ -250,9 +268,10 @@
 						data-title2="<c:out value="${ title2 }"></c:out>">
 						<div class="input-field col s12">
 							<select id="showingSelector">
-								<option value="<c:out value="${ today }"></c:out>" selected>Today (<c:out value="${ today }"></c:out>)
-								</option>
-								<option value="<c:out value="${ tomorrow }"></c:out>">Tomorrow (<c:out value="${ tomorrow }"></c:out>)
+								<option value="<c:out value="${ today }"></c:out>" selected><c:out
+										value="Today (${ today })"></c:out></option>
+								<option value="<c:out value="${ tomorrow }"></c:out>"><c:out
+										value="Tomorrow (${ tomorrow })"></c:out>
 								</option>
 							</select>
 						</div>
@@ -307,192 +326,10 @@
 
 	<!--Import jQuery before materialize.js-->
 	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" defer></script>
+	<script type="text/javascript" src="assets/js/materialize.min.js" defer></script>
 	<script type="text/javascript"
-		src="assets/js/jquery.star.rating.min.js"></script>
-	<script type="text/javascript" src="assets/js/jquery.shorten.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".button-collapse").sideNav();
-			$('ul.tabs').tabs();
-			$('select').material_select();
-
-			$('#rate').addRating({
-				fieldName : 'rateRating',
-				fieldId : 'rateRating',
-			});
-
-			$(".dropdown-button").dropdown({
-				constrain_width : false,
-				alignment : 'right',
-				belowOrigin : true,
-			});
-
-			// method to set rating
-			var i = $("#rate").attr("data-prevRating");
-			$('#rate').find('i').each(function() {
-				if (i == 0) {
-					return false;
-				}
-				$(this).text('star');
-				i--;
-			});
-		});
-
-		function rateMovie() {
-			var tmdbId = $("#rate").attr("data-id");
-			var rating = $("#rateRating").val();
-			var genreBit = $("#rate").attr("data-genreBit");
-			$
-					.ajax({
-						type : "POST",
-						url : "/rate",
-						data : "tmdbId=" + tmdbId + "&rating=" + rating
-								+ "&genreBit=" + genreBit,
-						dataType : "json",
-
-						//if received a response from the server
-						success : function(data) {
-							if (data.success) {
-								$("#rateTitle").html("You have rated");
-							} else {
-								Materialize
-										.toast(
-												"An error has occured, please try again later.",
-												3000);
-							}
-						}
-					});
-		}
-	</script>
-
-	<c:if test="${ !empty inSingId }">
-		<script>
-			$(document).ready(function() {
-				// fetch movie showing time
-				fetchShowingTime(null);
-
-				$("#showingSelector").change(function() {
-					fetchShowingTime($(this).val());
-				})
-			});
-
-			function fetchShowingTime(date) {
-				var title2 = $("#showing").attr("data-title2");
-				var id = $("#showing").attr("data-id");
-
-				var dataParam;
-				if (date == null) {
-					dataParam = "action=showtime&id=" + id + "&title2="
-							+ title2;
-				} else {
-					dataParam = "action=showtime&id=" + id + "&title2="
-							+ title2 + "&date=" + date;
-				}
-
-				$
-						.ajax({
-							type : "GET",
-							url : "/movie",
-							data : dataParam,
-							dataType : "json",
-							beforeSend : function() {
-								$("#showingError").attr("class",
-										"col s12 center hide");
-								$("#showingLoading").attr("class",
-										"col s12 center");
-								$("#showingLoaded").attr("class",
-										"col s12 center hide");
-								$("#showingAccordion").empty();
-							},
-							//if received a response from the server
-							success : function(data) {
-								if (data.success) {
-									$
-											.each(
-													data.cinema,
-													function(arrayID, cinema) {
-														var cinemaName = cinema.name;
-														var cinemaAddress = cinema.address;
-
-														var body = '<li><div class="collapsible-header"><i class="material-icons">theaters</i>'
-																+ cinemaName
-																+ '</div><div class="collapsible-body">';
-
-														if (cinema.Standard) {
-															body += '<h6>Standard</h6>';
-															$
-																	.each(
-																			cinema.Standard,
-																			function(
-																					arrayId,
-																					standard) {
-																				if (arrayId > 0) {
-																					body += ", ";
-																				}
-																				body += '<a href="' + standard.url + '">'
-																						+ standard.timing
-																						+ '</a> ';
-																			});
-														}
-
-														if (cinema.Atmos) {
-															body += '<h6>Atmos</h6>';
-															$
-																	.each(
-																			cinema.Atmos,
-																			function(
-																					arrayId,
-																					atmos) {
-																				if (arrayId > 0) {
-																					body += ", ";
-																				}
-																				body += '<a href="' + atmos.url + '">'
-																						+ atmos.timing
-																						+ '</a> ';
-																			});
-														}
-
-														if (cinema.Digital) {
-															body += '<h6>Digital</h6>';
-															$
-																	.each(
-																			cinema.Digital,
-																			function(
-																					arrayId,
-																					digital) {
-																				if (arrayId > 0) {
-																					body += ", ";
-																				}
-																				body += '<a href="' + digital.url + '">'
-																						+ digital.timing
-																						+ '</a> ';
-																			});
-														}
-
-														body += '</div></li>';
-														$("#showingAccordion")
-																.append(body);
-
-														$("#showingLoaded")
-																.attr("class",
-																		"col s12");
-														$("#showingLoading")
-																.attr("class",
-																		"col s12 hide center");
-													});
-								} else {
-									$("#showingError").attr("class",
-											"col s12 center");
-									$("#showingLoading").attr("class",
-											"col s12 hide center");
-								}
-							}
-						});
-			}
-		</script>
-	</c:if>
+		src="assets/js/jquery.star.rating.min.js" defer></script>
+	<script type="text/javascript" src="assets/js/movevote-movie.js" defer></script>
 </body>
-
 </html>

@@ -55,8 +55,9 @@ public class Rating {
 		this.ratingId = ratingId;
 	}
 
-	public static void calculateUserPreference(double[] ratingScore, String genreBit, int rating) {
+	public static void calculateUserPreference(double[] ratingScore, int[] genreCount, String genreBit, int rating) {
 		for (int i = 0; i < genreBit.length(); i++) {
+			genreCount[i] += 1;
 			if (genreBit.charAt(i) == '1') {
 				ratingScore[i] = ratingScore[i] + rating;
 			} else {

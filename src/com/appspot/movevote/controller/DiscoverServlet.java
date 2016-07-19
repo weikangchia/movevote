@@ -80,16 +80,21 @@ public class DiscoverServlet extends HttpServlet {
 				HashMap<String, Rating> userRatingMap = RatingDB.getRating(userInfo.getId());
 
 				double[] ratingScore = { 0, 0, 0, 0, 0, 0, 0 };
+				int[] genreCount = { 0, 0, 0, 0, 0, 0, 0 };
 				int highestGenreBit = 0;
 				double highestRating = -1;
 
 				for (Map.Entry<String, Rating> entry : userRatingMap.entrySet()) {
 					Rating userRating = entry.getValue();
-					Rating.calculateUserPreference(ratingScore, userRating.getGenreBit(), userRating.getRating());
+
+					if (userRating.getRating() != -1) {
+						Rating.calculateUserPreference(ratingScore, genreCount, userRating.getGenreBit(),
+								userRating.getRating());
+					}
 				}
 
 				for (int i = 0; i < ratingScore.length; i++) {
-					double tempScore = (double) ratingScore[i] / userRatingMap.size();
+					double tempScore = (double) ratingScore[i] / genreCount[i];
 					if (tempScore > highestRating) {
 						highestGenreBit = i;
 						highestRating = tempScore;

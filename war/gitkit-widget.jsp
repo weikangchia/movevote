@@ -5,15 +5,27 @@
 <html>
 
 <head>
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
 	href="assets/css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/font-awesome.css" />
-<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+
+<link rel="preload" href="assets/css/materialize.min.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/movevote.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/font-awesome.css" as="style"
+	onload="this.rel='stylesheet'">
+<noscript>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+	<link type="text/css" rel="stylesheet"
+		href="assets/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+</noscript>
 
 <script type="text/javascript"
 	src="//www.gstatic.com/authtoolkit/js/gitkit.js"></script>

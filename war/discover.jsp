@@ -5,15 +5,27 @@
 <html>
 
 <head>
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
 	href="assets/css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet"
-	href="assets/css/font-awesome.css" />
-<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+
+<link rel="preload" href="assets/css/materialize.min.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/movevote.css" as="style"
+	onload="this.rel='stylesheet'">
+<link rel="preload"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="assets/css/font-awesome.css" as="style"
+	onload="this.rel='stylesheet'">
+<noscript>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet">
+	<link type="text/css" rel="stylesheet"
+		href="assets/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
+</noscript>
 
 <!-- theme color for android chrome -->
 <meta name="theme-color" content="#ee6e73" />
@@ -113,7 +125,8 @@
 					<c:when test="${empty recommendMovieList}">
 						<p>It seems that you have not completed the movie survey yet.
 							Please go back to your profile and finish the movie survey.</p>
-						<a class="waves-effect waves-light btn" href="/user_profile">My Profile</a>
+						<a class="waves-effect waves-light btn" href="/user_profile">My
+							Profile</a>
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${recommendMovieList}" var="rMovie">
@@ -193,22 +206,10 @@
 	</footer>
 
 	<!--Import jQuery before materialize.js-->
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
-	<script type="text/javascript"
-		src="assets/js/jquery.star.rating.min.js"></script>
-	<script type="text/javascript" src="assets/js/jquery.shorten.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".button-collapse").sideNav({});
-			$(".dropdown-button").dropdown({
-				constrain_width : false,
-				alignment : 'right',
-				belowOrigin : true,
-			});
-		});
-	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
+		defer></script>
+	<script type="text/javascript" src="assets/js/materialize.min.js" defer></script>
+	<script type="text/javascript" src="assets/js/movevote.js" defer></script>
 </body>
-
 </html>

@@ -20,4 +20,9 @@
 		this feature enabled, there is a very small chance your app will see stale 
 		session data. For details, see https://cloud.google.com/appengine/docs/java/config/appconfig#Java_appengine_web_xml_Enabling_sessions -->
 
+	<static-files>
+		<include path="/assets/**" expiration="7d"/>
+		<include path="/favicon.ico" expiration="7d"/>
+	</static-files>
+
 </appengine-web-app>
