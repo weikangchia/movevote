@@ -32,7 +32,7 @@ For milestone 1, we have finished designing most of the user interface and have 
 
 For milestone 2, we have completed the registration and login process. In this update, user get to see more information (overview, now showing, similar movies and trailer) about the movies that are currently showing in the cinema. We have also implemented the movie survey to get to know the user movie preferences.
 
-For milestone 3, we have completed the recommendation system for individual. Due to time constraint, we are unable to implement the recommendation system for group and we will be leaving it for future enhancement. We have used Google PageSpeed tools to analyze and optimize our web app. Before optimizing, we have scored 52/100 (mobile), 86/100 (user experience) and 47/100 (desktop). After fixing the problems highlighted by Google PageSpeed tools, we have managed to impoved the score, 77/100 (mobile), 96/100 (user experience) and 92/100 (desktop).
+For milestone 3, we have completed the recommendation system for the individual. Our system will learn about the user's movie preference when they completed the movie survey. The system will analyze the genres of the movies that the user has rated and recommend them movies based on the genre they like. Due to time constraint, we are unable to implement the recommendation system for group and we will be leaving it for future enhancement. We have used Google PageSpeed tools to analyze and optimize our web app. Before optimizing, we have scored 52/100 (mobile), 86/100 (user experience) and 47/100 (desktop). After fixing the problems highlighted by Google PageSpeed tools, we have managed to improve the score, 59/100 (mobile), 100/100 (user experience) and 55/100 (desktop). It may seem that we have scored quite a low points for mobile and desktop, this is mainly due to the external pictures that we unable to optimize it. However, the web app still loads relatively fast. We have also used Google Mobile-Friendly Test tool to test our app and it passed.
 
 ## Project Log
 
@@ -55,12 +55,12 @@ For milestone 3, we have completed the recommendation system for individual. Due
 | Design Recommendation system | 10 | - |
 | Implement add and remove friend | - | 4 |
 | Improve page loading time | - | 2 |
-| Conduct user testing | - | 1 |
-| Others | - | 4 |
+| Conduct user testing | - | 2 |
 | Bug fix | - | 8 |
+| Preparation for milestone 3 | - | 2 |
 | **Total:** | 36.5 | 138 |
 
-We have finished 36.5 and 138 hours respectively towards the requirement.
+We have finished 36.5 and 137 hours respectively towards the requirement.
 
 ## Mission
 - [ ] Attend at least 12 hours of workshops
