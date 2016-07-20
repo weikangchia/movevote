@@ -7,32 +7,11 @@
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
 	href="assets/css/materialize.min.css" media="screen,projection" />
-
-<link rel="preload" href="assets/css/materialize.min.css" as="style"
-	onload="this.rel='stylesheet'">
-<link rel="preload" href="assets/css/owl.carousel.css" as="style"
-	onload="this.rel='stylesheet'">
-<link rel="preload" href="assets/css/owl.theme.default.min.css"
-	as="style" onload="this.rel='stylesheet'">
-<link rel="preload" href="assets/css/movevote.css" as="style"
-	onload="this.rel='stylesheet'">
-<link rel="preload"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	as="style" onload="this.rel='stylesheet'">
-<link rel="preload" href="assets/css/font-awesome.css" as="style"
-	onload="this.rel='stylesheet'">
-<noscript>
-	<!--Import Google Icon Font-->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-		rel="stylesheet">
-	<link type="text/css" rel="stylesheet"
-		href="assets/css/owl.carousel.css" />
-	<link type="text/css" rel="stylesheet"
-		href="assets/css/owl.theme.default.min.css" />
-	<link type="text/css" rel="stylesheet"
-		href="assets/css/font-awesome.css" />
-	<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
-</noscript>
+<link type="text/css" rel="stylesheet"
+	href="assets/css/owl.carousel.css" />
+<link type="text/css" rel="stylesheet"
+	href="assets/css/owl.theme.default.min.css" />
+<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
 
 <!-- theme color for android chrome -->
 <meta name="theme-color" content="#ee6e73" />
@@ -146,9 +125,7 @@
 		<div class="spacer-thick"></div>
 		<div class="row center">
 			<h3 class="thin">Now Showing</h3>
-			<i class="fa fa-map-marker red-text text-lighten-1"
-				aria-hidden="true"></i><span class="caption-normal thin">
-				Singapore</span>
+			<span class="caption-normal thin">Singapore</span>
 		</div>
 		<div class="row">
 			<div class="owl-carousel">
@@ -316,10 +293,26 @@
 	</footer>
 	<!--Import jQuery before materialize.js-->
 	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" defer></script>
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
+		defer></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js" defer></script>
 	<script type="text/javascript" src="assets/js/owl.carousel.min.js"
 		defer></script>
 	<script type="text/javascript" src="assets/js/movevote.js" defer></script>
+	<script defer>
+		var cb = function() {
+			var l = document.createElement('link');
+			l.rel = 'stylesheet';
+			l.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+			var h = document.getElementsByTagName('head')[0];
+			h.parentNode.insertBefore(l, h);
+		};
+		var raf = requestAnimationFrame || mozRequestAnimationFrame
+				|| webkitRequestAnimationFrame || msRequestAnimationFrame;
+		if (raf)
+			raf(cb);
+		else
+			window.addEventListener('load', cb);
+	</script>
 </body>
 </html>

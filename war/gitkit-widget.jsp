@@ -8,24 +8,7 @@
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
 	href="assets/css/materialize.min.css" media="screen,projection" />
-
-<link rel="preload" href="assets/css/materialize.min.css" as="style"
-	onload="this.rel='stylesheet'">
-<link rel="preload" href="assets/css/movevote.css" as="style"
-	onload="this.rel='stylesheet'">
-<link rel="preload"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	as="style" onload="this.rel='stylesheet'">
-<link rel="preload" href="assets/css/font-awesome.css" as="style"
-	onload="this.rel='stylesheet'">
-<noscript>
-	<!--Import Google Icon Font-->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-		rel="stylesheet">
-	<link type="text/css" rel="stylesheet"
-		href="assets/css/font-awesome.css" />
-	<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
-</noscript>
+<link type="text/css" rel="stylesheet" href="assets/css/movevote.css" />
 
 <script type="text/javascript"
 	src="//www.gstatic.com/authtoolkit/js/gitkit.js"></script>
@@ -90,9 +73,9 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/discover"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50"
-						data-tooltip="discover">movie</i></a></li>
+				<li><a href="/discover"><i
+						class="material-icons tooltipped" data-position="bottom"
+						data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -168,7 +151,7 @@
 
 	<!--Import jQuery before materialize.js-->
 	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
 
 	<script>
@@ -220,6 +203,21 @@
 														});
 											})
 						});
+	</script>
+	<script defer>
+		var cb = function() {
+			var l = document.createElement('link');
+			l.rel = 'stylesheet';
+			l.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+			var h = document.getElementsByTagName('head')[0];
+			h.parentNode.insertBefore(l, h);
+		};
+		var raf = requestAnimationFrame || mozRequestAnimationFrame
+				|| webkitRequestAnimationFrame || msRequestAnimationFrame;
+		if (raf)
+			raf(cb);
+		else
+			window.addEventListener('load', cb);
 	</script>
 </body>
 
