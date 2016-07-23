@@ -47,8 +47,6 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#"><i class="material-icons tooltipped"
-						data-position="bottom" data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -66,7 +64,6 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a href="#">Discover</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -91,19 +88,25 @@
 		<div class="spacer-thick"></div>
 		<div class="row">
 			<div class="col s10 offset-s1 center">
-				<h4 class="grey-text text-darken-2 thin">Discover</h4>
+				<h4 class="grey-text text-darken-2 thin">Now Showing</h4>
+				<span class="caption-normal thin">Singapore</span>
 			</div>
 		</div>
-
 		<div class="divider"></div>
 	</div>
 
 	<div class="container">
-		<div class="spacer-normal"></div>
+		<div class="spacer-thin"></div>
 		<div class="row">
-			<div class="col s12">
-				<h5>Movies recommended for you</h5>
-
+			<div class="input-field col s12 m4 l3 right">
+				<select>
+					<option value="1" selected>Show recommended only</option>
+					<option value="2">Show all</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12" id="recommended">
 				<c:choose>
 					<c:when test="${empty recommendMovieList}">
 						<p>It seems that you have not completed the movie survey yet.
@@ -143,9 +146,7 @@
 				</c:choose>
 			</div>
 
-			<div class="col s12">
-				<div class="spacer-normal"></div>
-				<h5>Now Showing</h5>
+			<div class="col s12" id="all">
 				<c:forEach items="${nowMovieList}" var="movie">
 					<div class="col s10 m6 l4 offset-s1">
 						<div class="card medium">
@@ -193,7 +194,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
 		defer></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js" defer></script>
-	<script type="text/javascript" src="assets/js/movevote.js" defer></script>
+	<script type="text/javascript" src="assets/js/movevote-discover.js" defer></script>
 	<script defer>
 		var cb = function() {
 			var l = document.createElement('link');

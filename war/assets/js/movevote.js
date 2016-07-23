@@ -12,6 +12,6 @@ $(document).ready(function() {
 		lazyLoad : true,
 		nav : true,
 		dots : false,
-		items: 5
-	})
+		items : 5
+	});
 });
