@@ -13,9 +13,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.appspot.movevote.db.FriendDB;
+import com.appspot.movevote.db.InSingMovieDB;
 import com.appspot.movevote.db.SurveyDB;
 import com.appspot.movevote.db.UserDB;
 import com.appspot.movevote.entity.Constant;
+import com.appspot.movevote.entity.InSingMovie;
 import com.appspot.movevote.entity.Survey;
 import com.appspot.movevote.entity.User;
 import com.appspot.movevote.helper.GitkitHelper;
@@ -61,13 +63,14 @@ public class UserProfileServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + Constant.LOGIN_PATH);
 			return;
 		} else {
-			isLoggedIn = true;
-			isVerified = User.checkIsUserVerified(request.getCookies(),
-					gitkitHelper.getGitkitClient());
+			ArrayList<InSingMovie> top5RatedMovieList = InSingMovieDB.top5RatedMovieList();
+			request.setAttribute("top5MovieList", top5RatedMovieList);
 
-			User userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(),
-					gitkitUser.getPhotoUrl(), gitkitUser.getEmail(),
-					gitkitUser.getCurrentProvider(), isVerified);
+			isLoggedIn = true;
+			isVerified = User.checkIsUserVerified(request.getCookies(), gitkitHelper.getGitkitClient());
+
+			User userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(), gitkitUser.getPhotoUrl(),
+					gitkitUser.getEmail(), gitkitUser.getCurrentProvider(), isVerified);
 
 			request.setAttribute("userInfo", userInfo);
 
@@ -80,29 +83,24 @@ public class UserProfileServlet extends HttpServlet {
 					// generate the verification link
 					String verificationLink = null;
 					try {
-						verificationLink = gitkitHelper.getGitkitClient()
-								.getEmailVerificationLink(userInfo.getEmail());
+						verificationLink = gitkitHelper.getGitkitClient().getEmailVerificationLink(userInfo.getEmail());
 					} catch (GitkitServerException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						log.warning(
-								"unable to create verification link for " + userInfo.getEmail());
+						log.warning("unable to create verification link for " + userInfo.getEmail());
 					} catch (GitkitClientException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						log.warning(
-								"unable to create verification link for " + userInfo.getEmail());
+						log.warning("unable to create verification link for " + userInfo.getEmail());
 					}
 
 					// initialize mailjet client
-					MailjetClient client = new MailjetClient(Constant.MAILJET_API_Key,
-							Constant.MAILJET_Secret_Key);
+					MailjetClient client = new MailjetClient(Constant.MAILJET_API_Key, Constant.MAILJET_Secret_Key);
 					MailjetRequest email = null;
 					JSONArray recipients;
 					MailjetResponse mailResponse = null;
 
-					recipients = new JSONArray()
-							.put(new JSONObject().put(Contact.EMAIL, userInfo.getEmail()));
+					recipients = new JSONArray().put(new JSONObject().put(Contact.EMAIL, userInfo.getEmail()));
 
 					email = new MailjetRequest(Email.resource).property(Email.FROMNAME, "MoveVote")
 							.property(Email.FROMEMAIL, "weikangchia@gmail.com")
@@ -112,8 +110,7 @@ public class UserProfileServlet extends HttpServlet {
 											+ ",</p><p>Follow this link to verify your email address.</p><a href=\""
 											+ verificationLink + "\">" + verificationLink
 											+ "</a><p>If you didn’t ask to change your email address, you can ignore this email.</p><p>Thanks,<br /> Your MoveVote team</p>")
-							.property(Email.RECIPIENTS, recipients)
-							.property(Email.MJCUSTOMID, "JAVA-Email");
+							.property(Email.RECIPIENTS, recipients).property(Email.MJCUSTOMID, "JAVA-Email");
 
 					try {
 						mailResponse = client.post(email);
@@ -139,7 +136,7 @@ public class UserProfileServlet extends HttpServlet {
 			} else {
 				request.setAttribute("hasSurvey", true);
 			}
-			
+
 			ArrayList<User> friendList = FriendDB.getFriendList(gitkitUser.getLocalId());
 			request.setAttribute("friendList", friendList);
 		}

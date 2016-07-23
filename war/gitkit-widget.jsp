@@ -19,7 +19,7 @@
 		var config = {
 			widgetUrl : '/gitkit',
 			apiKey : 'AIzaSyDtqW6zARF6LhKFHci_mST7x5yCNgfqRSQ',
-			signInSuccessUrl : '/user_profile',
+			signInSuccessUrl : '/home',
 			idps : [ "password", "google", "facebook" ],
 			idpButtons : 1,
 			oobActionUrl : '/gitkit',
@@ -73,9 +73,6 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/discover"><i
-						class="material-icons tooltipped" data-position="bottom"
-						data-delay="50" data-tooltip="discover">movie</i></a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -93,7 +90,6 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
-				<li><a href="/discover">Discover</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -141,6 +137,37 @@
 	</main>
 
 	<footer class="page-footer">
+		<div class="container white-text">
+			<div class="row">
+				<div class="col s12 m3">
+					<h5>Top 5 Movies</h5>
+					<ol>
+						<c:forEach items="${top5MovieList}" var="movie">
+							<a
+								href="/movie?is_id=<c:out
+									value="${movie.id}"></c:out>&title2=<c:out
+									value="${movie.title2}"></c:out>&tmdb_id=<c:out
+									value="${movie.tmdbId}"></c:out>&provider=is"
+								class="medium white-text"><li><c:out
+										value="${movie.title}"></c:out></li></a>
+						</c:forEach>
+					</ol>
+				</div>
+				<div class="col s12 m3">
+					<h5>Info</h5>
+					<a class="white-text" href="/privacy">Terms of Service and
+						Privacy Policy</a>
+				</div>
+				<div class="col s12 m6">
+					<h5>About</h5>
+					<p>MoveVote is a web app designed for optimal viewing and
+						interaction experience that recommends you and your friends movies
+						that are currently showing in the cinema. You will do a quick
+						movie survey so that we can know your individual movie
+						preferences. If you do not know the movie, you can skip it.</p>
+				</div>
+			</div>
+		</div>
 		<div class="footer-copyright">
 			<div class="container white-text">
 				<i class="fa fa-copyright" aria-hidden="true"></i> 2016 Copyright

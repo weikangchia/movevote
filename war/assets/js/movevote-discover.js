@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('#all').hide();
+	$('.all').hide();
 	$(".button-collapse").sideNav({});
 	$(".dropdown-button").dropdown({
 		constrain_width : false,
@@ -10,11 +10,11 @@ $(document).ready(function() {
 	$('select').on('change', function() {
 		var selectedVal = this.value;
 		if (selectedVal == 1) {
-			$('#recommended').show();
-			$('#all').hide();
+			$('.recommended').show();
+			$('.all').hide();
 		} else if (selectedVal == 2) {
-			$('#all').show();
-			$('#recommended').hide();
+			$('.all').show();
+			$('.recommended').hide();
 		}
 	});
 });

@@ -13,6 +13,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 public class InSingMovieDB {
 	public static void storeInSingMovie(InSingMovie movie) {
@@ -26,6 +27,8 @@ public class InSingMovieDB {
 		movieEntity.setProperty("last_update", new Date());
 		movieEntity.setProperty("genre_bit", movie.getGenreBit());
 		movieEntity.setProperty("overview", movie.getOverview());
+		movieEntity.setProperty("rating", movie.getRating());
+		movieEntity.setProperty("popularity", movie.getPopularity());
 		dataStore.put(movieEntity);
 	}
 
@@ -51,8 +54,40 @@ public class InSingMovieDB {
 				movieList.add(new InSingMovie(movieEntity.getKey().getName(),
 						movieEntity.getProperty("title").toString(), movieEntity.getProperty("title2").toString(),
 						movieEntity.getProperty("image_url").toString(), movieEntity.getProperty("tmdb_id").toString(),
-						movieEntity.getProperty("genre_bit").toString(),
-						movieEntity.getProperty("overview").toString()));
+						movieEntity.getProperty("genre_bit").toString(), movieEntity.getProperty("overview").toString(),
+						Double.parseDouble(movieEntity.getProperty("rating").toString())));
+			}
+		}
+
+		return movieList;
+	}
+
+	/**
+	 * Retrieve InSing movies from the datastore [InSing_Movie] with title
+	 * sorted in ascending order.
+	 * 
+	 * @param nothing
+	 * @return an arraylist of InSing movies from the datastore [InSing_Movie]
+	 */
+	public static ArrayList<InSingMovie> top5RatedMovieList() {
+		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
+
+		Query q = new Query(Constant.DS_TABLE_INSING_MOVIE_NOW_SHOWING).addSort("popularity", SortDirection.DESCENDING);
+		PreparedQuery pq = dataStore.prepare(q);
+
+		List<Entity> movieEntityList = pq.asList(FetchOptions.Builder.withLimit(5));
+
+		ArrayList<InSingMovie> movieList = new ArrayList<InSingMovie>();
+		for (Entity movieEntity : movieEntityList) {
+			if (movieEntity.getProperty("tmdb_id") != null
+					&& movieEntity.getProperty("tmdb_id").toString().length() > 0) {
+				System.out.println(movieEntity.getProperty("title").toString() + " "
+						+ movieEntity.getProperty("popularity").toString());
+				movieList.add(new InSingMovie(movieEntity.getKey().getName(),
+						movieEntity.getProperty("title").toString(), movieEntity.getProperty("title2").toString(),
+						movieEntity.getProperty("image_url").toString(), movieEntity.getProperty("tmdb_id").toString(),
+						movieEntity.getProperty("genre_bit").toString(), movieEntity.getProperty("overview").toString(),
+						Double.parseDouble(movieEntity.getProperty("rating").toString())));
 			}
 		}
 

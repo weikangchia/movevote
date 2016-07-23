@@ -139,4 +139,14 @@
     <servlet-name>DiscoverServlet</servlet-name>
     <url-pattern>/discover</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PrivacyPolicyServlet</display-name>
+    <servlet-name>PrivacyPolicyServlet</servlet-name>
+    <servlet-class>com.appspot.movevote.controller.PrivacyPolicyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PrivacyPolicyServlet</servlet-name>
+    <url-pattern>/privacy</url-pattern>
+  </servlet-mapping>
 </web-app>

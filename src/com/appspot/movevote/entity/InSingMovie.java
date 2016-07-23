@@ -15,7 +15,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.appspot.movevote.db.InSingMovieDB;
-import com.appspot.movevote.db.TMDBMovieDB;
 import com.google.appengine.api.datastore.Entity;
 
 public class InSingMovie extends Movie {
@@ -25,6 +24,8 @@ public class InSingMovie extends Movie {
 	private String title2;
 	private String genreBit;
 	private String overview;
+	private double rating;
+	private double popularity;
 
 	public InSingMovie(String id) {
 		super(id);
@@ -36,13 +37,14 @@ public class InSingMovie extends Movie {
 		this.title2 = title2;
 	}
 
-	public InSingMovie(String id, String title, String title2, String imageUrl, String tmdbID,
-			String genreBit, String overview) {
+	public InSingMovie(String id, String title, String title2, String imageUrl, String tmdbID, String genreBit,
+			String overview, double rating) {
 		super(id, title, imageUrl);
 		this.setTmdbId(tmdbID);
 		this.title2 = title2;
 		this.genreBit = genreBit;
 		this.overview = overview;
+		this.rating = rating;
 	}
 
 	public String getTmdbId() {
@@ -77,6 +79,22 @@ public class InSingMovie extends Movie {
 		this.overview = overview;
 	}
 
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public double getPopularity() {
+		return popularity;
+	}
+
+	public void setPopularity(double popularity) {
+		this.popularity = popularity;
+	}
+
 	public boolean equals(Object obj) {
 		if (obj != null && obj instanceof InSingMovie) {
 			InSingMovie movie = (InSingMovie) obj;
@@ -105,34 +123,29 @@ public class InSingMovie extends Movie {
 				Elements movieListElements = doc.select("div[class^=movie-slideshow]").select("li");
 
 				for (Element movieElement : movieListElements) {
-					String[] splitInSingIdArr = movieElement.select("figure").select("a")
-							.attr("href").split("/");
-					String inSingId = splitInSingIdArr[3].substring(3,
-							splitInSingIdArr[3].length());
+					String[] splitInSingIdArr = movieElement.select("figure").select("a").attr("href").split("/");
+					String inSingId = splitInSingIdArr[3].substring(3, splitInSingIdArr[3].length());
 					String title = movieElement.select("figure").select("a").attr("title");
 					String title2 = splitInSingIdArr[2];
 					try {
 						Response detailResponse = Jsoup.connect(Constant.INSING_HOSTNAME + "movies/"
-								+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3] + "/showtimes")
-								.execute();
+								+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3] + "/showtimes").execute();
 
 						if (detailResponse.statusCode() == HttpURLConnection.HTTP_OK) {
 							Document doc2 = detailResponse.parse();
-							Element movieImageElement = doc2.select("figure[class^=thumbnail")
-									.select("a").select("img").first();
+							Element movieImageElement = doc2.select("figure[class^=thumbnail").select("a").select("img")
+									.first();
 
 							String imageUrl = movieImageElement.attr("src");
-							movieMap.put(inSingId, new InSingMovie(inSingId,
-									StringEscapeUtils.unescapeHtml4(title), title2, imageUrl));
+							movieMap.put(inSingId, new InSingMovie(inSingId, StringEscapeUtils.unescapeHtml4(title),
+									title2, imageUrl));
 						} else {
 							log.info("Unable to connect to " + Constant.INSING_HOSTNAME + "movies/"
-									+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3]
-									+ "/showtimes");
+									+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3] + "/showtimes");
 						}
 					} catch (Exception ex2) {
-						log.info("Error while trying to parse data from " + Constant.INSING_HOSTNAME
-								+ "movies/" + splitInSingIdArr[2] + "/" + splitInSingIdArr[3]
-								+ "/showtimes");
+						log.info("Error while trying to parse data from " + Constant.INSING_HOSTNAME + "movies/"
+								+ splitInSingIdArr[2] + "/" + splitInSingIdArr[3] + "/showtimes");
 						System.out.println(ex2);
 					}
 				}
@@ -140,8 +153,7 @@ public class InSingMovie extends Movie {
 				log.warning("Unable to connect to " + Constant.INSING_HOSTNAME + "movies/");
 			}
 		} catch (Exception ex) {
-			log.warning("Error while trying to parse data from " + Constant.INSING_HOSTNAME
-					+ "movies/");
+			log.warning("Error while trying to parse data from " + Constant.INSING_HOSTNAME + "movies/");
 		}
 		return movieMap;
 	}
@@ -186,13 +198,15 @@ public class InSingMovie extends Movie {
 				newInSingMovie.setTmdbId(tmdbMovie.getId());
 				newInSingMovie.setGenreBit(tmdbMovie.getGenreBit());
 				newInSingMovie.setOverview(tmdbMovie.getOverview());
-				
+				newInSingMovie.setRating(tmdbMovie.getRating());
+				newInSingMovie.setPopularity(tmdbMovie.getPopularity());
+
 				InSingMovieDB.storeInSingMovie(newInSingMovie);
 			}
 		}
 
-		log.info(movieMap.size() + " new movies are added into the datastore and "
-				+ removeList.size() + " old movies are removed from the datastore.");
+		log.info(movieMap.size() + " new movies are added into the datastore and " + removeList.size()
+				+ " old movies are removed from the datastore.");
 	}
 
 	public static HashMap<InSingMovieShowPlace, HashMap<String, ArrayList<InSingMovieShowTime>>> retrieveShowTime(
@@ -202,8 +216,7 @@ public class InSingMovie extends Movie {
 		try {
 			String showUrl = "http://www.insing.com/movies/" + title2 + "/id-" + id + "/showtimes/";
 			if (date != null) {
-				showUrl = "http://www.insing.com/movies/" + title2 + "/id-" + id + "/showtimes/?d="
-						+ date;
+				showUrl = "http://www.insing.com/movies/" + title2 + "/id-" + id + "/showtimes/?d=" + date;
 			}
 
 			Response response = Jsoup.connect(showUrl).execute();
@@ -218,8 +231,7 @@ public class InSingMovie extends Movie {
 					HashMap<String, ArrayList<InSingMovieShowTime>> showTimeHashMap = new HashMap<String, ArrayList<InSingMovieShowTime>>();
 
 					// get showtimes list
-					Elements showTimesElementList = cinemaElement
-							.select("li[class^=showtimes slot-time-format");
+					Elements showTimesElementList = cinemaElement.select("li[class^=showtimes slot-time-format");
 					for (Element showTimeElement : showTimesElementList) {
 						String format = showTimeElement.attr("format");
 						String timing = showTimeElement.select("a").html();
@@ -240,8 +252,7 @@ public class InSingMovie extends Movie {
 								.add(new InSingMovieShowTime(format, url, timing));
 					}
 
-					showPlaceHashMap.put(new InSingMovieShowPlace(cinemaName, address),
-							showTimeHashMap);
+					showPlaceHashMap.put(new InSingMovieShowPlace(cinemaName, address), showTimeHashMap);
 				}
 			} else {
 				System.out.println("unable to connect");

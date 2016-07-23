@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.appspot.movevote.db.InSingMovieDB;
 import com.appspot.movevote.db.RatingDB;
 import com.appspot.movevote.entity.Constant;
 import com.appspot.movevote.entity.InSingMovie;
@@ -57,15 +58,15 @@ public class MovieServlet extends HttpServlet {
 		if (gitkitUser == null) {
 			response.sendRedirect(request.getContextPath() + Constant.LOGIN_PATH);
 			return;
-		} else {
-			isLoggedIn = true;
-			isVerified = User.checkIsUserVerified(request.getCookies(), gitkitHelper.getGitkitClient());
-
-			userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(), gitkitUser.getPhotoUrl(),
-					gitkitUser.getEmail(), gitkitUser.getCurrentProvider(), isVerified);
-
-			request.setAttribute("userInfo", userInfo);
 		}
+
+		isLoggedIn = true;
+		isVerified = User.checkIsUserVerified(request.getCookies(), gitkitHelper.getGitkitClient());
+
+		userInfo = new User(gitkitUser.getLocalId(), gitkitUser.getName(), gitkitUser.getPhotoUrl(),
+				gitkitUser.getEmail(), gitkitUser.getCurrentProvider(), isVerified);
+
+		request.setAttribute("userInfo", userInfo);
 
 		request.setAttribute("isLoggedIn", isLoggedIn);
 
@@ -119,7 +120,11 @@ public class MovieServlet extends HttpServlet {
 				request.setAttribute("rating", rate.getRating());
 			}
 
+			ArrayList<InSingMovie> top5RatedMovieList = InSingMovieDB.top5RatedMovieList();
+			request.setAttribute("top5MovieList", top5RatedMovieList);
+
 			getServletContext().getRequestDispatcher("/movie.jsp").forward(request, response);
+			return;
 		} else if (request.getParameter("action") != null) {
 			String action = request.getParameter("action");
 			JsonObject respObj = new JsonObject();

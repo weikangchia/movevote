@@ -105,8 +105,9 @@
 				</select>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col s12" id="recommended">
+
+		<div class="row hide-on-small-only">
+			<div class="col s12 recommended">
 				<c:choose>
 					<c:when test="${empty recommendMovieList}">
 						<p>It seems that you have not completed the movie survey yet.
@@ -116,7 +117,7 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${recommendMovieList}" var="rMovie">
-							<div class="col s10 m6 l4 offset-s1">
+							<div class="col s12 m6 l4 offset-s1">
 								<div class="card medium">
 									<div class="card-image">
 										<img
@@ -146,9 +147,9 @@
 				</c:choose>
 			</div>
 
-			<div class="col s12" id="all">
+			<div class="col s12 all">
 				<c:forEach items="${nowMovieList}" var="movie">
-					<div class="col s10 m6 l4 offset-s1">
+					<div class="col s12 m6 l4 offset-s1">
 						<div class="card medium">
 							<div class="card-image">
 								<img src="<c:out
@@ -175,12 +176,95 @@
 				</c:forEach>
 			</div>
 		</div>
+
+		<div class="row hide-on-med-and-up">
+			<div class="col s12 recommended">
+				<c:choose>
+					<c:when test="${empty recommendMovieList}">
+						<p>It seems that you have not completed the movie survey yet.
+							Please go back to your profile and finish the movie survey.</p>
+						<a class="waves-effect waves-light btn" href="/user_profile">My
+							Profile</a>
+					</c:when>
+					<c:otherwise>
+						<ul class="collection">
+							<c:forEach items="${recommendMovieList}" var="rMovie">
+								<li class="collection-item avatar"><img class="circle"
+									src="<c:out
+											value="${rMovie.imageUrl}"></c:out>"
+									alt=""><span class="title"><c:out
+											value="${rMovie.title}"></c:out></span>
+									<p class="truncate">
+										<c:out value="${rMovie.overview}"></c:out>
+									</p> <a
+									href="${pageContext.request.contextPath}/movie?is_id=<c:out
+									value="${rMovie.id}"></c:out>&title2=<c:out
+									value="${rMovie.title2}"></c:out>&tmdb_id=<c:out
+									value="${rMovie.tmdbId}"></c:out>&provider=is">more
+										info</a></li>
+							</c:forEach>
+						</ul>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+			<div class="col s12 all">
+				<ul class="collection">
+					<c:forEach items="${nowMovieList}" var="rMovie">
+						<li class="collection-item avatar"><img class="circle"
+							src="<c:out
+											value="${rMovie.imageUrl}"></c:out>"
+							alt=""><span class="title"><c:out
+									value="${rMovie.title}"></c:out></span>
+							<p class="truncate">
+								<c:out value="${rMovie.overview}"></c:out>
+							</p> <a
+							href="${pageContext.request.contextPath}/movie?is_id=<c:out
+									value="${rMovie.id}"></c:out>&title2=<c:out
+									value="${rMovie.title2}"></c:out>&tmdb_id=<c:out
+									value="${rMovie.tmdbId}"></c:out>&provider=is">more
+								info</a></li>
+					</c:forEach>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 	<div class="spacer-thick"></div>
 	</main>
 
 	<footer class="page-footer">
+		<div class="container white-text">
+			<div class="row">
+				<div class="col s12 m3">
+					<h5>Top 5 Movies</h5>
+					<ol>
+						<c:forEach items="${top5MovieList}" var="movie">
+							<a
+								href="/movie?is_id=<c:out
+									value="${movie.id}"></c:out>&title2=<c:out
+									value="${movie.title2}"></c:out>&tmdb_id=<c:out
+									value="${movie.tmdbId}"></c:out>&provider=is"
+								class="medium white-text"><li><c:out
+										value="${movie.title}"></c:out></li></a>
+						</c:forEach>
+					</ol>
+				</div>
+				<div class="col s12 m3">
+					<h5>Info</h5>
+					<a class="white-text" href="/privacy">Terms of Service and
+						Privacy Policy</a>
+				</div>
+				<div class="col s12 m6">
+					<h5>About</h5>
+					<p>MoveVote is a web app designed for optimal viewing and
+						interaction experience that recommends you and your friends movies
+						that are currently showing in the cinema. You will do a quick
+						movie survey so that we can know your individual movie
+						preferences. If you do not know the movie, you can skip it.</p>
+				</div>
+			</div>
+		</div>
 		<div class="footer-copyright">
 			<div class="container white-text">
 				<i class="fa fa-copyright" aria-hidden="true"></i> 2016 Copyright
@@ -194,7 +278,8 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
 		defer></script>
 	<script type="text/javascript" src="assets/js/materialize.min.js" defer></script>
-	<script type="text/javascript" src="assets/js/movevote-discover.js" defer></script>
+	<script type="text/javascript" src="assets/js/movevote-discover.js"
+		defer></script>
 	<script defer>
 		var cb = function() {
 			var l = document.createElement('link');

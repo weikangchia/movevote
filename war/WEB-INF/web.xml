@@ -109,13 +109,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 	<servlet>
 		<description></description>
-		<display-name>DiscoverServlet</display-name>
-		<servlet-name>DiscoverServlet</servlet-name>
-		<servlet-class>com.appspot.movevote.controller.DiscoverServlet</servlet-class>
+		<display-name>PrivacyPolicyServlet</display-name>
+		<servlet-name>PrivacyPolicyServlet</servlet-name>
+		<servlet-class>com.appspot.movevote.controller.PrivacyPolicyServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>DiscoverServlet</servlet-name>
-		<url-pattern>/discover</url-pattern>
+		<servlet-name>PrivacyPolicyServlet</servlet-name>
+		<url-pattern>/privacy</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>home</welcome-file>

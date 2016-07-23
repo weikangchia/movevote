@@ -44,6 +44,9 @@ public class HomeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ArrayList<InSingMovie> movieList = InSingMovieDB.retrieveMovieList();
 		request.setAttribute("movieList", movieList);
+		
+		ArrayList<InSingMovie> top5RatedMovieList = InSingMovieDB.top5RatedMovieList();
+		request.setAttribute("top5MovieList", top5RatedMovieList);
 
 		// check if user is login
 		boolean isLoggedIn = false;

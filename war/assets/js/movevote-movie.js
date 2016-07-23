@@ -72,6 +72,7 @@ function updateRating(tmdbId, rating, genreBit) {
 			if (data.success) {
 				if (rating == -1) {
 					resetStarRating();
+					$('#discardBtn').hide();
 				} else {
 					$("#rateTitle").html("You have rated");
 				}
