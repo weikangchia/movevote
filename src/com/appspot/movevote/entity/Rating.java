@@ -59,9 +59,11 @@ public class Rating {
 		for (int i = 0; i < genreBit.length(); i++) {
 			genreCount[i] += 1;
 			if (genreBit.charAt(i) == '1') {
-				ratingScore[i] = ratingScore[i] + rating;
-			} else {
-				ratingScore[i] = ratingScore[i] - (0.1);
+				if (rating >= 3) {
+					ratingScore[i] += rating;
+				} else {
+					ratingScore[i] -= rating * 0.5;
+				}
 			}
 		}
 	}

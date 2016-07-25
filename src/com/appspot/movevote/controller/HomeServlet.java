@@ -44,7 +44,7 @@ public class HomeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ArrayList<InSingMovie> movieList = InSingMovieDB.retrieveMovieList();
 		request.setAttribute("movieList", movieList);
-		
+
 		ArrayList<InSingMovie> top5RatedMovieList = InSingMovieDB.top5RatedMovieList();
 		request.setAttribute("top5MovieList", top5RatedMovieList);
 
@@ -85,12 +85,11 @@ public class HomeServlet extends HttpServlet {
 
 				double[] ratingScore = { 0, 0, 0, 0, 0, 0, 0 };
 				int[] genreCount = { 0, 0, 0, 0, 0, 0, 0 };
-				int highestGenreBit = 0;
-				double highestRating = -1;
 
 				for (Map.Entry<String, Rating> entry : userRatingMap.entrySet()) {
 					Rating userRating = entry.getValue();
 
+					// if user rating is -1 means the user has skip the movie.
 					if (userRating.getRating() != -1) {
 						Rating.calculateUserPreference(ratingScore, genreCount, userRating.getGenreBit(),
 								userRating.getRating());
@@ -98,15 +97,8 @@ public class HomeServlet extends HttpServlet {
 				}
 
 				for (int i = 0; i < ratingScore.length; i++) {
-					double tempScore = (double) ratingScore[i] / genreCount[i];
-					if (tempScore > highestRating) {
-						highestGenreBit = i;
-						highestRating = tempScore;
-					}
-					System.out.println(i + " " + tempScore);
+					ratingScore[i] = ratingScore[i] / genreCount[i];
 				}
-
-				System.out.println("highest: " + highestGenreBit);
 
 				ArrayList<InSingMovie> recommendMovieList = new ArrayList<InSingMovie>();
 				for (int m = 0; m < movieList.size(); m++) {
@@ -115,10 +107,19 @@ public class HomeServlet extends HttpServlet {
 					// skip this movie if users has rated low below average: 3
 					if (tempRating != null && tempRating.getRating() < 3) {
 						continue;
-					}
-
-					if (movieList.get(m).getGenreBit().charAt(highestGenreBit) == '1') {
+					} else if (tempRating != null && tempRating.getRating() >= 3) {
 						recommendMovieList.add(movieList.get(m));
+					} else {
+						double score = 0;
+						for (int i = 0; i < ratingScore.length; i++) {
+							if (movieList.get(m).getGenreBit().charAt(i) == '1') {
+								score += ratingScore[i];
+							}
+						}
+
+						if (score >= 3) {
+							recommendMovieList.add(movieList.get(m));
+						}
 					}
 				}
 				request.setAttribute("recommendMovieList", recommendMovieList);

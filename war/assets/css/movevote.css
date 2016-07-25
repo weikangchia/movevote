@@ -8,6 +8,11 @@ main {
 	flex: 1 0 auto;
 }
 
+ol {
+	padding: 0px;
+	padding-left: 20px
+}
+
 #hero {
 	background-color: rgba(0, 0, 0, 0.02);
 }

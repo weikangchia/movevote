@@ -47,6 +47,7 @@
 				data-activates="mobile-navbar" class="button-collapse"><i
 				class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="/home">Home</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
@@ -64,6 +65,7 @@
 				</c:choose>
 			</ul>
 			<ul class="side-nav" id="mobile-navbar">
+				<li><a href="/home">Home</a></li>
 				<c:choose>
 					<c:when test="${not isLoggedIn}">
 						<li><a
