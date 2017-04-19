@@ -6,7 +6,7 @@ Team: Civil War<br>
 Member: David, Wei Kang<br>
 Level of achievement: Gemini
 
-##Overview
+## Overview
 Given so many choices today, many of us tends to have a hard time making decisions and it is almost impossible to make without additional information or guidance. Furthermore many research have demonstrated that users’ marginal utility decreases when confronted with too many choices. Our aims for this summer project is to help people make better choices about which movies to watch.
 
 We proposed to build a collective intelligence web application that can smartly predict and recommend movies that you and your friends will like. MoveVote is definitely very useful if you are planning to watch movies with a group of friends or with your loved ones.
